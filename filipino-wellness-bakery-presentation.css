@@ -1,14 +1,16 @@
 :root {
-  --bg: #f6efe4;
-  --bg-deep: #f0e3cf;
-  --paper: rgba(255, 250, 244, 0.8);
-  --paper-strong: rgba(255, 248, 239, 0.95);
-  --ink: #1f1b18;
-  --muted: #65584e;
-  --accent: #b54f2d;
-  --olive: #5f6c45;
-  --line: rgba(31, 27, 24, 0.1);
-  --shadow: 0 24px 60px rgba(90, 54, 23, 0.14);
+  --bg: #050707;
+  --bg-deep: #0b120b;
+  --paper: rgba(13, 20, 13, 0.82);
+  --paper-strong: rgba(12, 20, 12, 0.94);
+  --ink: #f4f2e8;
+  --muted: #bfd19e;
+  --accent: #f0c541;
+  --olive: #95b83d;
+  --purple: #7e50b8;
+  --copper: #9d5b20;
+  --line: rgba(180, 215, 109, 0.16);
+  --shadow: 0 26px 70px rgba(0, 0, 0, 0.4);
 }
 
 * {
@@ -24,9 +26,10 @@ body {
   font-family: "Manrope", "Avenir Next", "Segoe UI", sans-serif;
   color: var(--ink);
   background:
-    radial-gradient(circle at top left, rgba(219, 142, 83, 0.22), transparent 30%),
-    radial-gradient(circle at top right, rgba(95, 108, 69, 0.18), transparent 28%),
-    linear-gradient(180deg, var(--bg) 0%, #fbf7f0 45%, var(--bg-deep) 100%);
+    radial-gradient(circle at top left, rgba(240, 197, 65, 0.12), transparent 26%),
+    radial-gradient(circle at top right, rgba(126, 80, 184, 0.14), transparent 24%),
+    radial-gradient(circle at center, rgba(149, 184, 61, 0.08), transparent 40%),
+    linear-gradient(180deg, #020303 0%, var(--bg) 35%, var(--bg-deep) 100%);
 }
 
 body::before {
@@ -38,7 +41,7 @@ body::before {
     linear-gradient(90deg, rgba(255, 255, 255, 0.08) 1px, transparent 1px);
   background-size: 36px 36px;
   mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.75), transparent 95%);
-  opacity: 0.28;
+  opacity: 0.08;
 }
 
 .page-shell {
@@ -73,6 +76,7 @@ body::before {
   border: 1px solid var(--line);
   border-radius: 999px;
   background: rgba(255, 250, 244, 0.66);
+  background: rgba(7, 11, 7, 0.76);
 }
 
 .eyebrow,
@@ -95,9 +99,9 @@ body::before {
 }
 
 .chat-link {
-  color: var(--ink);
+  color: #d9e8b0;
   text-decoration: none;
-  border-bottom: 1px solid rgba(31, 27, 24, 0.35);
+  border-bottom: 1px solid rgba(217, 232, 176, 0.3);
 }
 
 .hero-grid {
@@ -123,12 +127,12 @@ body::before {
 
 .hero-copy {
   padding: 3rem;
-  background: linear-gradient(135deg, rgba(255, 248, 239, 0.92), rgba(255, 242, 229, 0.84));
+  background: linear-gradient(145deg, rgba(8, 12, 8, 0.96), rgba(16, 30, 11, 0.92));
 }
 
 .hero-card {
   padding: 2rem;
-  background: linear-gradient(180deg, rgba(95, 108, 69, 0.94), rgba(58, 74, 39, 0.92));
+  background: linear-gradient(180deg, rgba(54, 26, 80, 0.95), rgba(22, 12, 35, 0.94));
   color: #f7f0e6;
 }
 
@@ -172,6 +176,47 @@ h3 {
   color: var(--muted);
 }
 
+.product-strip {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.product-pill {
+  padding: 1rem 1.1rem;
+  border-radius: 22px;
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow);
+  background: rgba(9, 14, 9, 0.84);
+}
+
+.product-pill span {
+  display: block;
+  margin-bottom: 0.35rem;
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #d6e991;
+}
+
+.product-pill strong {
+  font-size: 1.05rem;
+}
+
+.product-pill.ube {
+  background: linear-gradient(135deg, rgba(95, 51, 149, 0.92), rgba(33, 21, 48, 0.92));
+}
+
+.product-pill.turon {
+  background: linear-gradient(135deg, rgba(123, 71, 22, 0.92), rgba(45, 26, 8, 0.92));
+}
+
+.product-pill.pandan {
+  background: linear-gradient(135deg, rgba(43, 90, 34, 0.92), rgba(12, 30, 13, 0.92));
+}
+
 .hero-points {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -182,7 +227,7 @@ h3 {
 .hero-points div {
   padding: 1rem;
   border-radius: 20px;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .hero-points strong,
@@ -240,6 +285,14 @@ h3 {
   min-height: 220px;
 }
 
+.principle-row {
+  margin-top: 1rem;
+}
+
+.principle-card {
+  min-height: 205px;
+}
+
 .card-number {
   display: inline-block;
   margin-bottom: 1rem;
@@ -251,9 +304,9 @@ h3 {
 .statement-panel {
   padding: 2.6rem;
   background:
-    linear-gradient(135deg, rgba(181, 79, 45, 0.92), rgba(219, 142, 83, 0.9)),
-    rgba(255, 248, 239, 0.95);
-  color: #fff8f0;
+    linear-gradient(135deg, rgba(44, 94, 27, 0.95), rgba(92, 127, 20, 0.92)),
+    rgba(12, 20, 12, 0.95);
+  color: #f8f8ed;
 }
 
 .statement-panel .kicker {
@@ -264,6 +317,13 @@ h3 {
   max-width: 19ch;
 }
 
+.statement-support {
+  max-width: 64ch;
+  margin: 1.1rem 0 0;
+  color: rgba(239, 245, 220, 0.88);
+  line-height: 1.8;
+}
+
 .split-grid {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -271,7 +331,7 @@ h3 {
 }
 
 .panel.warm {
-  background: linear-gradient(180deg, rgba(255, 238, 218, 0.9), rgba(255, 247, 239, 0.8));
+  background: linear-gradient(180deg, rgba(30, 16, 45, 0.92), rgba(18, 11, 29, 0.85));
 }
 
 .clean-list {
@@ -287,6 +347,7 @@ h3 {
   gap: 1rem;
   margin-top: 1rem;
   background: linear-gradient(180deg, rgba(255, 244, 232, 0.92), rgba(249, 238, 223, 0.82));
+  background: linear-gradient(180deg, rgba(18, 31, 11, 0.92), rgba(10, 16, 9, 0.84));
 }
 
 .rhythm-steps {
@@ -298,7 +359,7 @@ h3 {
 .rhythm-steps div {
   padding: 1rem;
   border-radius: 18px;
-  background: rgba(255, 255, 255, 0.52);
+  background: rgba(255, 255, 255, 0.04);
 }
 
 .roadmap {
@@ -318,6 +379,7 @@ h3 {
   height: 130px;
   border-radius: 50%;
   background: radial-gradient(circle, rgba(181, 79, 45, 0.18), transparent 70%);
+  background: radial-gradient(circle, rgba(240, 197, 65, 0.16), transparent 70%);
 }
 
 .roadmap-step span {
@@ -333,14 +395,14 @@ h3 {
 }
 
 .risk-card {
-  background: linear-gradient(180deg, rgba(255, 251, 246, 0.9), rgba(246, 236, 223, 0.8));
+  background: linear-gradient(180deg, rgba(17, 14, 26, 0.9), rgba(10, 9, 16, 0.84));
 }
 
 .final-panel {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 1.5rem;
-  background: linear-gradient(135deg, rgba(31, 27, 24, 0.94), rgba(64, 54, 43, 0.92));
+  background: linear-gradient(135deg, rgba(7, 10, 7, 0.96), rgba(18, 30, 12, 0.92));
 }
 
 .final-panel p {
@@ -372,6 +434,7 @@ h3 {
 
 @media (max-width: 980px) {
   .hero-grid,
+  .product-strip,
   .split-grid,
   .reading-rhythm,
   .final-panel,
