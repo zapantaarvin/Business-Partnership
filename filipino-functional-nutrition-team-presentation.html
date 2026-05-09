@@ -1,0 +1,845 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Pitch | Filipino Functional Nutrition</title>
+  <style>
+    :root {
+      --bg: #050707;
+      --bg-deep: #0b120b;
+      --panel: rgba(13, 20, 13, 0.84);
+      --ink: #f4f2e8;
+      --muted: #c6d3ab;
+      --gold: #f0c541;
+      --olive: #95b83d;
+      --purple: #7e50b8;
+      --line: rgba(180, 215, 109, 0.18);
+      --shadow: 0 26px 70px rgba(0, 0, 0, 0.4);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Avenir Next", "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at top left, rgba(240, 197, 65, 0.12), transparent 24%),
+        radial-gradient(circle at top right, rgba(126, 80, 184, 0.14), transparent 22%),
+        radial-gradient(circle at center, rgba(149, 184, 61, 0.08), transparent 38%),
+        linear-gradient(180deg, #020303 0%, var(--bg) 35%, var(--bg-deep) 100%);
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, 0.06) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.06) 1px, transparent 1px);
+      background-size: 34px 34px;
+      opacity: 0.08;
+      mask-image: linear-gradient(180deg, rgba(0, 0, 0, 0.75), transparent 96%);
+    }
+
+    .shell {
+      width: min(1220px, calc(100% - 24px));
+      margin: 0 auto;
+      padding: 18px 0 34px;
+    }
+
+    .topbar,
+    .hero,
+    .carousel-shell,
+    .team-card,
+    .fit-card,
+    .info-accordion,
+    .summary-band {
+      border: 1px solid var(--line);
+      border-radius: 26px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      margin-bottom: 16px;
+      background: rgba(8, 12, 8, 0.76);
+    }
+
+    .mini-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip-link,
+    .carousel-tab,
+    .carousel-arrow {
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 13px;
+      font-weight: 700;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .hero {
+      padding: 28px;
+      background: linear-gradient(140deg, rgba(7, 12, 7, 0.97), rgba(18, 31, 11, 0.92));
+      margin-bottom: 16px;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+      gap: 16px;
+      align-items: stretch;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, h4 {
+      margin: 0;
+      font-family: Georgia, "Iowan Old Style", serif;
+      line-height: 1.05;
+    }
+
+    .hero h1 {
+      font-size: clamp(34px, 5vw, 58px);
+      max-width: 10ch;
+      margin-bottom: 12px;
+    }
+
+    .hero-title-stack {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 14px;
+    }
+
+    .hero-title-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.07);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #fff0b5;
+    }
+
+    .hero-title-chip .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--gold);
+      box-shadow: 0 0 0 6px rgba(240, 197, 65, 0.12);
+    }
+
+    .hero-visual {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      align-content: start;
+    }
+
+    .visual-card {
+      padding: 16px;
+      border-radius: 20px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.05);
+      min-height: 120px;
+    }
+
+    .visual-card strong {
+      display: block;
+      margin-top: 10px;
+      font-size: 14px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .visual-card span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .visual-icon {
+      font-size: 28px;
+      line-height: 1;
+    }
+
+    .visual-card.gold {
+      background: linear-gradient(180deg, rgba(74, 60, 18, 0.62), rgba(25, 22, 10, 0.62));
+    }
+
+    .visual-card.green {
+      background: linear-gradient(180deg, rgba(29, 63, 23, 0.7), rgba(12, 22, 10, 0.7));
+    }
+
+    .visual-card.purple {
+      background: linear-gradient(180deg, rgba(49, 27, 73, 0.7), rgba(17, 10, 29, 0.7));
+    }
+
+    .visual-card.blue {
+      background: linear-gradient(180deg, rgba(18, 42, 71, 0.72), rgba(10, 16, 28, 0.72));
+    }
+
+    .hero p,
+    .panel-copy,
+    .team-card p,
+    .fit-card p,
+    .info-accordion p {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    .hero-meta,
+    .summary-grid,
+    .fit-grid,
+    .team-grid,
+    .accordion-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .hero-meta {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-top: 20px;
+    }
+
+    .hero-meta div,
+    .summary-band,
+    .team-card,
+    .fit-card {
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 20px;
+    }
+
+    .hero-meta strong,
+    .summary-band strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .summary-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 18px;
+    }
+
+    .carousel-shell {
+      padding: 16px;
+      background: rgba(8, 12, 8, 0.78);
+    }
+
+    .carousel-topbar,
+    .carousel-tabs {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .carousel-topbar {
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .carousel-status strong {
+      display: block;
+      margin-top: 4px;
+    }
+
+    .carousel-actions { display: flex; gap: 10px; }
+    .carousel-arrow:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .carousel-tab.is-active {
+      background: rgba(240, 197, 65, 0.16);
+      border-color: rgba(240, 197, 65, 0.38);
+      color: #fff7dd;
+    }
+
+    .carousel-panel { display: none; padding-top: 6px; }
+    .carousel-panel.is-active { display: block; }
+
+    .section-head {
+      margin-bottom: 16px;
+    }
+
+    .section-head p {
+      margin: 8px 0 0;
+      color: var(--muted);
+      max-width: 860px;
+      line-height: 1.7;
+    }
+
+    .accordion-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .accordion-grid.stack {
+      grid-template-columns: 1fr;
+    }
+
+    .info-accordion {
+      padding: 14px 16px;
+      background: rgba(14, 23, 16, 0.88);
+    }
+
+    .info-accordion summary {
+      cursor: pointer;
+      list-style: none;
+      font-size: 19px;
+      font-weight: 700;
+      font-family: Georgia, "Iowan Old Style", serif;
+    }
+
+    .info-accordion summary::-webkit-details-marker { display: none; }
+
+    .info-accordion .content-wrap {
+      margin-top: 12px;
+    }
+
+    .plain-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.75;
+    }
+
+    .team-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .team-card h3,
+    .fit-card h3 {
+      margin-bottom: 10px;
+    }
+
+    .team-tag {
+      display: inline-block;
+      margin-bottom: 10px;
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--gold);
+    }
+
+    .fit-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 14px;
+    }
+
+    .fit-card {
+      background: linear-gradient(180deg, rgba(22, 17, 34, 0.9), rgba(10, 10, 18, 0.86));
+    }
+
+    .invite-panel {
+      margin-top: 14px;
+      padding: 18px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(44, 94, 27, 0.95), rgba(92, 127, 20, 0.92));
+      border: 1px solid var(--line);
+    }
+
+    .invite-panel p {
+      margin: 0;
+      color: rgba(248, 248, 237, 0.9);
+      line-height: 1.75;
+    }
+
+    @media (max-width: 1080px) {
+      .hero-grid,
+      .hero-meta,
+      .summary-grid,
+      .accordion-grid,
+      .team-grid,
+      .fit-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar,
+      .carousel-topbar,
+      .hero-grid,
+      .hero-meta,
+      .summary-grid,
+      .accordion-grid,
+      .team-grid,
+      .fit-grid {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav class="topbar">
+      <div>
+        <strong>Team Opportunity Presentation</strong>
+        <div class="panel-copy">Pitching the idea, the Phase 1 plan, and where interested people could contribute.</div>
+      </div>
+      <div class="mini-links">
+        <a class="chip-link" href="./index.html">Back to Index</a>
+        <a class="chip-link" href="./filipino-wellness-bakery-presentation.html">Open Brand Presentation</a>
+        <a class="chip-link" href="./filipino-functional-nutrition-business-engine-dashboard.html">Open Dashboard</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <div class="hero-grid">
+        <div>
+          <span class="eyebrow">Team Pitch</span>
+          <div class="hero-title-stack">
+            <span class="hero-title-chip"><i class="dot"></i> Culture</span>
+            <span class="hero-title-chip"><i class="dot"></i> Nutrition</span>
+            <span class="hero-title-chip"><i class="dot"></i> Build</span>
+          </div>
+          <h1>Fuel the Build.</h1>
+          <p>
+            This presentation is for the team. The goal is to explain how the idea came up, who
+            the customer is, what Phase 1 looks like, how we want to structure the business, and
+            where each person’s skills might fit if they are genuinely interested in taking part.
+          </p>
+        </div>
+
+        <div class="hero-visual">
+          <div class="visual-card gold">
+            <div class="visual-icon">⚡</div>
+            <strong>Big Idea</strong>
+            <span>Filipino-inspired functional nutrition with real market potential.</span>
+          </div>
+          <div class="visual-card purple">
+            <div class="visual-icon">◈</div>
+            <strong>Hook</strong>
+            <span>Distinct flavors, cultural relevance, and a modern wellness angle.</span>
+          </div>
+          <div class="visual-card green">
+            <div class="visual-icon">↗</div>
+            <strong>Phase 1</strong>
+            <span>Validate demand first before scaling systems or team complexity.</span>
+          </div>
+          <div class="visual-card blue">
+            <div class="visual-icon">✦</div>
+            <strong>Team Fit</strong>
+            <span>Everyone can see where their skills could contribute if interested.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-meta">
+        <div>
+          <strong>Main Idea</strong>
+          <span>Bars, shakes, and energy drinks with Filipino-inspired flavors.</span>
+        </div>
+        <div>
+          <strong>Why Now</strong>
+          <span>Wellness is growing, but Filipino flavor representation is still limited.</span>
+        </div>
+        <div>
+          <strong>Immediate Goal</strong>
+          <span>Run Phase 1 validation before trying to scale too early.</span>
+        </div>
+        <div>
+          <strong>Team Ask</strong>
+          <span>Explore fit, interest, and possible roles without forcing commitment.</span>
+        </div>
+      </div>
+
+      <div class="summary-grid">
+        <div class="summary-band">
+          <strong>Origin</strong>
+          <span>The idea came from seeing real family potential, cultural value, and a market gap at the same time.</span>
+        </div>
+        <div class="summary-band">
+          <strong>Approach</strong>
+          <span>Start lean, validate locally, document what works, then build systems deliberately.</span>
+        </div>
+        <div class="summary-band">
+          <strong>Mindset</strong>
+          <span>This is not only about money. It is about building something meaningful and becoming capable operators.</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="carousel-shell" data-carousel="team-pitch">
+      <div class="carousel-topbar">
+        <div class="carousel-status">
+          <span class="eyebrow">Pitch Flow</span>
+          <strong data-carousel-status>Section 1 of 6</strong>
+        </div>
+        <div class="carousel-actions">
+          <button class="carousel-arrow" type="button" data-carousel-prev>Previous</button>
+          <button class="carousel-arrow" type="button" data-carousel-next>Next</button>
+        </div>
+      </div>
+
+      <div class="carousel-tabs">
+        <button class="carousel-tab" type="button" data-carousel-jump="0">How It Started</button>
+        <button class="carousel-tab" type="button" data-carousel-jump="1">Customer</button>
+        <button class="carousel-tab" type="button" data-carousel-jump="2">Phase 1</button>
+        <button class="carousel-tab" type="button" data-carousel-jump="3">Operating Model</button>
+        <button class="carousel-tab" type="button" data-carousel-jump="4">Team Fit</button>
+        <button class="carousel-tab" type="button" data-carousel-jump="5">Invitation</button>
+      </div>
+
+      <main>
+        <section class="carousel-panel is-active">
+          <div class="section-head">
+            <h2>How the idea came up</h2>
+            <p>
+              This is the personal and strategic starting point behind the business idea.
+            </p>
+          </div>
+
+          <div class="accordion-grid">
+            <details class="info-accordion" open>
+              <summary>The personal spark</summary>
+              <div class="content-wrap">
+                <p>
+                  The idea started after meeting Christian's family and seeing the potential to build
+                  something meaningful from real talent, real effort, and a shared desire to create
+                  more Filipino representation.
+                </p>
+              </div>
+            </details>
+            <details class="info-accordion">
+              <summary>The market spark</summary>
+              <div class="content-wrap">
+                <p>
+                  Wellness and performance nutrition is a large and growing category, but many
+                  brands still feel generic. Filipino-inspired flavors create a clear opportunity to
+                  stand out.
+                </p>
+              </div>
+            </details>
+            <details class="info-accordion">
+              <summary>The mission spark</summary>
+              <div class="content-wrap">
+                <p>
+                  The idea matters because it can combine health, culture, business, and community.
+                  It is not only a product concept. It is a chance to build identity into a brand.
+                </p>
+              </div>
+            </details>
+            <details class="info-accordion">
+              <summary>Why this is worth exploring</summary>
+              <div class="content-wrap">
+                <p>
+                  It has both emotional depth and commercial logic. That makes it a stronger team
+                  opportunity than a random side project with no real differentiator.
+                </p>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section class="carousel-panel">
+          <div class="section-head">
+            <h2>Who the customer could be</h2>
+            <p>
+              The goal is to start with people who are likely to care about both function and
+              flavor, rather than trying to appeal to everyone immediately.
+            </p>
+          </div>
+
+          <div class="accordion-grid stack">
+            <details class="info-accordion" open>
+              <summary>Primary audiences</summary>
+              <div class="content-wrap">
+                <ul class="plain-list">
+                  <li>Filipino and Asian-American consumers who want cultural connection</li>
+                  <li>Health care professionals who need convenient functional nutrition</li>
+                  <li>Fitness-minded consumers who want flavor beyond standard protein products</li>
+                  <li>Athletes and creators who can represent the lifestyle authentically</li>
+                </ul>
+              </div>
+            </details>
+            <details class="info-accordion">
+              <summary>Why these audiences matter early</summary>
+              <div class="content-wrap">
+                <p>
+                  They are easier to learn from, more likely to give practical feedback, and more
+                  likely to help us understand repeat purchase behavior before we expand.
+                </p>
+              </div>
+            </details>
+            <details class="info-accordion">
+              <summary>What the customer is really buying</summary>
+              <div class="content-wrap">
+                <p>
+                  The customer is not just buying macros. They may also be buying convenience,
+                  identity, taste novelty, and trust in a brand that feels more human and distinct.
+                </p>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section class="carousel-panel">
+          <div class="section-head">
+            <h2>How we want to start with Phase 1</h2>
+            <p>
+              Phase 1 is about validation, not pretending we are already a scaled business.
+            </p>
+          </div>
+
+          <div class="accordion-grid stack">
+            <details class="info-accordion" open>
+              <summary>Phase 1 objective</summary>
+              <div class="content-wrap">
+                <p>
+                  Validate whether there is real product-market interest, identify the strongest
+                  flavors and product formats, and learn what customers actually respond to.
+                </p>
+              </div>
+            </details>
+            <details class="info-accordion">
+              <summary>Phase 1 workstream</summary>
+              <div class="content-wrap">
+                <ul class="plain-list">
+                  <li>Research customer preferences and competitors</li>
+                  <li>Develop a small set of hero product concepts</li>
+                  <li>Run local pilots with targeted groups</li>
+                  <li>Collect structured feedback and repeat-order signals</li>
+                  <li>Refine pricing, packaging direction, and positioning</li>
+                </ul>
+              </div>
+            </details>
+            <details class="info-accordion">
+              <summary>What success would look like</summary>
+              <div class="content-wrap">
+                <ul class="plain-list">
+                  <li>Clear demand for one or more hero products</li>
+                  <li>Strong flavor preference patterns</li>
+                  <li>Evidence of repeat interest or reorder intent</li>
+                  <li>A narrower, smarter direction for Phase 2</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section class="carousel-panel">
+          <div class="section-head">
+            <h2>Business and operating model</h2>
+            <p>
+              The point is to build a simple but disciplined framework so we are not improvising
+              everything as we go.
+            </p>
+          </div>
+
+          <div class="team-grid">
+            <article class="team-card">
+              <span class="team-tag">Research</span>
+              <h3>Understand the market</h3>
+              <p>Customer interviews, competitor analysis, flavor validation, and feedback collection.</p>
+            </article>
+            <article class="team-card">
+              <span class="team-tag">Product</span>
+              <h3>Develop MVP concepts</h3>
+              <p>Formulation direction, taste testing, nutrition positioning, and packaging thinking.</p>
+            </article>
+            <article class="team-card">
+              <span class="team-tag">Operations</span>
+              <h3>Keep the system real</h3>
+              <p>Sourcing, production planning, quality control, and practical execution constraints.</p>
+            </article>
+            <article class="team-card">
+              <span class="team-tag">Distribution</span>
+              <h3>Test where demand lives</h3>
+              <p>Hospitals, gyms, Filipino communities, pop-ups, direct orders, and partnerships.</p>
+            </article>
+            <article class="team-card">
+              <span class="team-tag">Brand</span>
+              <h3>Create meaning and trust</h3>
+              <p>Storytelling, visuals, messaging, audience relevance, and cultural clarity.</p>
+            </article>
+            <article class="team-card">
+              <span class="team-tag">Decision Layer</span>
+              <h3>Review and adapt</h3>
+              <p>Use weekly reporting, insights, and metrics to decide what to continue, change, or stop.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="carousel-panel">
+          <div class="section-head">
+            <h2>How people’s skills could be used</h2>
+            <p>
+              This is not about assigning jobs immediately. It is about identifying where someone
+              could add value if they are interested in helping shape the business.
+            </p>
+          </div>
+
+          <div class="fit-grid">
+            <article class="fit-card">
+              <h3>Marketing / Social</h3>
+              <p>Help with content, brand storytelling, community building, creator outreach, and early audience testing.</p>
+            </article>
+            <article class="fit-card">
+              <h3>Operations / Organizing</h3>
+              <p>Help with coordination, process building, tracking tasks, documenting decisions, and keeping momentum clean.</p>
+            </article>
+            <article class="fit-card">
+              <h3>Creative / Design</h3>
+              <p>Help with packaging concepts, visual identity, product presentation, and brand consistency.</p>
+            </article>
+            <article class="fit-card">
+              <h3>Sales / Networking</h3>
+              <p>Help with pilot outreach, partnership conversations, local distribution ideas, and relationship-building.</p>
+            </article>
+            <article class="fit-card">
+              <h3>Finance / Strategy</h3>
+              <p>Help with pricing, margin thinking, budget discipline, prioritization, and scenario planning.</p>
+            </article>
+            <article class="fit-card">
+              <h3>Product / Health Insight</h3>
+              <p>Help with nutrition positioning, customer relevance, and translating health-conscious expectations into product decisions.</p>
+            </article>
+          </div>
+        </section>
+
+        <section class="carousel-panel">
+          <div class="section-head">
+            <h2>The invitation</h2>
+            <p>
+              The purpose of this pitch is not to pressure anyone. It is to share the vision, show
+              the framework, and give people a chance to decide whether they want to contribute.
+            </p>
+          </div>
+
+          <div class="accordion-grid stack">
+            <details class="info-accordion" open>
+              <summary>What we are really asking from the team</summary>
+              <div class="content-wrap">
+                <ul class="plain-list">
+                  <li>Do you believe the idea is worth testing?</li>
+                  <li>Do you see a role where your skills could help?</li>
+                  <li>Would you want to contribute during Phase 1?</li>
+                  <li>If yes, what level of involvement feels realistic?</li>
+                </ul>
+              </div>
+            </details>
+            <details class="info-accordion">
+              <summary>Why the team matters</summary>
+              <div class="content-wrap">
+                <p>
+                  A good idea moves faster when the right people help shape it. The business becomes
+                  stronger when people contribute from their actual strengths instead of trying to do
+                  everything alone.
+                </p>
+              </div>
+            </details>
+          </div>
+
+          <div class="invite-panel">
+            <p>
+              If someone is interested, the next step is not “join forever.” The next step is to
+              identify what they can help with during Phase 1, what ownership makes sense, and what
+              real contribution would look like. This keeps the opportunity practical, respectful,
+              and aligned with actual interest.
+            </p>
+          </div>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const setupCarousel = (root) => {
+      const panels = Array.from(root.querySelectorAll(".carousel-panel"));
+      const tabs = Array.from(root.querySelectorAll("[data-carousel-jump]"));
+      const prev = root.querySelector("[data-carousel-prev]");
+      const next = root.querySelector("[data-carousel-next]");
+      const status = root.querySelector("[data-carousel-status]");
+      let index = 0;
+
+      const render = () => {
+        panels.forEach((panel, panelIndex) => {
+          panel.classList.toggle("is-active", panelIndex === index);
+        });
+
+        tabs.forEach((tab, tabIndex) => {
+          const active = tabIndex === index;
+          tab.classList.toggle("is-active", active);
+          tab.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+
+        if (status) {
+          status.textContent = `Section ${index + 1} of ${panels.length}`;
+        }
+
+        prev.disabled = index === 0;
+        next.disabled = index === panels.length - 1;
+      };
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          index = Number(tab.dataset.carouselJump);
+          render();
+        });
+      });
+
+      prev.addEventListener("click", () => {
+        if (index > 0) {
+          index -= 1;
+          render();
+        }
+      });
+
+      next.addEventListener("click", () => {
+        if (index < panels.length - 1) {
+          index += 1;
+          render();
+        }
+      });
+
+      render();
+    };
+
+    document.querySelectorAll("[data-carousel]").forEach(setupCarousel);
+  </script>
+</body>
+</html>

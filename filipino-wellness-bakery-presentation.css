@@ -2,23 +2,16 @@
   --bg: #050707;
   --bg-deep: #0b120b;
   --paper: rgba(13, 20, 13, 0.82);
-  --paper-strong: rgba(12, 20, 12, 0.94);
   --ink: #f4f2e8;
   --muted: #bfd19e;
   --accent: #f0c541;
   --olive: #95b83d;
-  --purple: #7e50b8;
-  --copper: #9d5b20;
   --line: rgba(180, 215, 109, 0.16);
   --shadow: 0 26px 70px rgba(0, 0, 0, 0.4);
 }
 
 * {
   box-sizing: border-box;
-}
-
-html {
-  scroll-behavior: smooth;
 }
 
 body {
@@ -51,19 +44,20 @@ body::before {
 }
 
 .hero,
-.section,
 .hero-card,
 .panel,
 .statement-panel,
 .reading-rhythm,
 .roadmap-step,
 .risk-card,
-.final-panel {
+.final-panel,
+.carousel-shell,
+.info-accordion {
   backdrop-filter: blur(14px);
 }
 
 .hero {
-  padding: 1.2rem 0 2rem;
+  padding: 1.2rem 0 1.5rem;
 }
 
 .topbar {
@@ -75,7 +69,6 @@ body::before {
   padding: 0.9rem 1rem;
   border: 1px solid var(--line);
   border-radius: 999px;
-  background: rgba(255, 250, 244, 0.66);
   background: rgba(7, 11, 7, 0.76);
 }
 
@@ -119,7 +112,9 @@ body::before {
 .roadmap-step,
 .risk-card,
 .final-panel,
-.info-card {
+.info-card,
+.carousel-shell,
+.info-accordion {
   border: 1px solid var(--line);
   border-radius: 28px;
   box-shadow: var(--shadow);
@@ -170,7 +165,8 @@ h3 {
 .info-card p,
 .roadmap-step p,
 .risk-card p,
-.final-panel p {
+.final-panel p,
+.info-accordion p {
   font-size: 1.03rem;
   line-height: 1.8;
   color: var(--muted);
@@ -188,7 +184,6 @@ h3 {
   border-radius: 22px;
   border: 1px solid var(--line);
   box-shadow: var(--shadow);
-  background: rgba(9, 14, 9, 0.84);
 }
 
 .product-pill span {
@@ -205,15 +200,15 @@ h3 {
   font-size: 1.05rem;
 }
 
-.product-pill.ube {
+.ube {
   background: linear-gradient(135deg, rgba(95, 51, 149, 0.92), rgba(33, 21, 48, 0.92));
 }
 
-.product-pill.turon {
+.turon {
   background: linear-gradient(135deg, rgba(123, 71, 22, 0.92), rgba(45, 26, 8, 0.92));
 }
 
-.product-pill.pandan {
+.pandan {
   background: linear-gradient(135deg, rgba(43, 90, 34, 0.92), rgba(12, 30, 13, 0.92));
 }
 
@@ -243,8 +238,67 @@ h3 {
   line-height: 1.55;
 }
 
-.section {
-  padding: 1rem 0;
+.carousel-shell {
+  padding: 1rem;
+  background: rgba(8, 12, 8, 0.76);
+}
+
+.carousel-topbar,
+.carousel-tabs {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.carousel-topbar {
+  margin-bottom: 1rem;
+}
+
+.carousel-status strong {
+  display: block;
+  margin-top: 0.25rem;
+}
+
+.carousel-actions {
+  display: flex;
+  gap: 0.75rem;
+}
+
+.carousel-arrow,
+.carousel-tab {
+  border: 1px solid var(--line);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--ink);
+  border-radius: 999px;
+  padding: 0.85rem 1rem;
+  cursor: pointer;
+  font: inherit;
+}
+
+.carousel-arrow:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.carousel-tabs {
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-bottom: 1rem;
+}
+
+.carousel-tab.is-active {
+  background: rgba(240, 197, 65, 0.18);
+  color: #fff7dd;
+}
+
+.carousel-panel {
+  display: none;
+  padding: 1rem 0 0;
+}
+
+.carousel-panel.is-active {
+  display: block;
 }
 
 .section-heading {
@@ -262,13 +316,24 @@ h3 {
 
 .cards.three-up,
 .risk-grid,
-.roadmap {
+.roadmap,
+.accordion-grid {
   display: grid;
   gap: 1rem;
 }
 
-.cards.three-up {
+.cards.three-up,
+.risk-grid {
   grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.accordion-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-top: 1rem;
+}
+
+.accordion-grid.stack {
+  grid-template-columns: 1fr;
 }
 
 .info-card,
@@ -285,14 +350,6 @@ h3 {
   min-height: 220px;
 }
 
-.principle-row {
-  margin-top: 1rem;
-}
-
-.principle-card {
-  min-height: 205px;
-}
-
 .card-number {
   display: inline-block;
   margin-bottom: 1rem;
@@ -303,9 +360,7 @@ h3 {
 
 .statement-panel {
   padding: 2.6rem;
-  background:
-    linear-gradient(135deg, rgba(44, 94, 27, 0.95), rgba(92, 127, 20, 0.92)),
-    rgba(12, 20, 12, 0.95);
+  background: linear-gradient(135deg, rgba(44, 94, 27, 0.95), rgba(92, 127, 20, 0.92));
   color: #f8f8ed;
 }
 
@@ -346,7 +401,6 @@ h3 {
   grid-template-columns: 0.8fr 1.2fr;
   gap: 1rem;
   margin-top: 1rem;
-  background: linear-gradient(180deg, rgba(255, 244, 232, 0.92), rgba(249, 238, 223, 0.82));
   background: linear-gradient(180deg, rgba(18, 31, 11, 0.92), rgba(10, 16, 9, 0.84));
 }
 
@@ -371,27 +425,12 @@ h3 {
   overflow: hidden;
 }
 
-.roadmap-step::after {
-  content: "";
-  position: absolute;
-  inset: auto -10% -15% auto;
-  width: 130px;
-  height: 130px;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(181, 79, 45, 0.18), transparent 70%);
-  background: radial-gradient(circle, rgba(240, 197, 65, 0.16), transparent 70%);
-}
-
 .roadmap-step span {
   display: inline-block;
   margin-bottom: 0.9rem;
   color: var(--olive);
   font-size: 0.78rem;
   font-weight: 800;
-}
-
-.risk-grid {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .risk-card {
@@ -402,6 +441,7 @@ h3 {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
   gap: 1.5rem;
+  margin-top: 1rem;
   background: linear-gradient(135deg, rgba(7, 10, 7, 0.96), rgba(18, 30, 12, 0.92));
 }
 
@@ -417,19 +457,26 @@ h3 {
   line-height: 1.2;
 }
 
-.reveal {
-  opacity: 0;
-  transform: translateY(24px);
-  transition: opacity 0.8s ease, transform 0.8s ease;
+.info-accordion {
+  background: rgba(14, 23, 16, 0.88);
+  padding: 1rem 1.2rem;
 }
 
-.reveal-delay-1 {
-  transition-delay: 0.12s;
+.info-accordion summary {
+  cursor: pointer;
+  font-family: "Fraunces", "Iowan Old Style", "Georgia", serif;
+  font-size: 1.15rem;
+  list-style: none;
 }
 
-.reveal.is-visible {
-  opacity: 1;
-  transform: translateY(0);
+.info-accordion summary::-webkit-details-marker {
+  display: none;
+}
+
+.info-accordion p,
+.info-accordion .risk-grid,
+.info-accordion .roadmap {
+  margin-top: 1rem;
 }
 
 @media (max-width: 980px) {
@@ -440,7 +487,8 @@ h3 {
   .final-panel,
   .cards.three-up,
   .roadmap,
-  .risk-grid {
+  .risk-grid,
+  .accordion-grid {
     grid-template-columns: 1fr;
   }
 
@@ -464,10 +512,10 @@ h3 {
     width: min(100% - 1rem, 1180px);
   }
 
-  .topbar {
+  .topbar,
+  .carousel-topbar {
     flex-direction: column;
     align-items: flex-start;
-    border-radius: 26px;
   }
 
   .hero-copy,
@@ -478,7 +526,9 @@ h3 {
   .roadmap-step,
   .risk-card,
   .final-panel,
-  .info-card {
+  .info-card,
+  .carousel-shell,
+  .info-accordion {
     border-radius: 24px;
   }
 }

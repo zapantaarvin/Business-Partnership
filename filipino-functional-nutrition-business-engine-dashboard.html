@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Filipino Functional Nutrition Business Engine Dashboard</title>
+  <style>
+    :root {
+      --bg: #07111d;
+      --panel: #102742;
+      --text: #ecf3fb;
+      --muted: #b6c8db;
+      --gold: #d6b165;
+      --line: rgba(214, 177, 101, 0.28);
+      --green: #89d277;
+      --blue: #71b7ff;
+      --violet: #b389ff;
+      --red: #ff9a9a;
+      --shadow: 0 22px 60px rgba(0, 0, 0, 0.28);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(113, 183, 255, 0.18), transparent 24%),
+        radial-gradient(circle at top right, rgba(137, 210, 119, 0.12), transparent 22%),
+        linear-gradient(180deg, #06101a 0%, var(--bg) 45%, #091827 100%);
+    }
+
+    .shell {
+      width: min(1360px, calc(100% - 24px));
+      margin: 0 auto;
+      padding: 18px 0 34px;
+    }
+
+    .topbar,
+    .hero,
+    .carousel-shell,
+    .info-accordion,
+    .task-card,
+    .metric-card,
+    .editable {
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      box-shadow: var(--shadow);
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      padding: 12px 16px;
+      background: rgba(11, 28, 46, 0.9);
+      margin-bottom: 16px;
+    }
+
+    .mini-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .chip-link,
+    .carousel-tab,
+    .carousel-arrow {
+      text-decoration: none;
+      padding: 10px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      font-size: 13px;
+      font-weight: bold;
+      color: inherit;
+      cursor: pointer;
+    }
+
+    .hero {
+      padding: 24px;
+      background: linear-gradient(135deg, rgba(9, 24, 40, 0.98), rgba(18, 47, 77, 0.95));
+      margin-bottom: 16px;
+    }
+
+    .eyebrow {
+      display: inline-block;
+      margin-bottom: 10px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: bold;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, h4 { margin: 0; }
+
+    .hero h1 {
+      font-size: clamp(32px, 5vw, 52px);
+      line-height: 1.05;
+      max-width: 16ch;
+      margin-bottom: 12px;
+    }
+
+    .hero p,
+    .panel-copy,
+    .info-accordion p,
+    .task-card span,
+    .metric-card p {
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .hero-meta,
+    .metrics-grid,
+    .accordion-grid,
+    .kanban,
+    .editor-grid,
+    .report-grid,
+    .table-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .hero-meta { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-top: 20px; }
+
+    .hero-meta div,
+    .metric-card {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .hero-meta strong,
+    .metric-card strong {
+      display: block;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 6px;
+    }
+
+    .carousel-shell {
+      padding: 16px;
+      background: rgba(11, 25, 41, 0.92);
+    }
+
+    .carousel-topbar,
+    .carousel-tabs {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .carousel-topbar {
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .carousel-status strong {
+      display: block;
+      margin-top: 4px;
+    }
+
+    .carousel-actions { display: flex; gap: 10px; }
+
+    .carousel-arrow:disabled { opacity: 0.45; cursor: not-allowed; }
+
+    .carousel-tab.is-active {
+      background: rgba(214, 177, 101, 0.16);
+      border-color: rgba(214, 177, 101, 0.4);
+    }
+
+    .carousel-panel { display: none; padding-top: 6px; }
+    .carousel-panel.is-active { display: block; }
+
+    .section-head { margin-bottom: 16px; }
+    .section-head p { margin: 8px 0 0; color: var(--muted); max-width: 860px; line-height: 1.6; }
+
+    .metrics-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); margin-bottom: 16px; }
+    .accordion-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    .accordion-grid.stack { grid-template-columns: 1fr; }
+    .kanban { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+    .editor-grid,
+    .report-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+    .table-grid { grid-template-columns: 1.05fr 0.95fr; }
+
+    .info-accordion {
+      background: rgba(16, 39, 66, 0.95);
+      padding: 14px 16px;
+    }
+
+    .info-accordion summary {
+      cursor: pointer;
+      list-style: none;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    .info-accordion summary::-webkit-details-marker { display: none; }
+    .info-accordion .content-wrap { margin-top: 12px; }
+
+    .team-list,
+    .phase-list,
+    .plain-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .task-card,
+    .metric-card {
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.05);
+    }
+
+    .task-card strong {
+      display: block;
+      margin-bottom: 6px;
+    }
+
+    .editable {
+      min-height: 180px;
+      padding: 14px;
+      background: rgba(255, 255, 255, 0.05);
+      border-style: dashed;
+      color: var(--text);
+      outline: none;
+      white-space: pre-wrap;
+      line-height: 1.65;
+    }
+
+    .editable:empty::before {
+      content: attr(data-placeholder);
+      color: rgba(182, 200, 219, 0.65);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 14px;
+    }
+
+    th, td {
+      text-align: left;
+      padding: 10px 8px;
+      vertical-align: top;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    th {
+      color: var(--gold);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    td { color: var(--muted); line-height: 1.55; }
+
+    .legend {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .g { background: var(--green); }
+    .b { background: var(--blue); }
+    .v { background: var(--violet); }
+    .r { background: var(--red); }
+
+    .footer-note {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    @media (max-width: 1180px) {
+      .hero-meta,
+      .metrics-grid,
+      .accordion-grid,
+      .kanban,
+      .editor-grid,
+      .report-grid,
+      .table-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 760px) {
+      .topbar,
+      .carousel-topbar,
+      .hero-meta,
+      .metrics-grid,
+      .accordion-grid,
+      .kanban,
+      .editor-grid,
+      .report-grid,
+      .table-grid {
+        grid-template-columns: 1fr;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <nav class="topbar">
+      <div>
+        <strong>Business Engine Dashboard</strong>
+        <div class="footer-note">Lean + Agile operating view for the Filipino functional nutrition brand.</div>
+      </div>
+      <div class="mini-links">
+        <a class="chip-link" href="./index.html">Back to Index</a>
+        <a class="chip-link" href="./filipino-wellness-bakery-presentation.html">Open Brand Presentation</a>
+      </div>
+    </nav>
+
+    <header class="hero">
+      <span class="eyebrow">Business Engine (Deploy & Create Value)</span>
+      <h1>Dashboard for roadmap, tasking, reporting, and weekly execution.</h1>
+      <p>
+        This page is designed to help us run the business with lean and agile discipline. The goal
+        is not only to have ideas, but to see what phase we are in, who owns what, what the next
+        deliverables are, what is blocked, what is being validated, and what should be reported
+        every week.
+      </p>
+
+      <div class="hero-meta">
+        <div>
+          <strong>Current Operating Goal</strong>
+          <span>Validate MVP demand, refine winning flavors, and prove repeat purchase behavior.</span>
+        </div>
+        <div>
+          <strong>Cadence</strong>
+          <span>Weekly sprint review, biweekly roadmap check, monthly metrics review.</span>
+        </div>
+        <div>
+          <strong>Primary Decision Lens</strong>
+          <span>Customer validation first, then system stability, then scale readiness.</span>
+        </div>
+        <div>
+          <strong>Core Output</strong>
+          <span>Clear owners, visible progress, useful reporting, and faster decision-making.</span>
+        </div>
+      </div>
+    </header>
+
+    <div class="carousel-shell" data-carousel="dashboard">
+      <div class="carousel-topbar">
+        <div class="carousel-status">
+          <span class="eyebrow">Dashboard Flow</span>
+          <strong data-carousel-status>Section 1 of 5</strong>
+        </div>
+        <div class="carousel-actions">
+          <button class="carousel-arrow" type="button" data-carousel-prev>Previous</button>
+          <button class="carousel-arrow" type="button" data-carousel-next>Next</button>
+        </div>
+      </div>
+
+      <div class="carousel-tabs">
+        <button class="carousel-tab" type="button" data-carousel-jump="0">Foundations</button>
+        <button class="carousel-tab" type="button" data-carousel-jump="1">Teams</button>
+        <button class="carousel-tab" type="button" data-carousel-jump="2">Roadmap</button>
+        <button class="carousel-tab" type="button" data-carousel-jump="3">Sprint Board</button>
+        <button class="carousel-tab" type="button" data-carousel-jump="4">Reporting</button>
+      </div>
+
+      <main>
+        <section class="carousel-panel is-active">
+          <div class="section-head">
+            <h2>Operating Foundations</h2>
+            <p>
+              This dashboard breaks the business into executive layers: phase, team, sprint work,
+              reporting, and decision logs. Each layer should answer one question clearly.
+            </p>
+          </div>
+
+          <div class="metrics-grid">
+            <article class="metric-card">
+              <strong>Phase</strong>
+              <p>What stage are we in right now, and what proves we are ready to move forward?</p>
+            </article>
+            <article class="metric-card">
+              <strong>Team</strong>
+              <p>Who owns each function, and what are they responsible for this week?</p>
+            </article>
+            <article class="metric-card">
+              <strong>Sprint Work</strong>
+              <p>What is now, next, blocked, and validated in the current sprint?</p>
+            </article>
+            <article class="metric-card">
+              <strong>Reporting</strong>
+              <p>What metrics moved, what was decided, and what needs escalation?</p>
+            </article>
+          </div>
+
+          <div class="accordion-grid">
+            <details class="info-accordion" open>
+              <summary>How to use this dashboard properly</summary>
+              <div class="content-wrap panel-copy">
+                Use the phase view for direction, the team view for ownership, the sprint board for
+                execution, and the reporting section for decision-making. Do not mix strategic
+                ideas, tasks, and metrics into one messy list.
+              </div>
+            </details>
+            <details class="info-accordion">
+              <summary>What should be updated weekly</summary>
+              <div class="content-wrap">
+                <ul class="plain-list">
+                  <li>Top priorities for the week</li>
+                  <li>New blockers or risks</li>
+                  <li>Customer feedback and insights</li>
+                  <li>Metrics snapshot</li>
+                  <li>Key decisions made</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section class="carousel-panel">
+          <div class="section-head">
+            <h2>Business Engine Team Map</h2>
+            <p>
+              This turns the business into functional lanes so work can be assigned, tracked, and
+              reported without confusion.
+            </p>
+          </div>
+
+          <div class="accordion-grid">
+            <details class="info-accordion" open>
+              <summary>Brand & Marketing</summary>
+              <div class="content-wrap">
+                <p class="panel-copy">Own the brand message, demand generation, and community growth.</p>
+                <ul class="team-list">
+                  <li>Content calendar</li>
+                  <li>Influencer or partner outreach</li>
+                  <li>Audience feedback themes</li>
+                </ul>
+              </div>
+            </details>
+            <details class="info-accordion">
+              <summary>Product Development</summary>
+              <div class="content-wrap">
+                <p class="panel-copy">Own formulation, macros, taste testing, and product iteration.</p>
+                <ul class="team-list">
+                  <li>Flavor test results</li>
+                  <li>Recipe revisions</li>
+                  <li>Shelf-life or packaging notes</li>
+                </ul>
+              </div>
+            </details>
+            <details class="info-accordion">
+              <summary>Operations & Supply Chain</summary>
+              <div class="content-wrap">
+                <p class="panel-copy">Own sourcing, inventory, vendor coordination, and quality control.</p>
+                <ul class="team-list">
+                  <li>Supplier status</li>
+                  <li>Inventory snapshot</li>
+                  <li>Risks and bottlenecks</li>
+                </ul>
+              </div>
+            </details>
+            <details class="info-accordion">
+              <summary>Sales & Distribution</summary>
+              <div class="content-wrap">
+                <p class="panel-copy">Own pilots, outreach, channels, and repeatability signals.</p>
+                <ul class="team-list">
+                  <li>Channel conversations</li>
+                  <li>Pilot performance</li>
+                  <li>Repeat order signals</li>
+                </ul>
+              </div>
+            </details>
+            <details class="info-accordion">
+              <summary>Creative Media</summary>
+              <div class="content-wrap">
+                <p class="panel-copy">Own visuals, storytelling, packaging direction, and creative assets.</p>
+                <ul class="team-list">
+                  <li>Content assets produced</li>
+                  <li>Packaging drafts</li>
+                  <li>Campaign concepts</li>
+                </ul>
+              </div>
+            </details>
+            <details class="info-accordion">
+              <summary>Data & AI + Finance & Strategy</summary>
+              <div class="content-wrap">
+                <p class="panel-copy">Own analytics, dashboards, automation, pricing, budget, and forecasting.</p>
+                <ul class="team-list">
+                  <li>Dashboard refresh and insights</li>
+                  <li>Margin assumptions and runway</li>
+                  <li>Decision recommendations</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section class="carousel-panel">
+          <div class="section-head">
+            <h2>Phase Roadmap</h2>
+            <p>
+              Each phase should have a narrow objective, a clear validation question, and a gate
+              before expansion.
+            </p>
+          </div>
+
+          <div class="accordion-grid stack">
+            <details class="info-accordion" open>
+              <summary>Phase 1 — Validate MVP</summary>
+              <div class="content-wrap">
+                <p class="panel-copy">Goal: prove demand, identify winning flavors, and confirm repeat purchase behavior.</p>
+                <ul class="phase-list">
+                  <li>Small-batch flavor testing</li>
+                  <li>Hospital, gym, and Filipino community pilots</li>
+                  <li>Collect structured customer feedback</li>
+                  <li>Track repeat purchase signals</li>
+                  <li>Decide which hero SKUs move forward</li>
+                </ul>
+              </div>
+            </details>
+            <details class="info-accordion">
+              <summary>Phase 2 — Systemize & Grow</summary>
+              <div class="content-wrap">
+                <p class="panel-copy">Goal: build repeatable systems so growth does not break quality or operations.</p>
+                <ul class="phase-list">
+                  <li>Create SOPs and handoff workflows</li>
+                  <li>Stabilize supply chain and inventory</li>
+                  <li>Launch Shopify, Amazon, or direct ordering</li>
+                  <li>Expand creator and community marketing</li>
+                  <li>Track monthly revenue and operational stability</li>
+                </ul>
+              </div>
+            </details>
+            <details class="info-accordion">
+              <summary>Phase 3 — Scale the Brand</summary>
+              <div class="content-wrap">
+                <p class="panel-copy">Goal: become a scalable wellness brand with stronger distribution, systems, and teams.</p>
+                <ul class="phase-list">
+                  <li>Retail expansion and national distribution</li>
+                  <li>Grow product line intentionally</li>
+                  <li>Build leadership lanes and reporting structure</li>
+                  <li>Add analytics, AI, and automation systems</li>
+                  <li>Strengthen brand ecosystem and partnerships</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section class="carousel-panel">
+          <div class="section-head">
+            <h2>Sprint Control Board</h2>
+            <p>
+              Keep the list tight and only track work that directly matters to the current phase.
+            </p>
+          </div>
+
+          <div class="kanban">
+            <article class="task-card">
+              <strong>Now</strong>
+              <span>Finalize MVP flavor shortlist, set up pilot feedback form, confirm first three pilot locations.</span>
+            </article>
+            <article class="task-card">
+              <strong>Next</strong>
+              <span>Draft lean packaging direction and build the initial unit economics model.</span>
+            </article>
+            <article class="task-card">
+              <strong>Blocked / Risks</strong>
+              <span>Ingredient sourcing uncertainty and claims or labeling questions.</span>
+            </article>
+            <article class="task-card">
+              <strong>Validated / Done</strong>
+              <span>Core concept direction confirmed and phase framework defined.</span>
+            </article>
+          </div>
+
+          <div class="accordion-grid" style="margin-top:12px;">
+            <details class="info-accordion" open>
+              <summary>What belongs on the sprint board</summary>
+              <div class="content-wrap">
+                <ul class="plain-list">
+                  <li>Only phase-relevant execution items</li>
+                  <li>Clearly owned tasks</li>
+                  <li>Visible blockers</li>
+                  <li>Validated learning, not just busywork</li>
+                </ul>
+              </div>
+            </details>
+            <details class="info-accordion">
+              <summary>What should not live here</summary>
+              <div class="content-wrap">
+                <ul class="plain-list">
+                  <li>Long-term brainstorming</li>
+                  <li>Unowned ideas</li>
+                  <li>Metrics without action</li>
+                  <li>Random admin notes</li>
+                </ul>
+              </div>
+            </details>
+          </div>
+        </section>
+
+        <section class="carousel-panel">
+          <div class="section-head">
+            <h2>Reporting, Updates, and Decision Tools</h2>
+            <p>
+              Use this section as the weekly operating layer. These editable boxes save in the
+              browser so you can keep a running dashboard without editing the HTML each time.
+            </p>
+          </div>
+
+          <div class="table-grid">
+            <details class="info-accordion" open>
+              <summary>Work Breakdown Structure</summary>
+              <div class="content-wrap">
+                <table>
+                  <thead>
+                    <tr>
+                      <th>Layer</th>
+                      <th>Example</th>
+                      <th>Owner</th>
+                      <th>Success Measure</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td>Objective</td>
+                      <td>Validate Phase 1 MVP demand</td>
+                      <td>Founders</td>
+                      <td>Repeat customers and strong pilot response</td>
+                    </tr>
+                    <tr>
+                      <td>Initiative</td>
+                      <td>Flavor testing pilot</td>
+                      <td>Product Dev + Sales</td>
+                      <td>Top flavor ranking and response</td>
+                    </tr>
+                    <tr>
+                      <td>Project</td>
+                      <td>Hospital or gym activation</td>
+                      <td>Sales & Distribution</td>
+                      <td>Signed pilot location and turnout</td>
+                    </tr>
+                    <tr>
+                      <td>Task</td>
+                      <td>Create tester feedback form</td>
+                      <td>Data & AI</td>
+                      <td>Structured data from every tester</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </details>
+
+            <details class="info-accordion">
+              <summary>Minimum Weekly Reporting</summary>
+              <div class="content-wrap">
+                <ul class="plain-list">
+                  <li>Brand & Marketing: content, reach, top message response</li>
+                  <li>Product Dev: batch count, scores, complaints, revisions</li>
+                  <li>Operations: supplier status, inventory risk, quality issues</li>
+                  <li>Sales: conversations, orders, repeat orders, channel feedback</li>
+                  <li>Creative: assets produced, packaging progress</li>
+                  <li>Data & AI: dashboard refresh, insights, automation ideas</li>
+                  <li>Finance: spend, margin assumptions, cash runway</li>
+                </ul>
+                <div class="legend">
+                  <span><i class="dot g"></i> On track</span>
+                  <span><i class="dot b"></i> In progress</span>
+                  <span><i class="dot v"></i> Needs decision</span>
+                  <span><i class="dot r"></i> Blocked / at risk</span>
+                </div>
+              </div>
+            </details>
+          </div>
+
+          <div class="editor-grid" style="margin-top:12px;">
+            <div class="editable" contenteditable="true" data-key="leadership-update" data-placeholder="Weekly Leadership Update:
+- Wins
+- Major progress
+- What moved the phase goal"></div>
+            <div class="editable" contenteditable="true" data-key="risks-blockers" data-placeholder="Risks, Blockers, Asks:
+- What is slowing the team down
+- What decisions are needed"></div>
+            <div class="editable" contenteditable="true" data-key="next-7-days" data-placeholder="Next 7 Days:
+- Most important tasks
+- Only work that supports the current phase"></div>
+          </div>
+
+          <div class="report-grid" style="margin-top:12px;">
+            <div class="editable" contenteditable="true" data-key="decision-log" data-placeholder="Decision Log:
+- What was decided
+- Why it was decided
+- What changes because of it"></div>
+            <div class="editable" contenteditable="true" data-key="customer-insights" data-placeholder="Customer Insight Log:
+- What testers are saying
+- Repeated themes
+- Behavior changes"></div>
+            <div class="editable" contenteditable="true" data-key="metrics-snapshot" data-placeholder="Metrics Snapshot:
+- Total testers
+- Repeat purchase interest
+- Top flavor
+- Pilot channels confirmed"></div>
+          </div>
+
+          <p class="footer-note">
+            Recommended rhythm: Monday planning, midweek check-in, Friday sprint review, end-of-month
+            metrics summary, and phase-gate review before expanding scope.
+          </p>
+        </section>
+      </main>
+    </div>
+  </div>
+
+  <script>
+    const setupCarousel = (root) => {
+      const panels = Array.from(root.querySelectorAll(".carousel-panel"));
+      const tabs = Array.from(root.querySelectorAll("[data-carousel-jump]"));
+      const prev = root.querySelector("[data-carousel-prev]");
+      const next = root.querySelector("[data-carousel-next]");
+      const status = root.querySelector("[data-carousel-status]");
+      let index = 0;
+
+      const render = () => {
+        panels.forEach((panel, panelIndex) => {
+          panel.classList.toggle("is-active", panelIndex === index);
+        });
+
+        tabs.forEach((tab, tabIndex) => {
+          const active = tabIndex === index;
+          tab.classList.toggle("is-active", active);
+          tab.setAttribute("aria-pressed", active ? "true" : "false");
+        });
+
+        if (status) {
+          status.textContent = `Section ${index + 1} of ${panels.length}`;
+        }
+
+        prev.disabled = index === 0;
+        next.disabled = index === panels.length - 1;
+      };
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          index = Number(tab.dataset.carouselJump);
+          render();
+        });
+      });
+
+      prev.addEventListener("click", () => {
+        if (index > 0) {
+          index -= 1;
+          render();
+        }
+      });
+
+      next.addEventListener("click", () => {
+        if (index < panels.length - 1) {
+          index += 1;
+          render();
+        }
+      });
+
+      render();
+    };
+
+    document.querySelectorAll("[data-carousel]").forEach(setupCarousel);
+
+    document.querySelectorAll(".editable").forEach((node) => {
+      const key = `business-engine:${node.dataset.key}`;
+      const savedValue = localStorage.getItem(key);
+      if (savedValue) {
+        node.textContent = savedValue;
+      }
+
+      node.addEventListener("input", () => {
+        localStorage.setItem(key, node.textContent);
+      });
+    });
+  </script>
+</body>
+</html>
