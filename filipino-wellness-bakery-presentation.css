@@ -95,6 +95,12 @@ body::before {
   color: #d9e8b0;
   text-decoration: none;
   border-bottom: 1px solid rgba(217, 232, 176, 0.3);
+  transition: color 0.18s ease, border-color 0.18s ease;
+}
+
+.chat-link:hover {
+  color: #fff0b5;
+  border-color: rgba(255, 240, 181, 0.65);
 }
 
 .hero-grid {
@@ -274,11 +280,28 @@ h3 {
   padding: 0.85rem 1rem;
   cursor: pointer;
   font: inherit;
+  transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
 }
 
 .carousel-arrow:disabled {
   opacity: 0.4;
   cursor: not-allowed;
+}
+
+.carousel-arrow:hover:not(:disabled),
+.carousel-tab:hover {
+  transform: translateY(-2px);
+  background: rgba(240, 197, 65, 0.12);
+  border-color: rgba(240, 197, 65, 0.32);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.18);
+}
+
+.carousel-arrow:focus-visible,
+.carousel-tab:focus-visible,
+.chat-link:focus-visible,
+.info-accordion summary:focus-visible {
+  outline: 2px solid rgba(240, 197, 65, 0.72);
+  outline-offset: 3px;
 }
 
 .carousel-tabs {
@@ -467,10 +490,16 @@ h3 {
   font-family: "Fraunces", "Iowan Old Style", "Georgia", serif;
   font-size: 1.15rem;
   list-style: none;
+  transition: color 0.18s ease, transform 0.18s ease;
 }
 
 .info-accordion summary::-webkit-details-marker {
   display: none;
+}
+
+.info-accordion summary:hover {
+  color: #fff0b5;
+  transform: translateX(3px);
 }
 
 .info-accordion p,

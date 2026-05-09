@@ -77,6 +77,16 @@
       font-weight: bold;
       color: inherit;
       cursor: pointer;
+      transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .chip-link:hover,
+    .carousel-tab:hover,
+    .carousel-arrow:hover:not(:disabled) {
+      transform: translateY(-2px);
+      background: rgba(214, 177, 101, 0.12);
+      border-color: rgba(214, 177, 101, 0.38);
+      box-shadow: 0 12px 28px rgba(0, 0, 0, 0.2);
     }
 
     .hero {
@@ -200,10 +210,21 @@
       list-style: none;
       font-size: 18px;
       font-weight: bold;
+      transition: color 0.18s ease, transform 0.18s ease;
     }
 
     .info-accordion summary::-webkit-details-marker { display: none; }
+    .info-accordion summary:hover { color: #fff0b5; transform: translateX(3px); }
     .info-accordion .content-wrap { margin-top: 12px; }
+
+    .chip-link:focus-visible,
+    .carousel-tab:focus-visible,
+    .carousel-arrow:focus-visible,
+    .info-accordion summary:focus-visible,
+    .editable:focus-visible {
+      outline: 2px solid rgba(214, 177, 101, 0.72);
+      outline-offset: 3px;
+    }
 
     .team-list,
     .phase-list,
