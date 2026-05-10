@@ -388,6 +388,73 @@
       margin-top: 14px;
     }
 
+    .diagram-board,
+    .workflow-board,
+    .phase-strip {
+      display: grid;
+      gap: 12px;
+    }
+
+    .diagram-board {
+      grid-template-columns: 0.9fr 1.4fr 0.9fr;
+      margin-top: 12px;
+    }
+
+    .diagram-panel,
+    .workflow-step,
+    .phase-box {
+      padding: 16px;
+      border-radius: 22px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow);
+    }
+
+    .diagram-panel {
+      min-height: 100%;
+    }
+
+    .diagram-panel h3,
+    .workflow-step h3,
+    .phase-box h3 {
+      margin-bottom: 10px;
+    }
+
+    .diagram-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .workflow-board {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .workflow-step {
+      background: linear-gradient(180deg, rgba(26, 51, 18, 0.84), rgba(12, 19, 10, 0.82));
+    }
+
+    .workflow-step span,
+    .phase-box span {
+      display: inline-block;
+      margin-bottom: 8px;
+      color: var(--gold);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .phase-strip {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 14px;
+    }
+
+    .phase-box {
+      background: linear-gradient(180deg, rgba(18, 42, 71, 0.84), rgba(10, 16, 28, 0.82));
+    }
+
     .fit-card {
       background: linear-gradient(180deg, rgba(22, 17, 34, 0.9), rgba(10, 10, 18, 0.86));
     }
@@ -412,7 +479,10 @@
       .summary-grid,
       .accordion-grid,
       .team-grid,
-      .fit-grid {
+      .fit-grid,
+      .diagram-board,
+      .workflow-board,
+      .phase-strip {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
@@ -425,7 +495,10 @@
       .summary-grid,
       .accordion-grid,
       .team-grid,
-      .fit-grid {
+      .fit-grid,
+      .diagram-board,
+      .workflow-board,
+      .phase-strip {
         grid-template-columns: 1fr;
         flex-direction: column;
         align-items: flex-start;
@@ -537,11 +610,12 @@
 
       <div class="carousel-tabs">
         <button class="carousel-tab" type="button" data-carousel-jump="0">How It Started</button>
-        <button class="carousel-tab" type="button" data-carousel-jump="1">Customer</button>
-        <button class="carousel-tab" type="button" data-carousel-jump="2">Phase 1</button>
-        <button class="carousel-tab" type="button" data-carousel-jump="3">Operating Model</button>
-        <button class="carousel-tab" type="button" data-carousel-jump="4">Team Fit</button>
-        <button class="carousel-tab" type="button" data-carousel-jump="5">Invitation</button>
+        <button class="carousel-tab" type="button" data-carousel-jump="1">Visual Framework</button>
+        <button class="carousel-tab" type="button" data-carousel-jump="2">Customer</button>
+        <button class="carousel-tab" type="button" data-carousel-jump="3">Phase 1</button>
+        <button class="carousel-tab" type="button" data-carousel-jump="4">Operating Model</button>
+        <button class="carousel-tab" type="button" data-carousel-jump="5">Team Fit</button>
+        <button class="carousel-tab" type="button" data-carousel-jump="6">Invitation</button>
       </div>
 
       <main>
@@ -592,6 +666,94 @@
                 </p>
               </div>
             </details>
+          </div>
+        </section>
+
+        <section class="carousel-panel">
+          <div class="section-head">
+            <h2>Visual framework</h2>
+            <p>
+              This recreates the uploaded diagram in a cleaner, brand-neutral format so the team
+              can understand the business model at a glance.
+            </p>
+          </div>
+
+          <div class="diagram-board">
+            <article class="diagram-panel">
+              <span class="team-tag">Initial Foundation</span>
+              <h3>Why this concept is worth testing</h3>
+              <ul class="diagram-list">
+                <li>Represent Filipino culture through health and wellness</li>
+                <li>Serve Asian and Asian-American health-conscious consumers</li>
+                <li>Start with bars, drinks, and functional product formats</li>
+                <li>Differentiate with flavor, culture, and cleaner positioning</li>
+              </ul>
+            </article>
+
+            <article class="diagram-panel">
+              <span class="team-tag">Workflow / System</span>
+              <div class="workflow-board">
+                <div class="workflow-step">
+                  <span>1</span>
+                  <h3>Research</h3>
+                  <p>Validate the market, audience, and competitor landscape.</p>
+                </div>
+                <div class="workflow-step">
+                  <span>2</span>
+                  <h3>Product Build</h3>
+                  <p>Develop hero products, flavor direction, and nutrition positioning.</p>
+                </div>
+                <div class="workflow-step">
+                  <span>3</span>
+                  <h3>Sourcing</h3>
+                  <p>Secure ingredients, production options, and quality standards.</p>
+                </div>
+                <div class="workflow-step">
+                  <span>4</span>
+                  <h3>Distribution</h3>
+                  <p>Test local channels, pilots, and direct customer access points.</p>
+                </div>
+                <div class="workflow-step">
+                  <span>5</span>
+                  <h3>Marketing</h3>
+                  <p>Build community, feedback loops, and clear brand positioning.</p>
+                </div>
+                <div class="workflow-step">
+                  <span>6</span>
+                  <h3>Optimize</h3>
+                  <p>Improve products, systems, and channel performance using real data.</p>
+                </div>
+              </div>
+            </article>
+
+            <article class="diagram-panel">
+              <span class="team-tag">Opportunity</span>
+              <h3>Where this could go</h3>
+              <ul class="diagram-list">
+                <li>Retail expansion into gyms, health stores, and specialty shops</li>
+                <li>E-commerce through direct ordering and marketplaces</li>
+                <li>Brand partnerships with fitness and wellness creators</li>
+                <li>Longer-term expansion into a broader lifestyle ecosystem</li>
+              </ul>
+            </article>
+          </div>
+
+          <div class="phase-strip">
+            <div class="phase-box">
+              <span>Phase 1</span>
+              <h3>Validate & Learn</h3>
+              <p>Test product-market fit, flavor response, and repeat interest.</p>
+            </div>
+            <div class="phase-box">
+              <span>Phase 2</span>
+              <h3>Systemize & Grow</h3>
+              <p>Document workflows, strengthen operations, and grow reliable channels.</p>
+            </div>
+            <div class="phase-box">
+              <span>Phase 3</span>
+              <h3>Scale Intentionally</h3>
+              <p>Expand only after the business proves real demand and operational readiness.</p>
+            </div>
           </div>
         </section>
 
