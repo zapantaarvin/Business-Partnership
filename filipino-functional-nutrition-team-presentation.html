@@ -388,11 +388,419 @@
       margin-top: 14px;
     }
 
-    .diagram-board,
-    .workflow-board,
-    .phase-strip {
+    .icon-strip,
+    .audience-icons,
+    .phase-icons {
       display: grid;
       gap: 12px;
+    }
+
+    .icon-strip {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-bottom: 14px;
+    }
+
+    .audience-icons,
+    .phase-icons {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-bottom: 14px;
+    }
+
+    .icon-card {
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow);
+      min-height: 150px;
+    }
+
+    .icon-card .icon {
+      font-size: 28px;
+      line-height: 1;
+      margin-bottom: 12px;
+      display: block;
+    }
+
+    .icon-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .icon-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
+    }
+
+    .diagram-board,
+    .workflow-board,
+    .phase-strip,
+    .poster-top,
+    .poster-middle,
+    .poster-bottom,
+    .mini-product-row,
+    .mini-metrics {
+      display: grid;
+      gap: 12px;
+    }
+
+    .poster-scene {
+      margin-top: 12px;
+      padding: 16px;
+      border-radius: 24px;
+      background: rgba(3, 6, 4, 0.92);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+    }
+
+    .poster-top {
+      grid-template-columns: 1.15fr 1.35fr;
+      margin-bottom: 12px;
+    }
+
+    .brand-lockup,
+    .brand-story,
+    .poster-panel {
+      padding: 18px;
+      border-radius: 22px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .brand-lockup {
+      background: linear-gradient(135deg, rgba(7, 13, 8, 0.96), rgba(13, 19, 10, 0.94));
+    }
+
+    .brand-mark {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
+
+    .sun-mark {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      background: radial-gradient(circle, #f0c541 0 34%, #c99918 35% 42%, transparent 43% 100%);
+      position: relative;
+      box-shadow: 0 0 0 10px rgba(240, 197, 65, 0.08);
+      flex: 0 0 auto;
+    }
+
+    .sun-mark::before {
+      content: "";
+      position: absolute;
+      inset: -12px;
+      background:
+        conic-gradient(from 0deg,
+          transparent 0 10deg,
+          rgba(240, 197, 65, 0.92) 10deg 18deg,
+          transparent 18deg 45deg,
+          rgba(240, 197, 65, 0.92) 45deg 53deg,
+          transparent 53deg 80deg,
+          rgba(240, 197, 65, 0.92) 80deg 88deg,
+          transparent 88deg 115deg,
+          rgba(240, 197, 65, 0.92) 115deg 123deg,
+          transparent 123deg 150deg,
+          rgba(240, 197, 65, 0.92) 150deg 158deg,
+          transparent 158deg 185deg,
+          rgba(240, 197, 65, 0.92) 185deg 193deg,
+          transparent 193deg 220deg,
+          rgba(240, 197, 65, 0.92) 220deg 228deg,
+          transparent 228deg 255deg,
+          rgba(240, 197, 65, 0.92) 255deg 263deg,
+          transparent 263deg 290deg,
+          rgba(240, 197, 65, 0.92) 290deg 298deg,
+          transparent 298deg 325deg,
+          rgba(240, 197, 65, 0.92) 325deg 333deg,
+          transparent 333deg 360deg);
+      border-radius: 50%;
+      opacity: 0.95;
+    }
+
+    .brand-lockup h3 {
+      font-size: clamp(34px, 5vw, 56px);
+      letter-spacing: -0.03em;
+      line-height: 0.96;
+    }
+
+    .brand-lockup p {
+      margin: 8px 0 0;
+      color: #f0c541;
+      font-size: 15px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-story {
+      background: linear-gradient(135deg, rgba(8, 12, 8, 0.96), rgba(18, 31, 11, 0.92));
+    }
+
+    .brand-story h3 {
+      font-size: 34px;
+      margin-bottom: 10px;
+    }
+
+    .brand-story .subline {
+      color: #b8dc57;
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .mini-product-row {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 14px;
+    }
+
+    .mini-product {
+      padding: 14px;
+      border-radius: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .mini-product strong {
+      display: block;
+      font-size: 22px;
+      line-height: 1;
+    }
+
+    .mini-product span {
+      display: block;
+      margin-top: 8px;
+      color: rgba(255, 255, 255, 0.82);
+      line-height: 1.45;
+      font-size: 13px;
+    }
+
+    .mini-product.ube {
+      background: linear-gradient(180deg, rgba(95, 51, 149, 0.92), rgba(33, 21, 48, 0.92));
+    }
+
+    .mini-product.turon {
+      background: linear-gradient(180deg, rgba(123, 71, 22, 0.92), rgba(45, 26, 8, 0.92));
+    }
+
+    .mini-product.pandan {
+      background: linear-gradient(180deg, rgba(43, 90, 34, 0.92), rgba(12, 30, 13, 0.92));
+    }
+
+    .poster-middle {
+      grid-template-columns: 0.82fr 1.45fr 0.9fr;
+      margin-bottom: 12px;
+    }
+
+    .poster-panel {
+      background: rgba(8, 12, 8, 0.94);
+    }
+
+    .poster-panel.foundation {
+      background: linear-gradient(180deg, rgba(10, 26, 48, 0.96), rgba(6, 14, 26, 0.96));
+    }
+
+    .poster-panel.opportunity,
+    .poster-panel.impact {
+      background: linear-gradient(180deg, rgba(34, 15, 46, 0.94), rgba(13, 8, 21, 0.96));
+    }
+
+    .poster-panel h3 {
+      font-size: 28px;
+      margin-bottom: 12px;
+    }
+
+    .poster-block {
+      display: grid;
+      gap: 12px;
+    }
+
+    .poster-item {
+      display: grid;
+      grid-template-columns: 56px 1fr;
+      gap: 12px;
+      align-items: start;
+    }
+
+    .poster-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 26px;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      background: rgba(255, 255, 255, 0.06);
+    }
+
+    .poster-item strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #fff;
+    }
+
+    .poster-item span {
+      display: block;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 14px;
+    }
+
+    .system-core {
+      background: linear-gradient(180deg, rgba(19, 52, 6, 0.92), rgba(7, 14, 7, 0.96));
+    }
+
+    .system-flow {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .system-node {
+      padding: 12px 8px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      text-align: center;
+    }
+
+    .system-node .node-icon {
+      width: 62px;
+      height: 62px;
+      margin: 0 auto 10px;
+      border-radius: 50%;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      background: rgba(149, 184, 61, 0.18);
+      border: 1px solid rgba(149, 184, 61, 0.38);
+    }
+
+    .system-node strong {
+      display: block;
+      font-size: 13px;
+      color: #f7f6e4;
+      line-height: 1.3;
+      text-transform: uppercase;
+    }
+
+    .system-node span {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+
+    .feedback-loop {
+      margin-top: 12px;
+      padding: 12px 16px;
+      border-radius: 18px;
+      border: 1px dashed rgba(149, 184, 61, 0.4);
+      color: #d5e8a7;
+      text-align: center;
+      font-size: 14px;
+      line-height: 1.55;
+    }
+
+    .poster-bottom {
+      grid-template-columns: 1.08fr 0.98fr 0.94fr;
+    }
+
+    .poster-panel.gtm {
+      background: linear-gradient(180deg, rgba(10, 26, 48, 0.96), rgba(6, 14, 26, 0.96));
+    }
+
+    .poster-panel.revenue {
+      background: linear-gradient(180deg, rgba(46, 35, 5, 0.96), rgba(17, 14, 8, 0.96));
+    }
+
+    .phase-track {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .track-card {
+      padding: 12px;
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .track-card strong {
+      display: block;
+      margin-bottom: 6px;
+      color: #7eb7ff;
+      text-transform: uppercase;
+      font-size: 12px;
+      letter-spacing: 0.08em;
+    }
+
+    .track-card span {
+      display: block;
+      color: var(--muted);
+      line-height: 1.5;
+      font-size: 13px;
+    }
+
+    .revenue-list {
+      margin: 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
+    .revenue-goal {
+      margin-top: 14px;
+      padding: 16px;
+      border-radius: 50%;
+      width: 180px;
+      height: 180px;
+      display: grid;
+      place-items: center;
+      text-align: center;
+      border: 2px solid rgba(240, 197, 65, 0.5);
+      color: #ffd961;
+      font-weight: 800;
+      margin-inline: auto;
+    }
+
+    .mini-metrics {
+      grid-template-columns: repeat(5, minmax(0, 1fr));
+      margin-top: 12px;
+    }
+
+    .metric-dot {
+      padding: 12px 8px;
+      border-radius: 18px;
+      text-align: center;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .metric-dot .poster-icon {
+      margin: 0 auto 8px;
+    }
+
+    .metric-dot span {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
     }
 
     .diagram-board {
@@ -477,6 +885,15 @@
       .hero-grid,
       .hero-meta,
       .summary-grid,
+      .icon-strip,
+      .audience-icons,
+      .phase-icons,
+      .poster-top,
+      .poster-middle,
+      .poster-bottom,
+      .mini-product-row,
+      .mini-metrics,
+      .phase-track,
       .accordion-grid,
       .team-grid,
       .fit-grid,
@@ -493,6 +910,15 @@
       .hero-grid,
       .hero-meta,
       .summary-grid,
+      .icon-strip,
+      .audience-icons,
+      .phase-icons,
+      .poster-top,
+      .poster-middle,
+      .poster-bottom,
+      .mini-product-row,
+      .mini-metrics,
+      .phase-track,
       .accordion-grid,
       .team-grid,
       .fit-grid,
@@ -627,6 +1053,29 @@
             </p>
           </div>
 
+          <div class="icon-strip">
+            <article class="icon-card">
+              <span class="icon">👨‍👩‍👧</span>
+              <strong>Real People</strong>
+              <p>The idea became real after meeting Christian's family and seeing authentic potential.</p>
+            </article>
+            <article class="icon-card">
+              <span class="icon">🌏</span>
+              <strong>Culture</strong>
+              <p>Filipino identity is not a side note. It is part of the value proposition.</p>
+            </article>
+            <article class="icon-card">
+              <span class="icon">💪</span>
+              <strong>Wellness</strong>
+              <p>The concept fits a category where people already spend on energy and performance.</p>
+            </article>
+            <article class="icon-card">
+              <span class="icon">✨</span>
+              <strong>White Space</strong>
+              <p>Many nutrition brands feel generic. Flavor and story give this one an edge.</p>
+            </article>
+          </div>
+
           <div class="accordion-grid">
             <details class="info-accordion">
               <summary>The personal spark</summary>
@@ -674,85 +1123,219 @@
             <h2>Visual framework</h2>
             <p>
               This recreates the uploaded diagram in a cleaner, brand-neutral format so the team
-              can understand the business model at a glance.
+              can understand the business model at a glance without relying on a finalized name.
             </p>
           </div>
 
-          <div class="diagram-board">
-            <article class="diagram-panel">
-              <span class="team-tag">Initial Foundation</span>
-              <h3>Why this concept is worth testing</h3>
-              <ul class="diagram-list">
-                <li>Represent Filipino culture through health and wellness</li>
-                <li>Serve Asian and Asian-American health-conscious consumers</li>
-                <li>Start with bars, drinks, and functional product formats</li>
-                <li>Differentiate with flavor, culture, and cleaner positioning</li>
-              </ul>
-            </article>
-
-            <article class="diagram-panel">
-              <span class="team-tag">Workflow / System</span>
-              <div class="workflow-board">
-                <div class="workflow-step">
-                  <span>1</span>
-                  <h3>Research</h3>
-                  <p>Validate the market, audience, and competitor landscape.</p>
-                </div>
-                <div class="workflow-step">
-                  <span>2</span>
-                  <h3>Product Build</h3>
-                  <p>Develop hero products, flavor direction, and nutrition positioning.</p>
-                </div>
-                <div class="workflow-step">
-                  <span>3</span>
-                  <h3>Sourcing</h3>
-                  <p>Secure ingredients, production options, and quality standards.</p>
-                </div>
-                <div class="workflow-step">
-                  <span>4</span>
-                  <h3>Distribution</h3>
-                  <p>Test local channels, pilots, and direct customer access points.</p>
-                </div>
-                <div class="workflow-step">
-                  <span>5</span>
-                  <h3>Marketing</h3>
-                  <p>Build community, feedback loops, and clear brand positioning.</p>
-                </div>
-                <div class="workflow-step">
-                  <span>6</span>
-                  <h3>Optimize</h3>
-                  <p>Improve products, systems, and channel performance using real data.</p>
+          <div class="poster-scene">
+            <div class="poster-top">
+              <div class="brand-lockup">
+                <div class="brand-mark">
+                  <div class="sun-mark"></div>
+                  <div>
+                    <h3>[Brand Name Here]</h3>
+                    <p>Nourished by culture. Fueled by purpose.</p>
+                  </div>
                 </div>
               </div>
-            </article>
-
-            <article class="diagram-panel">
-              <span class="team-tag">Opportunity</span>
-              <h3>Where this could go</h3>
-              <ul class="diagram-list">
-                <li>Retail expansion into gyms, health stores, and specialty shops</li>
-                <li>E-commerce through direct ordering and marketplaces</li>
-                <li>Brand partnerships with fitness and wellness creators</li>
-                <li>Longer-term expansion into a broader lifestyle ecosystem</li>
-              </ul>
-            </article>
-          </div>
-
-          <div class="phase-strip">
-            <div class="phase-box">
-              <span>Phase 1</span>
-              <h3>Validate & Learn</h3>
-              <p>Test product-market fit, flavor response, and repeat interest.</p>
+              <div class="brand-story">
+                <h3>Filipino-Inspired Functional Nutrition</h3>
+                <div class="subline">Real Flavors. Real Nutrition. Real Impact.</div>
+                <p>
+                  Bringing Filipino flavors into wellness through functional products designed to
+                  fuel better lives.
+                </p>
+                <div class="mini-product-row">
+                  <div class="mini-product ube">
+                    <strong>UBE</strong>
+                    <span>Protein shake concept</span>
+                  </div>
+                  <div class="mini-product turon">
+                    <strong>TURON</strong>
+                    <span>Protein bar concept</span>
+                  </div>
+                  <div class="mini-product pandan">
+                    <strong>COCONUT</strong>
+                    <span>Energy drink concept</span>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="phase-box">
-              <span>Phase 2</span>
-              <h3>Systemize & Grow</h3>
-              <p>Document workflows, strengthen operations, and grow reliable channels.</p>
+
+            <div class="poster-middle">
+              <div class="poster-panel foundation">
+                <span class="team-tag">1. Initial Foundation</span>
+                <div class="poster-block">
+                  <div class="poster-item">
+                    <div class="poster-icon">👥</div>
+                    <div>
+                      <strong>The Why</strong>
+                      <span>Represent Filipino culture through health and wellness while building a global-impact brand.</span>
+                    </div>
+                  </div>
+                  <div class="poster-item">
+                    <div class="poster-icon">🎯</div>
+                    <div>
+                      <strong>Target Market</strong>
+                      <span>Asian and Asian-American health-conscious consumers plus Filipino health care professionals.</span>
+                    </div>
+                  </div>
+                  <div class="poster-item">
+                    <div class="poster-icon">📦</div>
+                    <div>
+                      <strong>Core Products</strong>
+                      <span>Protein bars, protein drinks, and functional energy drinks.</span>
+                    </div>
+                  </div>
+                  <div class="poster-item">
+                    <div class="poster-icon">🧪</div>
+                    <div>
+                      <strong>Advantage</strong>
+                      <span>Authentic Filipino-inspired flavors with a clean wellness positioning.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="poster-panel system-core">
+                <span class="team-tag">2. Workflow / System</span>
+                <div class="system-flow">
+                  <div class="system-node">
+                    <div class="node-icon">🔍</div>
+                    <strong>Research</strong>
+                    <span>Validate audience and demand</span>
+                  </div>
+                  <div class="system-node">
+                    <div class="node-icon">🥤</div>
+                    <strong>Product</strong>
+                    <span>Build hero concepts</span>
+                  </div>
+                  <div class="system-node">
+                    <div class="node-icon">🏭</div>
+                    <strong>Sourcing</strong>
+                    <span>Secure production and quality</span>
+                  </div>
+                  <div class="system-node">
+                    <div class="node-icon">📦</div>
+                    <strong>Distribution</strong>
+                    <span>Test pilot channels</span>
+                  </div>
+                  <div class="system-node">
+                    <div class="node-icon">📣</div>
+                    <strong>Marketing</strong>
+                    <span>Build community and demand</span>
+                  </div>
+                  <div class="system-node">
+                    <div class="node-icon">📈</div>
+                    <strong>Optimize</strong>
+                    <span>Improve using real feedback</span>
+                  </div>
+                </div>
+                <div class="feedback-loop">
+                  Data and feedback loop: customer feedback, sales data, reviews, and market trends
+                  continuously improve products and operations.
+                </div>
+              </div>
+
+              <div class="poster-panel opportunity">
+                <span class="team-tag">3. Opportunities</span>
+                <div class="poster-block">
+                  <div class="poster-item">
+                    <div class="poster-icon">🛒</div>
+                    <div>
+                      <strong>Retail Expansion</strong>
+                      <span>Gyms, health stores, convenience, and specialty channels.</span>
+                    </div>
+                  </div>
+                  <div class="poster-item">
+                    <div class="poster-icon">🌐</div>
+                    <div>
+                      <strong>E-Commerce Growth</strong>
+                      <span>Direct online sales and marketplace expansion.</span>
+                    </div>
+                  </div>
+                  <div class="poster-item">
+                    <div class="poster-icon">🤝</div>
+                    <div>
+                      <strong>Brand Partnerships</strong>
+                      <span>Influencers, athletes, wellness communities, and aligned brands.</span>
+                    </div>
+                  </div>
+                  <div class="poster-item">
+                    <div class="poster-icon">🚀</div>
+                    <div>
+                      <strong>Long-Term Upside</strong>
+                      <span>A broader lifestyle ecosystem if the business earns the right to scale.</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-            <div class="phase-box">
-              <span>Phase 3</span>
-              <h3>Scale Intentionally</h3>
-              <p>Expand only after the business proves real demand and operational readiness.</p>
+
+            <div class="poster-bottom">
+              <div class="poster-panel gtm">
+                <span class="team-tag">4. Go-To-Market</span>
+                <div class="phase-track">
+                  <div class="track-card">
+                    <strong>Phase 1</strong>
+                    <span>Local validation through hospitals, health facilities, Filipino markets, and feedback loops.</span>
+                  </div>
+                  <div class="track-card">
+                    <strong>Phase 2</strong>
+                    <span>Wider distribution through gyms, health centers, regional retailers, and community partnerships.</span>
+                  </div>
+                  <div class="track-card">
+                    <strong>Phase 3</strong>
+                    <span>E-commerce and national scale through direct ordering, social commerce, and broader reach.</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="poster-panel revenue">
+                <span class="team-tag">5. Revenue + 7. Growth Roadmap</span>
+                <ul class="revenue-list">
+                  <li>Product sales across bars, drinks, and energy formats</li>
+                  <li>Subscription or bundle boxes</li>
+                  <li>Wholesale and retail partnerships</li>
+                  <li>Licensing or co-branded flavor opportunities</li>
+                </ul>
+                <div class="revenue-goal">Validate &amp; learn first before any large-scale revenue target.</div>
+              </div>
+
+              <div class="poster-panel impact">
+                <span class="team-tag">6. Impact + Key Metrics</span>
+                <div class="poster-block">
+                  <div class="poster-item">
+                    <div class="poster-icon">♥</div>
+                    <div>
+                      <strong>Impact</strong>
+                      <span>Health, culture, and community are all part of the mission.</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="mini-metrics">
+                  <div class="metric-dot">
+                    <div class="poster-icon">💵</div>
+                    <span>Revenue</span>
+                  </div>
+                  <div class="metric-dot">
+                    <div class="poster-icon">🛒</div>
+                    <span>Repeat Purchase</span>
+                  </div>
+                  <div class="metric-dot">
+                    <div class="poster-icon">⭐</div>
+                    <span>Review Score</span>
+                  </div>
+                  <div class="metric-dot">
+                    <div class="poster-icon">👤</div>
+                    <span>Customer Growth</span>
+                  </div>
+                  <div class="metric-dot">
+                    <div class="poster-icon">📊</div>
+                    <span>Margin</span>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </section>
@@ -764,6 +1347,24 @@
               The goal is to start with people who are likely to care about both function and
               flavor, rather than trying to appeal to everyone immediately.
             </p>
+          </div>
+
+          <div class="audience-icons">
+            <article class="icon-card">
+              <span class="icon">🏥</span>
+              <strong>Health Care</strong>
+              <p>Busy professionals who need practical, convenient nutrition.</p>
+            </article>
+            <article class="icon-card">
+              <span class="icon">🏋️</span>
+              <strong>Fitness</strong>
+              <p>Consumers who want better flavor than standard protein products.</p>
+            </article>
+            <article class="icon-card">
+              <span class="icon">🇵🇭</span>
+              <strong>Community</strong>
+              <p>Filipino and Asian-American audiences who value cultural connection.</p>
+            </article>
           </div>
 
           <div class="accordion-grid stack">
@@ -805,6 +1406,24 @@
             <p>
               Phase 1 is about validation, not pretending we are already a scaled business.
             </p>
+          </div>
+
+          <div class="phase-icons">
+            <article class="icon-card">
+              <span class="icon">🧪</span>
+              <strong>Test</strong>
+              <p>Learn which products and flavors people genuinely respond to.</p>
+            </article>
+            <article class="icon-card">
+              <span class="icon">🗣️</span>
+              <strong>Listen</strong>
+              <p>Capture structured feedback instead of guessing what the market wants.</p>
+            </article>
+            <article class="icon-card">
+              <span class="icon">📈</span>
+              <strong>Decide</strong>
+              <p>Use real signals to choose what earns the right to move forward.</p>
+            </article>
           </div>
 
           <div class="accordion-grid stack">
@@ -893,6 +1512,29 @@
               This is not about assigning jobs immediately. It is about identifying where someone
               could add value if they are interested in helping shape the business.
             </p>
+          </div>
+
+          <div class="icon-strip">
+            <article class="icon-card">
+              <span class="icon">📣</span>
+              <strong>Tell the Story</strong>
+              <p>Marketing, content, social, and community building.</p>
+            </article>
+            <article class="icon-card">
+              <span class="icon">🧭</span>
+              <strong>Keep It Organized</strong>
+              <p>Operations, planning, tasking, and process structure.</p>
+            </article>
+            <article class="icon-card">
+              <span class="icon">🎨</span>
+              <strong>Shape the Brand</strong>
+              <p>Design, packaging, visual identity, and presentation quality.</p>
+            </article>
+            <article class="icon-card">
+              <span class="icon">🤝</span>
+              <strong>Open Doors</strong>
+              <p>Sales, networking, outreach, and distribution relationships.</p>
+            </article>
           </div>
 
           <div class="fit-grid">
