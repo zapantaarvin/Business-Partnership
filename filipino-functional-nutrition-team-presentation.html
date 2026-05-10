@@ -233,6 +233,7 @@
 
     .hero-meta,
     .summary-grid,
+    .signal-grid,
     .fit-grid,
     .team-grid,
     .accordion-grid {
@@ -241,7 +242,7 @@
     }
 
     .hero-meta {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+      grid-template-columns: repeat(2, minmax(0, 1fr));
       margin-top: 20px;
     }
 
@@ -253,6 +254,10 @@
       background: rgba(255, 255, 255, 0.05);
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 20px;
+    }
+
+    .hero-meta div {
+      min-height: 108px;
     }
 
     .hero-meta strong,
@@ -269,6 +274,36 @@
     .summary-grid {
       grid-template-columns: repeat(3, minmax(0, 1fr));
       margin-top: 18px;
+    }
+
+    .signal-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin-top: 18px;
+    }
+
+    .signal-card {
+      padding: 16px;
+      border-radius: 20px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow);
+    }
+
+    .signal-card strong {
+      display: block;
+      margin-bottom: 8px;
+      color: var(--gold);
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .signal-card p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.55;
+      font-size: 14px;
     }
 
     .carousel-shell {
@@ -883,8 +918,8 @@
 
     @media (max-width: 1080px) {
       .hero-grid,
-      .hero-meta,
       .summary-grid,
+      .signal-grid,
       .icon-strip,
       .audience-icons,
       .phase-icons,
@@ -910,6 +945,7 @@
       .hero-grid,
       .hero-meta,
       .summary-grid,
+      .signal-grid,
       .icon-strip,
       .audience-icons,
       .phase-icons,
@@ -1006,18 +1042,18 @@
         </div>
       </div>
 
-      <div class="summary-grid">
-        <div class="summary-band">
-          <strong>Origin</strong>
-          <span>The idea came from seeing real family potential, cultural value, and a market gap at the same time.</span>
+      <div class="signal-grid">
+        <div class="signal-card">
+          <strong>Why This Matters</strong>
+          <p>Cultural relevance, real market whitespace, and a chance to build something meaningful together.</p>
         </div>
-        <div class="summary-band">
-          <strong>Approach</strong>
-          <span>Start lean, validate locally, document what works, then build systems deliberately.</span>
+        <div class="signal-card">
+          <strong>How We Start</strong>
+          <p>Validate first, stay lean, learn fast, and only scale what earns the right to grow.</p>
         </div>
-        <div class="summary-band">
-          <strong>Mindset</strong>
-          <span>This is not only about money. It is about building something meaningful and becoming capable operators.</span>
+        <div class="signal-card">
+          <strong>What We Need</strong>
+          <p>People who can help shape the idea through real skills, honest feedback, and practical execution.</p>
         </div>
       </div>
     </header>
