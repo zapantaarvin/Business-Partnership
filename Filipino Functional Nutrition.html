@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Filipino Functional Nutrition — Business Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ===== DESIGN TOKENS ===== */
+:root {
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', 'Helvetica Neue', sans-serif;
+
+  --text-xs:   clamp(0.75rem,  0.7rem  + 0.25vw, 0.875rem);
+  --text-sm:   clamp(0.875rem, 0.8rem  + 0.35vw, 1rem);
+  --text-base: clamp(1rem,     0.95rem + 0.25vw, 1.125rem);
+  --text-lg:   clamp(1.125rem, 1rem    + 0.75vw, 1.5rem);
+  --text-xl:   clamp(1.5rem,   1.2rem  + 1.25vw, 2.25rem);
+  --text-2xl:  clamp(2rem,     1.2rem  + 2.5vw,  3.5rem);
+  --text-3xl:  clamp(2.5rem,   1rem    + 4vw,    5rem);
+
+  --space-1:  0.25rem;  --space-2:  0.5rem;   --space-3:  0.75rem;
+  --space-4:  1rem;     --space-5:  1.25rem;  --space-6:  1.5rem;
+  --space-8:  2rem;     --space-10: 2.5rem;   --space-12: 3rem;
+  --space-16: 4rem;     --space-20: 5rem;     --space-24: 6rem;
+
+  --radius-sm: 0.375rem; --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;  --radius-xl: 1rem; --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+
+  --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 500ms cubic-bezier(0.16, 1, 0.3, 1);
+
+  /* Brand colors — Filipino gold, deep navy, ube purple, pandan teal */
+  --gold:          #F2A900;
+  --gold-light:    #FFD055;
+  --gold-dark:     #C07800;
+  --navy:          #0B1628;
+  --navy-mid:      #122040;
+  --navy-light:    #1A2E54;
+  --ube:           #6B3FA0;
+  --ube-light:     #9B6DD6;
+  --ube-highlight: #2A1840;
+  --pandan:        #1A8A6E;
+  --pandan-light:  #2EC4A1;
+  --pandan-highlight: #0D3D2F;
+  --cinnamon:      #C4622D;
+  --cinnamon-light:#E8875A;
+
+  /* Dark mode surfaces */
+  --color-bg:           #080E1A;
+  --color-surface:      #0E1826;
+  --color-surface-2:    #12203A;
+  --color-surface-3:    #172845;
+  --color-border:       rgba(242, 169, 0, 0.15);
+  --color-divider:      rgba(255,255,255,0.08);
+  --color-text:         #EEE8D8;
+  --color-text-muted:   #9B95A5;
+  --color-text-faint:   #50485E;
+
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.4);
+  --shadow-md: 0 4px 16px rgba(0,0,0,0.5);
+  --shadow-lg: 0 12px 40px rgba(0,0,0,0.6);
+  --shadow-gold: 0 0 30px rgba(242,169,0,0.25);
+
+  --content-default: 1100px;
+  --slide-count: 10;
+}
+
+/* ===== BASE RESET ===== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background: var(--color-bg);
+  overflow: hidden;
+  height: 100dvh;
+  width: 100vw;
+}
+img { display: block; max-width: 100%; height: auto; }
+button { cursor: pointer; background: none; border: none; font: inherit; color: inherit; }
+a { color: inherit; text-decoration: none; }
+ul { list-style: none; }
+
+/* ===== CAROUSEL SHELL ===== */
+#carousel-track {
+  display: flex;
+  width: calc(var(--slide-count) * 100vw);
+  height: 100dvh;
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.slide {
+  width: 100vw;
+  height: 100dvh;
+  flex-shrink: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: thin;
+  scrollbar-color: var(--gold-dark) transparent;
+  position: relative;
+}
+
+.slide::-webkit-scrollbar { width: 4px; }
+.slide::-webkit-scrollbar-track { background: transparent; }
+.slide::-webkit-scrollbar-thumb { background: var(--gold-dark); border-radius: 2px; }
+
+/* ===== STICKY NAVIGATION BAR ===== */
+#nav-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  height: 56px;
+  background: rgba(8, 14, 26, 0.92);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--space-6);
+  gap: var(--space-4);
+}
+
+#nav-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+#nav-logo svg { color: var(--gold); }
+
+#nav-logo span {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--gold);
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+}
+
+#nav-tabs {
+  display: flex;
+  gap: var(--space-1);
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex: 1;
+  justify-content: center;
+}
+#nav-tabs::-webkit-scrollbar { display: none; }
+
+.nav-tab {
+  font-size: var(--text-xs);
+  font-weight: 500;
+  color: var(--color-text-muted);
+  padding: var(--space-1) var(--space-3);
+  border-radius: var(--radius-full);
+  border: 1px solid transparent;
+  white-space: nowrap;
+  transition: all var(--transition);
+  cursor: pointer;
+}
+.nav-tab:hover { color: var(--color-text); background: rgba(255,255,255,0.06); }
+.nav-tab.active {
+  color: var(--navy);
+  background: var(--gold);
+  border-color: var(--gold);
+  font-weight: 600;
+}
+
+#nav-arrows {
+  display: flex;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+
+.arrow-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-text-muted);
+  transition: all var(--transition);
+  flex-shrink: 0;
+}
+.arrow-btn:hover:not(:disabled) {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: var(--navy);
+  box-shadow: var(--shadow-gold);
+}
+.arrow-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+.arrow-btn svg { width: 16px; height: 16px; pointer-events: none; }
+
+/* ===== SLIDE COUNTER ===== */
+#slide-counter {
+  position: fixed;
+  bottom: var(--space-6);
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+  display: flex;
+  gap: var(--space-2);
+  align-items: center;
+}
+.dot {
+  width: 6px; height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-text-faint);
+  transition: all var(--transition);
+  cursor: pointer;
+}
+.dot.active {
+  background: var(--gold);
+  width: 20px;
+  box-shadow: 0 0 8px rgba(242,169,0,0.6);
+}
+
+/* ===== SLIDE PADDING ===== */
+.slide-inner {
+  padding: calc(56px + var(--space-8)) var(--space-8) calc(var(--space-16) + var(--space-4));
+  max-width: var(--content-default);
+  margin: 0 auto;
+  min-height: 100%;
+}
+
+/* ===== SECTION HEADERS ===== */
+.section-label {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: var(--space-2);
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 900;
+  line-height: 1.1;
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+.section-desc {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  max-width: 72ch;
+  margin-bottom: var(--space-8);
+}
+
+/* ===== CARD ===== */
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+.card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+
+.card-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+.card-body {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+/* ===== GRID LAYOUTS ===== */
+.grid-2 { display: grid; grid-template-columns: repeat(2, 1fr); gap: var(--space-4); }
+.grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-4); }
+.grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--space-4); }
+.grid-auto { display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: var(--space-4); }
+
+@media (max-width: 768px) {
+  .grid-2, .grid-3, .grid-4, .grid-auto { grid-template-columns: 1fr; }
+  .slide-inner { padding: calc(56px + var(--space-4)) var(--space-4) calc(var(--space-12)); }
+  #nav-tabs { display: none; }
+}
+@media (max-width: 1024px) {
+  .grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ===== BADGES ===== */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: 3px var(--space-2);
+  border-radius: var(--radius-full);
+}
+.badge-gold   { background: rgba(242,169,0,0.15); color: var(--gold-light); }
+.badge-ube    { background: rgba(107,63,160,0.2); color: var(--ube-light); }
+.badge-pandan { background: rgba(26,138,110,0.2); color: var(--pandan-light); }
+.badge-red    { background: rgba(196,98,45,0.2);  color: var(--cinnamon-light); }
+
+/* ===== STAT BOXES ===== */
+.stat-box {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5) var(--space-6);
+  text-align: center;
+}
+.stat-number {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+  margin-bottom: var(--space-1);
+}
+.stat-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+/* ===== TIMELINE ===== */
+.timeline { display: flex; flex-direction: column; gap: 0; position: relative; }
+.timeline::before {
+  content: '';
+  position: absolute;
+  left: 20px;
+  top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--gold), var(--pandan));
+}
+.timeline-item {
+  display: flex;
+  gap: var(--space-4);
+  padding-bottom: var(--space-6);
+  padding-left: var(--space-2);
+  position: relative;
+}
+.timeline-dot {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--navy-mid);
+  border: 2px solid var(--gold);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: var(--text-xs);
+  font-weight: 700;
+  color: var(--gold);
+  z-index: 1;
+}
+.timeline-content { flex: 1; padding-top: var(--space-2); }
+.timeline-period {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-1);
+}
+.timeline-phase {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+.timeline-items { display: flex; flex-wrap: wrap; gap: var(--space-2); }
+.timeline-item-tag {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  padding: 2px var(--space-2);
+}
+
+/* ===== TOOL CARD ===== */
+.tool-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  transition: all var(--transition);
+}
+.tool-card:hover { border-color: var(--gold); box-shadow: 0 0 20px rgba(242,169,0,0.1); }
+.tool-icon {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-md);
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  font-size: 18px;
+}
+.tool-name { font-size: var(--text-sm); font-weight: 600; color: var(--color-text); }
+.tool-desc { font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.5; margin-top: 2px; }
+
+/* ===== STEP LIST ===== */
+.step-list { display: flex; flex-direction: column; gap: var(--space-3); }
+.step-item {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+}
+.step-num {
+  width: 28px; height: 28px;
+  border-radius: var(--radius-full);
+  background: var(--gold);
+  color: var(--navy);
+  font-size: var(--text-xs);
+  font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+}
+.step-text { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.6; flex: 1; }
+.step-text strong { color: var(--color-text); }
+
+/* ===== COMPETITOR TABLE ===== */
+.comp-table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
+.comp-table th {
+  background: var(--color-surface-2);
+  padding: var(--space-3) var(--space-4);
+  text-align: left;
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border-bottom: 1px solid var(--color-border);
+}
+.comp-table td {
+  padding: var(--space-3) var(--space-4);
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-divider);
+  vertical-align: top;
+}
+.comp-table tr:last-child td { border-bottom: none; }
+.comp-table tr.highlight td { background: rgba(107,63,160,0.1); color: var(--color-text); }
+.comp-table tr.highlight td:first-child { border-left: 2px solid var(--ube-light); }
+.check { color: #4ade80; }
+.cross { color: #f87171; }
+
+/* ===== REVENUE STREAM ===== */
+.revenue-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  padding: var(--space-4) var(--space-5);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  transition: all var(--transition);
+  margin-bottom: var(--space-3);
+}
+.revenue-item:hover { border-color: var(--gold); transform: translateX(4px); }
+.revenue-icon { font-size: 24px; flex-shrink: 0; }
+.revenue-info { flex: 1; }
+.revenue-name { font-size: var(--text-base); font-weight: 600; color: var(--color-text); }
+.revenue-desc { font-size: var(--text-xs); color: var(--color-text-muted); margin-top: 2px; }
+.revenue-pct {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+
+/* ===== IMPACT CARDS ===== */
+.impact-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6);
+  text-align: center;
+}
+.impact-icon { font-size: 36px; margin-bottom: var(--space-3); }
+.impact-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+.impact-text { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.6; }
+
+/* ===== METRIC CARD ===== */
+.metric-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+.metric-icon { font-size: 28px; flex-shrink: 0; }
+.metric-label { font-size: var(--text-xs); color: var(--color-text-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+.metric-value { font-family: var(--font-display); font-size: var(--text-lg); font-weight: 700; color: var(--color-text); }
+.metric-sub { font-size: var(--text-xs); color: var(--color-text-faint); margin-top: 2px; }
+
+/* ===== GOAL BANNER ===== */
+.goal-banner {
+  background: linear-gradient(135deg, var(--ube-highlight) 0%, var(--navy-mid) 50%, var(--pandan-highlight) 100%);
+  border: 1px solid var(--ube);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  text-align: center;
+  margin-bottom: var(--space-8);
+  position: relative;
+  overflow: hidden;
+}
+.goal-banner::before {
+  content: '✦';
+  position: absolute;
+  font-size: 200px;
+  color: rgba(242,169,0,0.03);
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+.goal-banner-title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1.1;
+  margin-bottom: var(--space-2);
+}
+.goal-banner-sub { font-size: var(--text-base); color: var(--color-text-muted); }
+
+/* ===== SLIDE-SPECIFIC BACKGROUND ACCENTS ===== */
+.slide-bg-gold-top::after {
+  content: '';
+  position: absolute;
+  top: -200px;
+  right: -200px;
+  width: 500px;
+  height: 500px;
+  background: radial-gradient(circle, rgba(242,169,0,0.06) 0%, transparent 70%);
+  pointer-events: none;
+  z-index: 0;
+}
+.slide-inner { position: relative; z-index: 1; }
+
+/* ===== HERO SLIDE SPECIFICS ===== */
+#slide-0 {
+  display: flex;
+  align-items: stretch;
+  background:
+    radial-gradient(ellipse 60% 50% at 30% 50%, rgba(107,63,160,0.12) 0%, transparent 70%),
+    radial-gradient(ellipse 50% 60% at 80% 30%, rgba(242,169,0,0.07) 0%, transparent 60%),
+    var(--color-bg);
+}
+
+.hero-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: center;
+  min-height: calc(100dvh - 56px);
+  padding-top: calc(56px + var(--space-8));
+  padding-bottom: var(--space-8);
+  padding-inline: var(--space-8);
+  max-width: var(--content-default);
+  margin: 0 auto;
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .hero-layout { grid-template-columns: 1fr; padding-inline: var(--space-4); gap: var(--space-6); }
+}
+
+.hero-eyebrow {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: var(--space-3);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.hero-eyebrow::before {
+  content: '';
+  width: 24px;
+  height: 2px;
+  background: var(--gold);
+  border-radius: 1px;
+}
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  font-weight: 900;
+  line-height: 1.05;
+  color: var(--color-text);
+  margin-bottom: var(--space-4);
+}
+.hero-headline .accent { color: var(--gold); }
+
+.hero-sub {
+  font-size: var(--text-lg);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-bottom: var(--space-8);
+  max-width: 52ch;
+}
+
+.hero-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  margin-bottom: var(--space-8);
+}
+.pill {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-1);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-full);
+  border: 1px solid;
+}
+.pill-gold  { border-color: rgba(242,169,0,0.4); color: var(--gold-light); background: rgba(242,169,0,0.08); }
+.pill-ube   { border-color: rgba(155,109,214,0.4); color: var(--ube-light); background: rgba(107,63,160,0.1); }
+.pill-pandan{ border-color: rgba(46,196,161,0.4); color: var(--pandan-light); background: rgba(26,138,110,0.1); }
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-3);
+}
+.hero-stat {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  text-align: center;
+}
+.hero-stat-num {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 900;
+  color: var(--gold);
+  line-height: 1;
+}
+.hero-stat-lbl {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  margin-top: var(--space-1);
+  line-height: 1.3;
+}
+
+.hero-img-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.hero-img {
+  width: 100%;
+  max-width: 520px;
+  border-radius: var(--radius-2xl);
+  box-shadow: var(--shadow-lg), var(--shadow-gold);
+  object-fit: cover;
+  aspect-ratio: 4/3;
+}
+
+/* ===== SLIDE TRANSITION INDICATOR ===== */
+.slide-nav-hint {
+  position: fixed;
+  bottom: calc(var(--space-6) + 24px);
+  right: var(--space-6);
+  font-size: var(--text-xs);
+  color: var(--color-text-faint);
+  display: flex;
+  align-items: center;
+  gap: var(--space-1);
+}
+
+/* ===== SWIPE HINT ===== */
+@keyframes swipe-hint {
+  0%, 100% { opacity: 0.4; transform: translateX(0); }
+  50% { opacity: 1; transform: translateX(6px); }
+}
+.swipe-anim { animation: swipe-hint 2s ease-in-out infinite; }
+
+/* ===== PROGRESS BAR ===== */
+#progress-bar {
+  position: fixed;
+  top: 56px;
+  left: 0;
+  height: 2px;
+  background: linear-gradient(to right, var(--gold), var(--ube-light));
+  z-index: 101;
+  transition: width 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 0 8px rgba(242,169,0,0.5);
+}
+
+/* ===== TWO-PANEL ===== */
+.two-panel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-6);
+  align-items: start;
+}
+@media (max-width: 768px) {
+  .two-panel { grid-template-columns: 1fr; }
+}
+
+/* ===== DIVIDER ===== */
+.divider {
+  height: 1px;
+  background: var(--color-divider);
+  margin: var(--space-6) 0;
+}
+
+/* ===== FULL WIDTH IMG ===== */
+.full-img {
+  width: 100%;
+  border-radius: var(--radius-xl);
+  object-fit: cover;
+  box-shadow: var(--shadow-md);
+  margin: var(--space-6) 0;
+}
+
+/* ===== KEYWORD HIGHLIGHT ===== */
+.hl-gold   { color: var(--gold); font-weight: 600; }
+.hl-ube    { color: var(--ube-light); font-weight: 600; }
+.hl-pandan { color: var(--pandan-light); font-weight: 600; }
+
+/* ===== CHECKLIST ===== */
+.checklist { display: flex; flex-direction: column; gap: var(--space-2); }
+.check-item {
+  display: flex;
+  gap: var(--space-3);
+  align-items: flex-start;
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+.check-item::before {
+  content: '✓';
+  color: var(--pandan-light);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  margin-top: 2px;
+  flex-shrink: 0;
+}
+
+/* ===== PHASE CARD ===== */
+.phase-card {
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  background: var(--color-surface);
+}
+.phase-num {
+  font-size: var(--text-xs);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: var(--space-1);
+}
+.phase-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: var(--space-3);
+}
+.phase-items { display: flex; flex-direction: column; gap: var(--space-1); }
+.phase-item {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-2);
+  line-height: 1.5;
+}
+.phase-item::before { content: '→'; color: var(--gold); flex-shrink: 0; }
+
+/* ===== AI SECTION ===== */
+.ai-banner {
+  background: linear-gradient(135deg, rgba(107,63,160,0.15) 0%, rgba(26,138,110,0.1) 100%);
+  border: 1px solid rgba(155,109,214,0.3);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  margin-bottom: var(--space-8);
+}
+.ai-banner-title {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 900;
+  color: var(--ube-light);
+  margin-bottom: var(--space-2);
+}
+.ai-banner-sub {
+  font-size: var(--text-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* ===== SLIDE ENTER ANIMATION ===== */
+@keyframes slide-up-fade {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.slide-inner > * {
+  animation: slide-up-fade 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.slide-inner > *:nth-child(1) { animation-delay: 0.05s; }
+.slide-inner > *:nth-child(2) { animation-delay: 0.10s; }
+.slide-inner > *:nth-child(3) { animation-delay: 0.15s; }
+.slide-inner > *:nth-child(4) { animation-delay: 0.20s; }
+.slide-inner > *:nth-child(5) { animation-delay: 0.25s; }
+.slide-inner > *:nth-child(6) { animation-delay: 0.30s; }
+.slide-inner > *:nth-child(7) { animation-delay: 0.35s; }
+.slide-inner > *:nth-child(8) { animation-delay: 0.40s; }
+</style>
+</head>
+<body>
+
+<!-- PROGRESS BAR -->
+<div id="progress-bar" style="width:10%"></div>
+
+<!-- NAV BAR -->
+<nav id="nav-bar" role="navigation" aria-label="Slide navigation">
+  <div id="nav-logo">
+    <!-- Philippine Sun SVG Logo -->
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-label="Filipino Functional Nutrition" role="img">
+      <circle cx="16" cy="16" r="6" fill="currentColor" opacity="0.9"/>
+      <line x1="16" y1="1" x2="16" y2="7" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="16" y1="25" x2="16" y2="31" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="1" y1="16" x2="7" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="25" y1="16" x2="31" y2="16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="5" y1="5" x2="9.2" y2="9.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="22.8" y1="22.8" x2="27" y2="27" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="27" y1="5" x2="22.8" y2="9.2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+      <line x1="9.2" y1="22.8" x2="5" y2="27" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+    </svg>
+    <span>FFN Blueprint</span>
+  </div>
+  <div id="nav-tabs" role="tablist">
+    <button class="nav-tab active" onclick="goTo(0)" role="tab">🏠 Home</button>
+    <button class="nav-tab" onclick="goTo(1)" role="tab">📊 Market Research</button>
+    <button class="nav-tab" onclick="goTo(2)" role="tab">⚖️ Legal Setup</button>
+    <button class="nav-tab" onclick="goTo(3)" role="tab">🧪 Products</button>
+    <button class="nav-tab" onclick="goTo(4)" role="tab">🎨 Brand Identity</button>
+    <button class="nav-tab" onclick="goTo(5)" role="tab">📣 Marketing</button>
+    <button class="nav-tab" onclick="goTo(6)" role="tab">🤝 Partnerships</button>
+    <button class="nav-tab" onclick="goTo(7)" role="tab">💰 Revenue</button>
+    <button class="nav-tab" onclick="goTo(8)" role="tab">🤖 AI Tools</button>
+    <button class="nav-tab" onclick="goTo(9)" role="tab">🗺️ Roadmap</button>
+  </div>
+  <div id="nav-arrows">
+    <button class="arrow-btn" id="btn-prev" onclick="prev()" aria-label="Previous slide" disabled>
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 3L5 8l5 5"/></svg>
+    </button>
+    <button class="arrow-btn" id="btn-next" onclick="next()" aria-label="Next slide">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3l5 5-5 5"/></svg>
+    </button>
+  </div>
+</nav>
+
+<!-- CAROUSEL TRACK -->
+<div id="carousel-track">
+
+  <!-- ===== SLIDE 0: HOME ===== -->
+  <div class="slide" id="slide-0" role="tabpanel" aria-label="Home">
+    <div class="hero-layout">
+      <div class="hero-left">
+        <div class="hero-eyebrow">Filipino Functional Nutrition</div>
+        <h1 class="hero-headline">
+          Real Flavors.<br>
+          Real Nutrition.<br>
+          <span class="accent">Real Impact.</span>
+        </h1>
+        <p class="hero-sub">Your complete business blueprint for launching a Filipino-inspired functional nutrition brand in the United States — from market research to $1M+ revenue.</p>
+        <div class="hero-pills">
+          <span class="pill pill-gold">🍫 Protein Bars</span>
+          <span class="pill pill-ube">🥤 Protein Drinks</span>
+          <span class="pill pill-pandan">⚡ Energy Drinks</span>
+          <span class="pill pill-gold">🇵🇭 Filipino Flavors</span>
+          <span class="pill pill-ube">🌿 Clean Ingredients</span>
+        </div>
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <div class="hero-stat-num">$1M+</div>
+            <div class="hero-stat-lbl">Revenue Goal 12–24 Months</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">$163B</div>
+            <div class="hero-stat-lbl">Filipino-American Buying Power</div>
+          </div>
+          <div class="hero-stat">
+            <div class="hero-stat-num">8.3%</div>
+            <div class="hero-stat-lbl">Functional Food CAGR 2030</div>
+          </div>
+        </div>
+      </div>
+      <div class="hero-img-wrap">
+        <img
+          src="https://user-gen-media-assets.s3.amazonaws.com/gpt4o_images/385b4d1a-7f9f-466d-b848-b964b1d97743.png"
+          alt="Filipino Functional Nutrition brand hero — ube bars, coconut shakes, pandan energy drinks"
+          class="hero-img"
+          width="520" height="390" loading="eager"
+        >
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 1: MARKET RESEARCH ===== -->
+  <div class="slide slide-bg-gold-top" id="slide-1" role="tabpanel" aria-label="Market Research">
+    <div class="slide-inner">
+      <div class="section-label">Section 01</div>
+      <h2 class="section-title">Market Research</h2>
+      <p class="section-desc">Your target market is large, underserved, and ready. Filipino Americans are the 3rd-largest Asian group in the US — concentrated in California, Hawaii, and the Mid-Atlantic.</p>
+
+      <div class="grid-4" style="margin-bottom:var(--space-8)">
+        <div class="stat-box">
+          <div class="stat-number">$49.7B</div>
+          <div class="stat-label">US Functional Food Market 2024</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">$1.57B</div>
+          <div class="stat-label">US Protein Bar Market by 2034</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">4.2M+</div>
+          <div class="stat-label">Filipino Americans in the US</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-number">$163B</div>
+          <div class="stat-label">Filipino-American Buying Power</div>
+        </div>
+      </div>
+
+      <div class="two-panel">
+        <div>
+          <h3 class="card-title" style="margin-bottom:var(--space-4)">🎯 Target Segments</h3>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-text"><strong>Filipino-American Community</strong> — food-proud, diaspora-connected, 4.2M+ people seeking cultural identity in daily products</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-text"><strong>Asian-American Fitness Enthusiasts</strong> — 18–44 years old, gym-goers who want clean protein with familiar flavors</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-text"><strong>Filipino Healthcare Workers</strong> — nurses, doctors, aides; high income, long shifts, need convenient functional nutrition</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">4</div>
+              <div class="step-text"><strong>General "Adventurous Eaters"</strong> — non-Filipino Americans drawn to novel, ethnic-inspired flavors and clean labels</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">5</div>
+              <div class="step-text"><strong>Busy Professionals</strong> — need portable, clean-label high-protein snacks; vending machine and convenience store buyers</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 class="card-title" style="margin-bottom:var(--space-4)">🔍 Research Methods</h3>
+          <div class="checklist">
+            <div class="check-item">Survey 100+ Filipino-Americans via Typeform or Google Forms — taste preferences, price sensitivity, buying habits</div>
+            <div class="check-item">Join & post in Filipino Facebook Groups and Reddit (r/Philippines, r/AsianAmerican) to validate flavors</div>
+            <div class="check-item">Run pop-up taste tests at Filipino community events, churches, and cultural festivals</div>
+            <div class="check-item">Analyze Google Trends for "ube protein bar," "pandan snack," "Filipino snack US"</div>
+            <div class="check-item">Study Amazon reviews of existing protein bars to find flavor + ingredient gaps</div>
+            <div class="check-item">Interview 10–20 Filipino healthcare workers about snacking habits on shift</div>
+            <div class="check-item">Use Statista, Mintel, and IBISWorld for functional food market data</div>
+            <div class="check-item">Map Filipino grocery stores (Seafood City, Island Pacific) as distribution entry points</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3 class="card-title" style="margin-bottom:var(--space-4)">🗺️ Geographic Priority Markets</h3>
+      <div class="grid-3">
+        <div class="card">
+          <div class="badge badge-gold" style="margin-bottom:var(--space-2)">Tier 1</div>
+          <div class="card-title">California</div>
+          <div class="card-body">Largest Filipino-American population. Los Angeles, San Diego, San Jose. Major Filipino grocery chains, hospitals, gyms.</div>
+        </div>
+        <div class="card">
+          <div class="badge badge-gold" style="margin-bottom:var(--space-2)">Tier 1</div>
+          <div class="card-title">Virginia / DMV Area</div>
+          <div class="card-body">Strong Filipino healthcare worker concentration. Falls Church, Fairfax, Alexandria — your home base. High income, health-conscious.</div>
+        </div>
+        <div class="card">
+          <div class="badge badge-pandan" style="margin-bottom:var(--space-2)">Tier 2</div>
+          <div class="card-title">Hawaii, Texas, New York</div>
+          <div class="card-body">Large Filipino diaspora, diverse gym culture, Asian grocery networks, hospital vending opportunities.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 2: LEGAL SETUP ===== -->
+  <div class="slide" id="slide-2" role="tabpanel" aria-label="Legal Setup">
+    <div class="slide-inner">
+      <div class="section-label">Section 02</div>
+      <h2 class="section-title">Legal Setup & Protection</h2>
+      <p class="section-desc">Structured correctly from day one, you protect your personal assets, your brand, and your investors. This is how you build to last — not just to launch.</p>
+
+      <div class="grid-2" style="margin-bottom:var(--space-8)">
+        <div class="card">
+          <div class="badge badge-gold" style="margin-bottom:var(--space-3)">Step 1 — Day 1</div>
+          <div class="card-title">🏢 Form Your LLC</div>
+          <div class="card-body" style="margin-bottom:var(--space-4)">An LLC separates your personal finances from business liability. Best structure for a small food startup — flexible taxes, simple management, easy co-founder equity splits.</div>
+          <div class="checklist">
+            <div class="check-item">Register your LLC in Virginia (home state) via the VA SCC — ~$100 filing fee</div>
+            <div class="check-item">Get an EIN (Employer Identification Number) free at IRS.gov</div>
+            <div class="check-item">Open a dedicated business bank account (Relay, Mercury, or Chase Business)</div>
+            <div class="check-item">Draft an Operating Agreement defining ownership %, roles, decision-making</div>
+            <div class="check-item">Consider a Delaware C-Corp later if you seek VC investment</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="badge badge-ube" style="margin-bottom:var(--space-3)">Step 2 — Week 2</div>
+          <div class="card-title">🍫 FDA Food Business Registration</div>
+          <div class="card-body" style="margin-bottom:var(--space-4)">All food facilities that manufacture, process, pack, or hold food must register with the FDA. Your co-manufacturer handles most compliance, but you need your own registration.</div>
+          <div class="checklist">
+            <div class="check-item">Register as a food facility at FDA.gov (free, biennial renewal)</div>
+            <div class="check-item">Ensure your co-manufacturer is also FDA-registered and has a Food Safety Plan (FSMA)</div>
+            <div class="check-item">Follow FDA labeling rules: Nutrition Facts panel, ingredient list, allergens, net weight</div>
+            <div class="check-item">Get a UPC/barcode via GS1 US (~$250/year) for retail distribution</div>
+            <div class="check-item">Apply for "Good Manufacturing Practices" (GMP) compliance certification</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="badge badge-pandan" style="margin-bottom:var(--space-3)">Step 3 — Month 1</div>
+          <div class="card-title">™ Trademark Your Brand</div>
+          <div class="card-body" style="margin-bottom:var(--space-4)">A registered trademark protects your brand name and logo from being copied by competitors. File early — before you launch.</div>
+          <div class="checklist">
+            <div class="check-item">Search USPTO.gov TESS database to confirm your brand name is available</div>
+            <div class="check-item">File a trademark application in Class 29 (food products) — $250–$350 per class</div>
+            <div class="check-item">Hire a trademark attorney for ~$500–$1,500 to improve approval odds</div>
+            <div class="check-item">Also buy your domain (.com) and all social media handles on day 1</div>
+            <div class="check-item">File copyright on original artwork and brand identity elements</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="badge badge-red" style="margin-bottom:var(--space-3)">Step 4 — Month 1</div>
+          <div class="card-title">🛡️ Insurance & Risk Management</div>
+          <div class="card-body" style="margin-bottom:var(--space-4)">A single lawsuit or recall can shut down an uninsured food startup. Insurance is non-negotiable in the food industry.</div>
+          <div class="checklist">
+            <div class="check-item">Product Liability Insurance — covers injury/illness claims from your products ($500–$2,000/yr)</div>
+            <div class="check-item">General Business Liability Insurance — covers property damage, accidents</div>
+            <div class="check-item">Product Recall Insurance — covers cost of pulling product from shelves</div>
+            <div class="check-item">Request Certificate of Insurance (COI) from your co-manufacturer</div>
+            <div class="check-item">Sign co-packer agreements with indemnification clauses protecting you from their errors</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="margin-bottom:var(--space-4)">⚠️ Key Risk Protections</div>
+        <div class="grid-3">
+          <div>
+            <div class="badge badge-gold" style="margin-bottom:var(--space-2)">Financial Risk</div>
+            <div class="card-body">Start lean — use co-manufacturers to avoid $200K+ equipment costs. Limit initial run to 500–1,000 units. Keep 3 months' operating expenses in reserve.</div>
+          </div>
+          <div>
+            <div class="badge badge-ube" style="margin-bottom:var(--space-2)">Product Risk</div>
+            <div class="card-body">Validate flavors with taste tests BEFORE mass production. Get lab testing (protein content, shelf life, allergen testing) from a certified food lab.</div>
+          </div>
+          <div>
+            <div class="badge badge-pandan" style="margin-bottom:var(--space-2)">Partnership Risk</div>
+            <div class="card-body">Use written contracts for everything — co-manufacturers, distributors, influencers. Include IP ownership clauses, exclusivity terms, and termination conditions.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 3: PRODUCTS ===== -->
+  <div class="slide" id="slide-3" role="tabpanel" aria-label="Products & Ingredients">
+    <div class="slide-inner">
+      <div class="section-label">Section 03</div>
+      <h2 class="section-title">Products & Ingredients</h2>
+      <p class="section-desc">Filipino flavors are your unfair advantage. None of the top 15 US protein bars touch ube, pandan, or turon cinnamon. That's your white space — own it before anyone else does.</p>
+
+      <img
+        src="https://user-gen-media-assets.s3.amazonaws.com/gpt4o_images/20892727-6f03-4ceb-8424-cf718f12a4e1.png"
+        alt="Filipino functional nutrition product lineup — ube protein bars, pandan shakes, turon cinnamon bars"
+        class="full-img"
+        width="1100" height="450" loading="lazy"
+      >
+
+      <div class="grid-3" style="margin-bottom:var(--space-8)">
+        <div class="card">
+          <div class="badge badge-ube" style="margin-bottom:var(--space-3)">Product 1</div>
+          <div class="card-title">🍫 Protein Bars</div>
+          <div class="card-body" style="margin-bottom:var(--space-3)">Start with 2–3 flavors. Validate before expanding.</div>
+          <div class="phase-items">
+            <div class="phase-item">Ube Coconut — purple yam + coconut butter base, 20g protein</div>
+            <div class="phase-item">Turon Cinnamon — banana-cinnamon inspired, 18g protein</div>
+            <div class="phase-item">Pandan Almond — pandan leaf extract + almond protein</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="badge badge-pandan" style="margin-bottom:var(--space-3)">Product 2</div>
+          <div class="card-title">🥤 Protein Shakes</div>
+          <div class="card-body" style="margin-bottom:var(--space-3)">Ready-to-drink or powder format. Target post-workout and hospital vending.</div>
+          <div class="phase-items">
+            <div class="phase-item">Ube Coconut Protein Shake — RTD can, 20g+ protein</div>
+            <div class="phase-item">Pandan Matcha Blend — antioxidant-rich, clean label</div>
+            <div class="phase-item">Protein powder sachets for subscription boxes</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="badge badge-gold" style="margin-bottom:var(--space-3)">Product 3</div>
+          <div class="card-title">⚡ Energy Drinks</div>
+          <div class="card-body" style="margin-bottom:var(--space-3)">Functional energy — no junk, Filipino-inspired. Target gym and hospital vending.</div>
+          <div class="phase-items">
+            <div class="phase-item">Pandan Coconut Energy — natural caffeine, electrolytes</div>
+            <div class="phase-item">Dalandan Orange Boost — Philippine citrus + B vitamins</div>
+            <div class="phase-item">Low-sugar formula, 12–16 oz cans</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="two-panel">
+        <div>
+          <h3 class="card-title" style="margin-bottom:var(--space-4)">🧪 Key Ingredients</h3>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-num" style="background:var(--ube); border-color:var(--ube)">Ube</div>
+              <div class="step-text"><strong>Purple Yam (Ube) Extract</strong> — high in antioxidants (anthocyanins), naturally sweet, distinctive purple color. Source from Philippine/Asian food suppliers or Dole</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num" style="background:var(--pandan); border-color:var(--pandan)">🌿</div>
+              <div class="step-text"><strong>Pandan Leaf Extract</strong> — natural green color, vanilla-like aroma, anti-inflammatory properties. Available as food-grade extract</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">🥥</div>
+              <div class="step-text"><strong>Coconut Butter/Milk Powder</strong> — MCT fats, tropical flavor, clean-label ingredient widely available from Anthony's or Nutiva</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">💪</div>
+              <div class="step-text"><strong>Whey or Plant Protein</strong> — 18–25g per serving. Source from Arla, Fonterra (whey) or Roquette (pea protein for vegan line)</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 class="card-title" style="margin-bottom:var(--space-4)">🏭 Co-Manufacturers to Contact</h3>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-text"><strong>YouBar (youbars.com)</strong> — specialty custom protein bars, low MOQ (minimum 12 bars), ideal for initial validation runs</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-text"><strong>PartnerSlate (partnerslate.com)</strong> — marketplace to find co-packers by product type; filter by bar, RTD beverage, powder</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-text"><strong>EMPWR Manufacturing</strong> — functional food co-packer specializing in bars and snacks; FDA-registered, GMP certified</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">4</div>
+              <div class="step-text"><strong>Nutra Manufacturing</strong> — handles protein shakes and powder; offers white-label and custom formulation services</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 4: BRAND IDENTITY ===== -->
+  <div class="slide" id="slide-4" role="tabpanel" aria-label="Brand Identity">
+    <div class="slide-inner">
+      <div class="section-label">Section 04</div>
+      <h2 class="section-title">Brand Identity</h2>
+      <p class="section-desc">Your brand is your most valuable asset. For a Filipino functional nutrition company, the identity must feel authentic, modern, and globally aspirational — not like a culture cliché.</p>
+
+      <div class="goal-banner">
+        <div class="goal-banner-title">Nourished by Culture. Fueled by Purpose.</div>
+        <div class="goal-banner-sub">The brand promise: Filipino flavors meeting performance nutrition — for the diaspora and the world.</div>
+      </div>
+
+      <div class="grid-2" style="margin-bottom:var(--space-8)">
+        <div>
+          <h3 class="card-title" style="margin-bottom:var(--space-4)">🎨 Visual Identity System</h3>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-text"><strong>Primary Colors:</strong> Deep Navy (heritage), Golden Yellow (Philippine sun), Ube Purple (signature flavor). Avoid generic green-white health branding.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-text"><strong>Logo:</strong> Philippine Sun mark (8 rays) reimagined as a modern geometric emblem. Should work on packaging, apparel, and digital at any size.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-text"><strong>Typography:</strong> Bold serif display font for brand name (confident, premium) paired with clean sans-serif for nutrition info and body copy.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">4</div>
+              <div class="step-text"><strong>Packaging:</strong> Dark/navy backgrounds with vibrant flavor-coded accents (ube purple, pandan green, cinnamon orange). Real ingredient photography.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">5</div>
+              <div class="step-text"><strong>Tone of Voice:</strong> Proud, not boastful. Cultural, not tokenizing. Performance-focused, not preachy. Speak like a Filipino-American gym friend.</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 class="card-title" style="margin-bottom:var(--space-4)">🛠️ Brand Creation Tools</h3>
+          <div class="grid-auto" style="gap:var(--space-3)">
+            <div class="tool-card">
+              <div class="tool-icon" style="background:rgba(26,138,110,0.15)">🎨</div>
+              <div>
+                <div class="tool-name">Canva Pro ($13/mo)</div>
+                <div class="tool-desc">Brand kit, social templates, packaging mockups. Use Magic Design AI for instant layout generation.</div>
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-icon" style="background:rgba(107,63,160,0.15)">✏️</div>
+              <div>
+                <div class="tool-name">Adobe Illustrator</div>
+                <div class="tool-desc">Professional logo design, vector packaging art. Use AI Generative Fill for concept explorations.</div>
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-icon" style="background:rgba(242,169,0,0.15)">🖼️</div>
+              <div>
+                <div class="tool-name">Midjourney / DALL-E</div>
+                <div class="tool-desc">AI image generation for hero shots, brand mood boards, social media visuals, and packaging concepts.</div>
+              </div>
+            </div>
+            <div class="tool-card">
+              <div class="tool-icon" style="background:rgba(196,98,45,0.15)">📦</div>
+              <div>
+                <div class="tool-name">Packhelp / Noissue</div>
+                <div class="tool-desc">Custom branded packaging (boxes, stickers, mailers). Eco-friendly options align with sustainability values.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3 class="card-title" style="margin-bottom:var(--space-4)">🌐 Brand Pillars</h3>
+      <div class="grid-4">
+        <div class="impact-card">
+          <div class="impact-icon">🌏</div>
+          <div class="impact-title">Cultural Pride</div>
+          <div class="impact-text">Every product tells a Filipino story. Packaging, names, and messaging celebrate heritage authentically.</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-icon">💪</div>
+          <div class="impact-title">Performance</div>
+          <div class="impact-text">Backed by real nutrition science. Not just "ethnic snacks" — serious functional food with clinical macros.</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-icon">🌿</div>
+          <div class="impact-title">Clean Label</div>
+          <div class="impact-text">No artificial colors. No fillers. Ingredients your lola would recognize. Short, pronounceable ingredient lists.</div>
+        </div>
+        <div class="impact-card">
+          <div class="impact-icon">🤝</div>
+          <div class="impact-title">Community</div>
+          <div class="impact-text">Give back to Filipino communities. Source from Filipino-owned suppliers where possible. Bayanihan spirit built in.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 5: MARKETING ===== -->
+  <div class="slide" id="slide-5" role="tabpanel" aria-label="Marketing">
+    <div class="slide-inner">
+      <div class="section-label">Section 05</div>
+      <h2 class="section-title">Marketing & Finding Customers</h2>
+      <p class="section-desc">Your marketing strategy should be channel-stacked: start with community-led, go broad with digital, then earn media and influencer amplification to scale.</p>
+
+      <img
+        src="https://user-gen-media-assets.s3.amazonaws.com/gpt4o_images/99b11bae-96a2-4a45-b51c-4870e8b65bea.png"
+        alt="Filipino-American fitness community — gym, protein bars, cultural events"
+        class="full-img"
+        width="1100" height="420" loading="lazy"
+      >
+
+      <div class="two-panel" style="margin-bottom:var(--space-8)">
+        <div>
+          <h3 class="card-title" style="margin-bottom:var(--space-4)">📱 Digital Channels</h3>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-text"><strong>TikTok</strong> — highest organic reach for food brands. Create "flavor story" videos (cooking ube, making turon). Target #FilAm, #FilipinoFood, #ProteinSnacks</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-text"><strong>Instagram</strong> — visual brand building. Reels of product + Philippine culture. Partner with Filipino lifestyle influencers (10K–100K micro-influencers are most cost-effective)</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-text"><strong>YouTube</strong> — long-form brand storytelling. "Why I Started This" founder video. Filipino-American culture + fitness content builds deep loyalty</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">4</div>
+              <div class="step-text"><strong>Meta Ads</strong> — hyper-target Filipino-Americans by interest, language, and location. Start with $20–$50/day testing phase</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 class="card-title" style="margin-bottom:var(--space-4)">🏘️ Community-Led Marketing</h3>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-num">A</div>
+              <div class="step-text"><strong>Filipino Events</strong> — set up sampling booths at Filipino fiestas, cultural festivals, bayanihan events, and church fundraisers in your area (Falls Church, Fairfax)</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">B</div>
+              <div class="step-text"><strong>Filipino Nurses/Healthcare</strong> — bring sample boxes to hospital breakrooms. Filipino nurses share obsessively within their networks — word-of-mouth amplification</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">C</div>
+              <div class="step-text"><strong>Filipino Organizations</strong> — partner with FANHS, PANA, FilAm sports leagues to reach organized, high-trust community channels</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">D</div>
+              <div class="step-text"><strong>Asian Grocery Demos</strong> — in-store sampling at Seafood City, Island Pacific, H-Mart. Direct trial is the fastest conversion path for food</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3 class="card-title" style="margin-bottom:var(--space-4)">📊 Marketing Tools Stack</h3>
+      <div class="grid-4">
+        <div class="tool-card">
+          <div class="tool-icon" style="background:rgba(242,169,0,0.1)">📧</div>
+          <div><div class="tool-name">Klaviyo</div><div class="tool-desc">Email + SMS marketing. Automated welcome sequences, reorder reminders, launch campaigns.</div></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="background:rgba(26,138,110,0.1)">🏪</div>
+          <div><div class="tool-name">Shopify + Amazon</div><div class="tool-desc">D2C storefront + Amazon marketplace. Run both channels in parallel from launch.</div></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="background:rgba(107,63,160,0.1)">📹</div>
+          <div><div class="tool-name">Later / Buffer</div><div class="tool-desc">Schedule social media content across TikTok, Instagram, and Facebook. AI-powered best-time posting.</div></div>
+        </div>
+        <div class="tool-card">
+          <div class="tool-icon" style="background:rgba(196,98,45,0.1)">📈</div>
+          <div><div class="tool-name">Google Analytics 4</div><div class="tool-desc">Track website traffic, conversion funnels, attribution. Free. Essential from day one.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 6: COMPETITORS & PARTNERSHIPS ===== -->
+  <div class="slide" id="slide-6" role="tabpanel" aria-label="Competitors & Partnerships">
+    <div class="slide-inner">
+      <div class="section-label">Section 06</div>
+      <h2 class="section-title">Competitors & Partnerships</h2>
+      <p class="section-desc">No major US protein bar brand currently offers Filipino flavors. Your competitive moat is cultural specificity + clean nutrition. Win your niche before competing head-to-head with giants.</p>
+
+      <div style="overflow-x:auto; margin-bottom:var(--space-8)">
+        <table class="comp-table">
+          <thead>
+            <tr>
+              <th>Brand</th>
+              <th>Flavors</th>
+              <th>Filipino Flavors</th>
+              <th>Clean Label</th>
+              <th>Cultural Identity</th>
+              <th>Price/Bar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="highlight">
+              <td><strong>Your Brand</strong> <span class="badge badge-gold">YOU</span></td>
+              <td>Ube, Pandan, Turon, Dalandan</td>
+              <td class="check">✓ Exclusive</td>
+              <td class="check">✓ Yes</td>
+              <td class="check">✓ Filipino-first</td>
+              <td>$3.50–$4.50</td>
+            </tr>
+            <tr>
+              <td>Quest Bar</td>
+              <td>Chocolate, Birthday Cake, PB etc.</td>
+              <td class="cross">✗</td>
+              <td class="cross">✗ Artificial</td>
+              <td class="cross">✗ None</td>
+              <td>$2.50–$3.00</td>
+            </tr>
+            <tr>
+              <td>Barebells</td>
+              <td>Chocolate Dough, Salty Peanut</td>
+              <td class="cross">✗</td>
+              <td class="check">✓ Cleaner</td>
+              <td class="cross">✗ Swedish</td>
+              <td>$3.00–$3.50</td>
+            </tr>
+            <tr>
+              <td>David Bar</td>
+              <td>Chocolate, Cake Pop</td>
+              <td class="cross">✗</td>
+              <td class="check">✓ Yes</td>
+              <td class="cross">✗ None</td>
+              <td>$3.50–$4.00</td>
+            </tr>
+            <tr>
+              <td>RXBar</td>
+              <td>Chocolate, Blueberry, Peanut Butter</td>
+              <td class="cross">✗</td>
+              <td class="check">✓ Whole food</td>
+              <td class="cross">✗ None</td>
+              <td>$2.50–$3.50</td>
+            </tr>
+            <tr>
+              <td>KIND Bar</td>
+              <td>Nuts, fruit, granola</td>
+              <td class="cross">✗</td>
+              <td class="check">✓ Yes</td>
+              <td class="cross">✗ None</td>
+              <td>$1.80–$2.50</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="two-panel">
+        <div>
+          <h3 class="card-title" style="margin-bottom:var(--space-4)">🤝 Partnership Targets</h3>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-num">1</div>
+              <div class="step-text"><strong>Filipino Grocery Chains</strong> — Seafood City, Island Pacific, Philippine Village. Pitch shelf placement + in-store demos. Fastest path to core customers.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">2</div>
+              <div class="step-text"><strong>Hospital Systems</strong> — Kaiser Permanente, Inova, HCA Healthcare. Pitch vending machine placement in break rooms where Filipino nurses work.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">3</div>
+              <div class="step-text"><strong>Gym Chains</strong> — LA Fitness, Anytime Fitness, Planet Fitness. Wholesale accounts + vending machine placements near locker rooms.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">4</div>
+              <div class="step-text"><strong>Filipino-American Influencers</strong> — @mabelsfoods, @filipiniana, @thefilipinochef, @filipinofit. Micro (10K–100K) > Mega for authenticity.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">5</div>
+              <div class="step-text"><strong>Filipino Organizations</strong> — FilAm Sports Association, Fil-Am Chamber of Commerce, FANHS chapters. Sponsorship = distribution access.</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 class="card-title" style="margin-bottom:var(--space-4)">📋 How to Approach Partnerships</h3>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-num">A</div>
+              <div class="step-text"><strong>Build a one-pager first</strong> — product overview, target customer, sales data (even early numbers), your ask, and what you offer in return</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">B</div>
+              <div class="step-text"><strong>Warm intros via LinkedIn</strong> — search "Seafood City buyer," "hospital vending manager," "gym regional director." Filipino last names are a direct in.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">C</div>
+              <div class="step-text"><strong>Offer a consignment pilot</strong> — start with no upfront cost to the partner. Just ask for 60-day shelf space. Let the product prove itself.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">D</div>
+              <div class="step-text"><strong>Show up in person</strong> — bring product samples, brand story, and a smile. Filipino business culture values personal relationships over cold emails.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 7: REVENUE ===== -->
+  <div class="slide" id="slide-7" role="tabpanel" aria-label="Revenue Streams">
+    <div class="slide-inner">
+      <div class="section-label">Section 07</div>
+      <h2 class="section-title">Revenue Streams</h2>
+      <p class="section-desc">Diversify revenue from day one. Don't rely on a single channel. Build a stacked revenue model that creates resilience and compounds growth across multiple touchpoints.</p>
+
+      <div class="goal-banner">
+        <div class="goal-banner-title">Goal: $1M+ Revenue in 12–24 Months</div>
+        <div class="goal-banner-sub">Achievable through stacked channels — D2C, wholesale, vending, subscriptions, and licensing working simultaneously.</div>
+      </div>
+
+      <div class="revenue-item">
+        <div class="revenue-icon">🛒</div>
+        <div class="revenue-info">
+          <div class="revenue-name">Direct-to-Consumer (D2C) Product Sales</div>
+          <div class="revenue-desc">Shopify store + Amazon. Highest margin channel. Bars, drinks, bundles. Average order value $35–$65.</div>
+        </div>
+        <div class="revenue-pct">40%</div>
+      </div>
+
+      <div class="revenue-item">
+        <div class="revenue-icon">📦</div>
+        <div class="revenue-info">
+          <div class="revenue-name">Subscription / Bundle Boxes</div>
+          <div class="revenue-desc">Monthly "Flavor Box" subscription — 10–15 items, branded packaging, member exclusives. Predictable recurring revenue.</div>
+        </div>
+        <div class="revenue-pct">20%</div>
+      </div>
+
+      <div class="revenue-item">
+        <div class="revenue-icon">🏪</div>
+        <div class="revenue-info">
+          <div class="revenue-name">Wholesale & Retail Partnerships</div>
+          <div class="revenue-desc">Filipino grocery stores, specialty health stores, gyms, regional distributors. Margin ~35–45%. Lower volume per order, higher reach.</div>
+        </div>
+        <div class="revenue-pct">25%</div>
+      </div>
+
+      <div class="revenue-item">
+        <div class="revenue-icon">🏧</div>
+        <div class="revenue-info">
+          <div class="revenue-name">Vending Machine Revenue</div>
+          <div class="revenue-desc">Hospitals, offices, gyms, schools. 30–50% margins. One machine can generate $400–$1,200/month passively. Scale to 20+ machines.</div>
+        </div>
+        <div class="revenue-pct">10%</div>
+      </div>
+
+      <div class="revenue-item">
+        <div class="revenue-icon">©️</div>
+        <div class="revenue-info">
+          <div class="revenue-name">Licensing / Co-Branded Products</div>
+          <div class="revenue-desc">License Filipino flavors to larger food brands (Goya, Dole, General Mills). Royalty-based income once brand is established.</div>
+        </div>
+        <div class="revenue-pct">5%</div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3 class="card-title" style="margin-bottom:var(--space-4)">📊 Key Financial Metrics to Track</h3>
+      <div class="grid-3">
+        <div class="metric-card">
+          <div class="metric-icon">💵</div>
+          <div><div class="metric-label">Monthly Revenue</div><div class="metric-value">Track Weekly</div><div class="metric-sub">Break into channel by channel</div></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon">🔁</div>
+          <div><div class="metric-label">Repeat Purchase Rate</div><div class="metric-value">Target 35%+</div><div class="metric-sub">Key loyalty indicator</div></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon">⭐</div>
+          <div><div class="metric-label">Avg. Review Score</div><div class="metric-value">Target 4.5+</div><div class="metric-sub">Amazon + Google + Shopify</div></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon">📈</div>
+          <div><div class="metric-label">Customer Acquisition Cost</div><div class="metric-value">Target &lt;$12</div><div class="metric-sub">Under $12 for unit economics</div></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon">💰</div>
+          <div><div class="metric-label">Gross Margin</div><div class="metric-value">Target 45–60%</div><div class="metric-sub">After COGS, before overhead</div></div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-icon">🛍️</div>
+          <div><div class="metric-label">Customer Lifetime Value</div><div class="metric-value">Target $85+</div><div class="metric-sub">LTV:CAC ratio of 3:1 minimum</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 8: AI TOOLS ===== -->
+  <div class="slide" id="slide-8" role="tabpanel" aria-label="AI Tools">
+    <div class="slide-inner">
+      <div class="section-label">Section 08</div>
+      <h2 class="section-title">AI Tools & Workflow Stack</h2>
+      <p class="section-desc">A small team using AI effectively operates at the capacity of a company 5× its size. Build your AI-powered workflow stack from day one to move fast without burning out.</p>
+
+      <div class="ai-banner">
+        <div class="ai-banner-title">🤖 Your $100/Month AI Department</div>
+        <div class="ai-banner-sub">ChatGPT Pro ($20) + Claude Pro ($20) + Canva Pro ($13) + Midjourney ($10) + Perplexity Pro ($20) + Zapier (free tier) = a full marketing, research, and creative team for ~$83/month.</div>
+      </div>
+
+      <div class="grid-3" style="margin-bottom:var(--space-8)">
+        <div>
+          <h3 class="card-title" style="margin-bottom:var(--space-4)">✍️ Content & Marketing AI</h3>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-num">🤖</div>
+              <div class="step-text"><strong>ChatGPT / Claude</strong> — write ad copy, product descriptions, email sequences, social captions, blog posts, pitch decks, and business plans</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">🎨</div>
+              <div class="step-text"><strong>Midjourney / DALL-E 3</strong> — generate product concept images, packaging mockups, social media hero shots, and brand mood boards</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">📱</div>
+              <div class="step-text"><strong>Canva AI (Magic Studio)</strong> — auto-generate social media posts, resize content for every platform, create branded templates in seconds</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">🎬</div>
+              <div class="step-text"><strong>CapCut / InVideo AI</strong> — auto-generate TikTok and Reels from text prompts. AI captions, B-roll suggestions, voiceovers</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 class="card-title" style="margin-bottom:var(--space-4)">🔄 Operations & Workflow AI</h3>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-num">⚡</div>
+              <div class="step-text"><strong>Zapier / Make (Integromat)</strong> — automate workflows: new order → notify team → update inventory → send customer email. Zero code required.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">📋</div>
+              <div class="step-text"><strong>Notion AI</strong> — team wiki, SOPs, meeting notes, project tracking, recipe development logs, all in one searchable workspace</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">📊</div>
+              <div class="step-text"><strong>Shopify + AI Analytics</strong> — AI-powered inventory forecasting, customer segmentation, and reorder recommendations built into the platform</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">💬</div>
+              <div class="step-text"><strong>Tidio / Gorgias</strong> — AI customer service chatbot handles 60–80% of customer questions automatically on your Shopify store</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h3 class="card-title" style="margin-bottom:var(--space-4)">🔬 Research & Strategy AI</h3>
+          <div class="step-list">
+            <div class="step-item">
+              <div class="step-num">🔍</div>
+              <div class="step-text"><strong>Perplexity Pro</strong> — real-time market research, competitor monitoring, industry trend reports. Ask anything and get sourced answers instantly.</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">📈</div>
+              <div class="step-text"><strong>Jungle Scout / Helium 10</strong> — Amazon market research: find best-selling keywords, analyze competitor listings, track rankings</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">🧠</div>
+              <div class="step-text"><strong>Claude for Business Strategy</strong> — use Claude to draft investor pitches, analyze contracts, generate financial models, and stress-test your business plan</div>
+            </div>
+            <div class="step-item">
+              <div class="step-num">🏭</div>
+              <div class="step-text"><strong>FoodLogiQ</strong> — AI-powered supply chain traceability. Track ingredients from supplier to shelf. Automates FDA compliance documentation.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="divider"></div>
+
+      <h3 class="card-title" style="margin-bottom:var(--space-4)">⚙️ Team Operating System</h3>
+      <div class="grid-2">
+        <div class="card">
+          <div class="card-title" style="margin-bottom:var(--space-3)">📅 Weekly Cadence</div>
+          <div class="step-list" style="gap:var(--space-2)">
+            <div class="step-item"><div class="step-num" style="width:24px;height:24px;font-size:10px">M</div><div class="step-text">Team standup (15 min). Review weekly KPIs. Assign priorities in Notion.</div></div>
+            <div class="step-item"><div class="step-num" style="width:24px;height:24px;font-size:10px">W</div><div class="step-text">Content creation day. Batch-produce 7–10 days of social content using Canva AI + ChatGPT.</div></div>
+            <div class="step-item"><div class="step-num" style="width:24px;height:24px;font-size:10px">F</div><div class="step-text">Sales & operations review. Inventory check, order fulfillment status, customer feedback review.</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title" style="margin-bottom:var(--space-3)">👥 Team Roles (Start Lean)</div>
+          <div class="step-list" style="gap:var(--space-2)">
+            <div class="step-item"><div class="step-num" style="font-size:10px">CEO</div><div class="step-text"><strong>Arvin</strong> — vision, partnerships, operations, investor relations, product development</div></div>
+            <div class="step-item"><div class="step-num" style="font-size:10px">CMO</div><div class="step-text"><strong>Co-founder or hire</strong> — brand, marketing, social media, community building, influencer relations</div></div>
+            <div class="step-item"><div class="step-num" style="font-size:10px">Ops</div><div class="step-text"><strong>Part-time / VA</strong> — order fulfillment, customer service (with AI assist), inventory management</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== SLIDE 9: ROADMAP ===== -->
+  <div class="slide" id="slide-9" role="tabpanel" aria-label="Roadmap">
+    <div class="slide-inner">
+      <div class="section-label">Section 09</div>
+      <h2 class="section-title">Growth Roadmap</h2>
+      <p class="section-desc">Four phases from zero to $1M+ revenue. Each phase builds on the last — don't skip ahead. Validate before you scale. The biggest startup mistakes come from moving too fast on an unproven foundation.</p>
+
+      <img
+        src="https://user-gen-media-assets.s3.amazonaws.com/gpt4o_images/247088ba-1d4c-4243-a1ac-97ea4215f2f4.png"
+        alt="Four-phase business growth roadmap illustration"
+        class="full-img"
+        width="1100" height="380" loading="lazy"
+      >
+
+      <div class="timeline" style="margin-bottom:var(--space-8)">
+
+        <div class="timeline-item">
+          <div class="timeline-dot">01</div>
+          <div class="timeline-content">
+            <div class="timeline-period">Months 0–3</div>
+            <div class="timeline-phase">🧪 Validate & Test</div>
+            <div style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-3);line-height:1.6">
+              Form LLC, register FDA, secure co-manufacturer. Finalize 2–3 flavors, run taste tests, set up Shopify store. Launch vending machine pilots in Falls Church/Fairfax area hospitals and gyms.
+            </div>
+            <div class="timeline-items">
+              <span class="timeline-item-tag">Form LLC</span>
+              <span class="timeline-item-tag">FDA Registration</span>
+              <span class="timeline-item-tag">Taste Testing (100+ people)</span>
+              <span class="timeline-item-tag">Co-packer Agreement</span>
+              <span class="timeline-item-tag">Brand Design</span>
+              <span class="timeline-item-tag">Shopify Launch</span>
+              <span class="timeline-item-tag">First 500 units</span>
+              <span class="timeline-item-tag">2–3 Vending Pilots</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot" style="border-color:var(--ube-light);color:var(--ube-light)">02</div>
+          <div class="timeline-content">
+            <div class="timeline-period">Months 4–9</div>
+            <div class="timeline-phase">🏗️ Build & Optimize</div>
+            <div style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-3);line-height:1.6">
+              Refine products based on feedback. Expand to 10–20 vending machines. Secure first 3–5 wholesale retail accounts. Begin influencer partnerships. Grow email list to 2,000+.
+            </div>
+            <div class="timeline-items">
+              <span class="timeline-item-tag">Expand Vending (10–20 machines)</span>
+              <span class="timeline-item-tag">Seafood City Placement</span>
+              <span class="timeline-item-tag">Micro-influencer Campaign</span>
+              <span class="timeline-item-tag">Amazon Launch</span>
+              <span class="timeline-item-tag">Email List 2K+</span>
+              <span class="timeline-item-tag">Subscription Box V1</span>
+              <span class="timeline-item-tag">Trademark Filing</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot" style="border-color:var(--pandan-light);color:var(--pandan-light)">03</div>
+          <div class="timeline-content">
+            <div class="timeline-period">Months 10–18</div>
+            <div class="timeline-phase">🚀 Scale & Expand</div>
+            <div style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-3);line-height:1.6">
+              Launch full e-commerce with ads. Increase production volume for cost reduction. National distribution via regional distributors. Hire CMO or marketing director. Target $50K–$100K MRR.
+            </div>
+            <div class="timeline-items">
+              <span class="timeline-item-tag">National Distribution</span>
+              <span class="timeline-item-tag">Full E-commerce Launch</span>
+              <span class="timeline-item-tag">Meta + TikTok Ads ($50/day)</span>
+              <span class="timeline-item-tag">Influencer Scale Campaign</span>
+              <span class="timeline-item-tag">Hire CMO</span>
+              <span class="timeline-item-tag">Target $50K MRR</span>
+              <span class="timeline-item-tag">Expand Product Line</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="timeline-dot" style="border-color:var(--cinnamon-light);color:var(--cinnamon-light)">04</div>
+          <div class="timeline-content">
+            <div class="timeline-period">Months 18–36</div>
+            <div class="timeline-phase">🏆 Dominate & Diversify</div>
+            <div style="font-size:var(--text-sm);color:var(--color-text-muted);margin-bottom:var(--space-3);line-height:1.6">
+              International expansion to Canada, UK, and Middle East (large Filipino diaspora). Strategic brand partnerships. Explore licensing deals with major food brands. Potential acquisition by larger health food company.
+            </div>
+            <div class="timeline-items">
+              <span class="timeline-item-tag">International Expansion</span>
+              <span class="timeline-item-tag">$1M+ Revenue</span>
+              <span class="timeline-item-tag">Strategic Partnerships</span>
+              <span class="timeline-item-tag">Licensing Discussions</span>
+              <span class="timeline-item-tag">Series A Fundraising</span>
+              <span class="timeline-item-tag">Acquisition Target</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card">
+        <div class="card-title" style="margin-bottom:var(--space-4)">🎯 First 30 Days — Action Checklist</div>
+        <div class="grid-2">
+          <div class="checklist">
+            <div class="check-item">Register LLC with Virginia State Corporation Commission</div>
+            <div class="check-item">Get EIN number from IRS.gov (free, same day)</div>
+            <div class="check-item">Open business bank account (Mercury or Relay — both free)</div>
+            <div class="check-item">Buy domain name + all social media handles</div>
+            <div class="check-item">Design logo using Canva AI — iterate 10+ versions</div>
+            <div class="check-item">Contact 3 co-manufacturers (YouBar, PartnerSlate, EMPWR)</div>
+          </div>
+          <div class="checklist">
+            <div class="check-item">Order ingredient samples (ube extract, pandan extract, coconut butter)</div>
+            <div class="check-item">Create Shopify store — minimal viable storefront</div>
+            <div class="check-item">Set up Notion team workspace with SOPs template</div>
+            <div class="check-item">File for trademark via USPTO.gov</div>
+            <div class="check-item">Join 5+ Filipino-American Facebook groups — listen and engage</div>
+            <div class="check-item">Schedule taste test event at a local Filipino community gathering</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div><!-- end carousel-track -->
+
+<!-- DOTS -->
+<div id="slide-counter" role="navigation" aria-label="Slide position">
+  <div class="dot active" onclick="goTo(0)" title="Home"></div>
+  <div class="dot" onclick="goTo(1)" title="Market Research"></div>
+  <div class="dot" onclick="goTo(2)" title="Legal Setup"></div>
+  <div class="dot" onclick="goTo(3)" title="Products"></div>
+  <div class="dot" onclick="goTo(4)" title="Brand Identity"></div>
+  <div class="dot" onclick="goTo(5)" title="Marketing"></div>
+  <div class="dot" onclick="goTo(6)" title="Competitors"></div>
+  <div class="dot" onclick="goTo(7)" title="Revenue"></div>
+  <div class="dot" onclick="goTo(8)" title="AI Tools"></div>
+  <div class="dot" onclick="goTo(9)" title="Roadmap"></div>
+</div>
+
+<div class="slide-nav-hint">
+  <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="swipe-anim"><path d="M3 7h8M8 4l3 3-3 3"/></svg>
+  Use arrows or swipe
+</div>
+
+<script>
+(function(){
+  const TOTAL = 10;
+  let current = 0;
+  let touchStartX = 0;
+  let touchEndX = 0;
+  let isAnimating = false;
+
+  const track = document.getElementById('carousel-track');
+  const btnPrev = document.getElementById('btn-prev');
+  const btnNext = document.getElementById('btn-next');
+  const tabs = document.querySelectorAll('.nav-tab');
+  const dots = document.querySelectorAll('.dot');
+  const progressBar = document.getElementById('progress-bar');
+
+  function updateUI() {
+    // Move carousel
+    track.style.transform = `translateX(-${current * 100}vw)`;
+
+    // Tabs
+    tabs.forEach((t, i) => t.classList.toggle('active', i === current));
+    dots.forEach((d, i) => d.classList.toggle('active', i === current));
+
+    // Progress bar
+    const pct = ((current + 1) / TOTAL) * 100;
+    progressBar.style.width = pct + '%';
+
+    // Arrows
+    btnPrev.disabled = current === 0;
+    btnNext.disabled = current === TOTAL - 1;
+
+    // Reset scroll of current slide
+    const slide = document.querySelectorAll('.slide')[current];
+    if (slide) slide.scrollTop = 0;
+
+    // Re-trigger animations on slide-inner children
+    const inner = slide ? slide.querySelector('.slide-inner') : null;
+    if (inner) {
+      inner.querySelectorAll(':scope > *').forEach(el => {
+        el.style.animation = 'none';
+        void el.offsetWidth;
+        el.style.animation = '';
+      });
+    }
+  }
+
+  window.goTo = function(idx) {
+    if (isAnimating || idx === current) return;
+    isAnimating = true;
+    current = Math.max(0, Math.min(TOTAL - 1, idx));
+    updateUI();
+    setTimeout(() => { isAnimating = false; }, 650);
+  };
+
+  window.next = function() { goTo(current + 1); };
+  window.prev = function() { goTo(current - 1); };
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); next(); }
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   { e.preventDefault(); prev(); }
+  });
+
+  // Touch/swipe support
+  document.addEventListener('touchstart', (e) => {
+    touchStartX = e.changedTouches[0].clientX;
+  }, { passive: true });
+
+  document.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].clientX;
+    const diff = touchStartX - touchEndX;
+    if (Math.abs(diff) > 50) {
+      diff > 0 ? next() : prev();
+    }
+  }, { passive: true });
+
+  updateUI();
+})();
+</script>
+</body>
+</html>
