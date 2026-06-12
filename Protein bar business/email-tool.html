@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilipinas Fuel — Email Outreach Tool</title>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300..700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root,[data-theme="light"]{
+--bg:#f7f6f2;--surface:#f9f8f5;--surface-2:#fbfbf9;--surface-offset:#f0ede9;
+--border:#d4d1ca;--divider:#dcd9d5;
+--text:#28251d;--muted:#7a7974;--faint:#bab9b4;
+--primary:#01696f;
+--ube:#7B4FA6;--ube-l:#e8d9f5;
+--pandan:#2D7A4F;--pandan-l:#d4ede1;
+--gold:#E8A020;--gold-l:#faeacc;
+--success:#437a22;--success-l:#d4dfcc;
+--error:#a12c7b;--error-l:#f5ddf0;
+--r-sm:.375rem;--r-md:.5rem;--r-lg:.75rem;--r-xl:1rem;--r-full:9999px;
+--sh-sm:0 1px 2px oklch(0.2 0.01 80/0.06);--sh-md:0 4px 12px oklch(0.2 0.01 80/0.08);
+--font:'Work Sans','Helvetica Neue',sans-serif;
+}
+[data-theme="dark"]{
+--bg:#171614;--surface:#1c1b19;--surface-2:#201f1d;--surface-offset:#1d1c1a;
+--border:#393836;--divider:#262523;
+--text:#cdccca;--muted:#797876;--faint:#5a5957;
+--primary:#4f98a3;
+--ube:#a47cc4;--ube-l:#3a2850;
+--pandan:#5aad7a;--pandan-l:#1e3d2a;
+--gold:#f0b847;--gold-l:#3d2f0e;
+--success:#6daa45;--success-l:#3a4435;
+--error:#d163a7;--error-l:#4c3d46;
+--sh-sm:0 1px 2px oklch(0 0 0/0.25);--sh-md:0 4px 12px oklch(0 0 0/0.35);
+}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);font-size:1rem;color:var(--text);background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+button{cursor:pointer;border:none;font:inherit;color:inherit;background:none}
+input,textarea,select{font:inherit;color:inherit}
+
+.app-header{background:var(--surface);border-bottom:1px solid var(--border);padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between}
+.header-brand{display:flex;align-items:center;gap:.75rem;font-size:1.2rem;font-weight:700}
+.header-brand svg{width:28px;height:28px}
+.theme-btn{width:34px;height:34px;border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:color .15s,background .15s}
+.theme-btn:hover{color:var(--text);background:var(--surface-offset)}
+
+.app-body{display:grid;grid-template-columns:300px 1fr;flex:1;overflow:hidden;min-height:0}
+
+/* SIDEBAR */
+.sidebar{background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow:hidden}
+.sidebar-section{padding:1rem;border-bottom:1px solid var(--divider)}
+.sidebar-section h3{font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem}
+.template-btn{width:100%;text-align:left;padding:.625rem .75rem;border-radius:var(--r-md);font-size:.875rem;font-weight:500;transition:background .15s,color .15s;display:flex;align-items:center;gap:.75rem;margin-bottom:.25rem}
+.template-btn:hover{background:var(--surface-offset)}
+.template-btn.active{background:var(--ube-l);color:var(--ube);font-weight:700}
+.template-icon{font-size:1.1rem;width:24px;flex-shrink:0}
+
+.sidebar-fields{padding:1rem;flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:.875rem}
+.field-group{display:flex;flex-direction:column;gap:.375rem}
+.field-label{font-size:.75rem;font-weight:700;color:var(--muted);letter-spacing:.04em;text-transform:uppercase}
+.field-input{padding:.5rem .625rem;border-radius:var(--r-md);border:1.5px solid var(--border);background:var(--surface-2);font-size:.875rem;transition:border-color .15s;outline:none;color:var(--text)}
+.field-input:focus{border-color:var(--ube)}
+
+/* MAIN */
+.main-area{display:flex;flex-direction:column;overflow:hidden;min-height:0}
+.composer-header{padding:1rem 1.5rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;flex-wrap:wrap;gap:.75rem}
+.composer-header h2{font-size:1.1rem;font-weight:700}
+.action-btns{display:flex;gap:.5rem;align-items:center;flex-wrap:wrap}
+.btn{padding:.375rem .875rem;border-radius:var(--r-full);font-size:.875rem;font-weight:600;transition:background .15s,transform .1s,opacity .15s;cursor:pointer;display:inline-flex;align-items:center;gap:.375rem}
+.btn-primary{background:var(--ube);color:#fff}
+.btn-primary:hover{opacity:.9;transform:translateY(-1px)}
+.btn-ghost{color:var(--muted);border:1px solid var(--border)}
+.btn-ghost:hover{color:var(--text);background:var(--surface-offset)}
+.btn-success{background:var(--success);color:#fff}
+.btn-success:hover{opacity:.9;transform:translateY(-1px)}
+.btn-pandan{background:var(--pandan);color:#fff}
+.btn-pandan:hover{opacity:.9;transform:translateY(-1px)}
+
+.tabs{display:flex;gap:0;border-bottom:1px solid var(--border);padding:0 1.5rem;flex-shrink:0}
+.tab{padding:.625rem .875rem;font-size:.875rem;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;transition:color .15s,border-color .15s;cursor:pointer;margin-bottom:-1px;user-select:none}
+.tab.active{color:var(--ube);border-bottom-color:var(--ube)}
+.tab:hover:not(.active){color:var(--text)}
+
+.panel{flex:1;overflow:hidden;display:none;min-height:0}
+.panel.active{display:flex;flex-direction:column}
+
+/* COMPOSE */
+.compose-panel{padding:1.5rem;display:flex;flex-direction:column;gap:1rem;overflow-y:auto;flex:1}
+.email-meta{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-lg);overflow:hidden}
+.meta-row{display:flex;align-items:center;border-bottom:1px solid var(--border);padding:.5rem .875rem;gap:.75rem}
+.meta-row:last-child{border-bottom:none}
+.meta-label{font-size:.8rem;font-weight:700;color:var(--muted);min-width:55px;flex-shrink:0}
+.meta-input{flex:1;background:none;border:none;font-size:.875rem;padding:.25rem 0;outline:none;color:var(--text)}
+.subject-input{font-weight:600}
+.body-textarea{min-height:340px;resize:vertical;padding:1rem;border-radius:var(--r-lg);border:1px solid var(--border);background:var(--surface-2);font-size:.9rem;line-height:1.7;font-family:var(--font);outline:none;transition:border-color .15s;color:var(--text)}
+.body-textarea:focus{border-color:var(--ube)}
+.char-count{font-size:.75rem;color:var(--faint);text-align:right;margin-top:-.5rem}
+
+/* PREVIEW */
+.preview-panel{padding:1.5rem;overflow-y:auto;flex:1}
+.email-preview-wrapper{max-width:600px;margin:0 auto;background:white;border-radius:var(--r-xl);box-shadow:var(--sh-md);overflow:hidden;border:1px solid var(--border)}
+.preview-banner{background:linear-gradient(135deg,#7B4FA6,#5a3278);color:white;padding:1.5rem;text-align:center}
+.preview-banner-logo{font-size:1.5rem;font-weight:800;margin-bottom:.25rem}
+.preview-meta{background:#fafafa;padding:.875rem 2rem;border-bottom:1px solid #eee;font-size:.8rem;color:#555}
+.preview-meta .pm-row{display:flex;gap:.5rem;margin-bottom:.25rem}
+.preview-meta .pm-row:last-child{margin-bottom:0}
+.pm-label{font-weight:700;color:#333;min-width:55px}
+.preview-body{padding:2rem;font-size:.95rem;line-height:1.8;color:#28251d;white-space:pre-wrap;font-family:Georgia,serif}
+.preview-footer{background:#f7f6f2;padding:1rem;text-align:center;font-size:.75rem;color:#7a7974;border-top:1px solid #dcd9d5}
+
+/* BCC LIST */
+.bcc-panel{padding:1.5rem;display:flex;flex-direction:column;gap:1rem;overflow-y:auto;flex:1}
+.bcc-input-row{display:flex;gap:.625rem}
+.bcc-tag{display:inline-flex;align-items:center;gap:.375rem;background:var(--ube-l);color:var(--ube);padding:.25rem .75rem;border-radius:var(--r-full);font-size:.8rem;font-weight:600;margin:.25rem}
+.bcc-tag button{width:16px;height:16px;border-radius:50%;background:var(--ube);color:white;font-size:.65rem;display:flex;align-items:center;justify-content:center;flex-shrink:0;cursor:pointer;border:none}
+.bcc-list{display:flex;flex-wrap:wrap;padding:.75rem;background:var(--surface-2);border-radius:var(--r-lg);border:1px solid var(--border);min-height:60px}
+.bcc-empty{color:var(--faint);font-size:.875rem;padding:.25rem}
+
+/* MAILTO MODAL */
+.mailto-modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem}
+.mailto-modal-overlay.open{display:flex}
+.mailto-modal{background:var(--surface);border-radius:var(--r-xl);width:100%;max-width:480px;box-shadow:var(--sh-md);overflow:hidden;animation:slideUp .18s ease}
+@keyframes slideUp{from{transform:translateY(12px);opacity:0}to{transform:translateY(0);opacity:1}}
+.mm-header{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.mm-header h3{font-size:1.1rem;font-weight:700}
+.mm-close{width:28px;height:28px;border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:background .15s;cursor:pointer}
+.mm-close:hover{background:var(--surface-offset)}
+.mm-body{padding:1.25rem;display:flex;flex-direction:column;gap:.875rem}
+.mm-note{font-size:.8rem;color:var(--muted);background:var(--gold-l);border-radius:var(--r-md);padding:.75rem 1rem;line-height:1.5}
+.mm-subject{font-size:.875rem;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);padding:.625rem .875rem;font-weight:600;color:var(--text)}
+.mm-footer{padding:.875rem 1.25rem;border-top:1px solid var(--border);display:flex;gap:.75rem;justify-content:flex-end}
+.mm-to-input{padding:.5rem .75rem;border-radius:var(--r-md);border:1.5px solid var(--border);background:var(--surface-2);font-size:.875rem;outline:none;transition:border-color .15s;color:var(--text);width:100%}
+.mm-to-input:focus{border-color:var(--ube)}
+
+/* TOAST */
+.toast{position:fixed;bottom:1.5rem;right:1.5rem;background:var(--success);color:white;padding:.75rem 1.25rem;border-radius:var(--r-full);font-size:.875rem;font-weight:600;box-shadow:var(--sh-md);z-index:999;display:none;align-items:center;gap:.5rem;max-width:360px}
+.toast.show{display:flex;animation:fadeIn .2s}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:768px){.app-body{grid-template-columns:1fr}.sidebar{border-right:none;border-bottom:1px solid var(--border);max-height:40vh;overflow-y:auto}.composer-header{flex-direction:column;align-items:flex-start}}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-brand">
+    <svg viewBox="0 0 28 28" fill="none">
+      <circle cx="14" cy="14" r="13" fill="#7B4FA6"/>
+      <path d="M7 20V8h6a4.5 4.5 0 0 1 0 9H11v3H7z" fill="white"/>
+      <circle cx="13" cy="12.5" r="2.5" fill="#E8A020"/>
+    </svg>
+    Pilipinas Fuel · Email Tool
+  </div>
+  <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+  </button>
+</header>
+
+<div class="app-body">
+
+  <!-- SIDEBAR -->
+  <div class="sidebar">
+    <div class="sidebar-section">
+      <h3>Email Templates</h3>
+      <button class="template-btn active" onclick="loadTemplate('influencer', this)"><span class="template-icon">🤳</span>Influencer Pitch</button>
+      <button class="template-btn" onclick="loadTemplate('retailer', this)"><span class="template-icon">🏪</span>Retailer Introduction</button>
+      <button class="template-btn" onclick="loadTemplate('copacker', this)"><span class="template-icon">🏭</span>Co-packer Inquiry</button>
+      <button class="template-btn" onclick="loadTemplate('investor', this)"><span class="template-icon">💼</span>Investor Update</button>
+      <button class="template-btn" onclick="loadTemplate('event', this)"><span class="template-icon">🎉</span>Community Event Invite</button>
+      <button class="template-btn" onclick="loadTemplate('wholesale', this)"><span class="template-icon">📦</span>Wholesale Inquiry</button>
+    </div>
+    <div class="sidebar-fields">
+      <h3 style="font-size:.75rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:0">Merge Fields</h3>
+      <div class="field-group">
+        <label class="field-label">Recipient Name</label>
+        <input class="field-input" id="m-name" placeholder="e.g. Jessica" oninput="updatePreview()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Their Brand / Co.</label>
+        <input class="field-input" id="m-brand" placeholder="e.g. FitLife PH" oninput="updatePreview()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Event / Location</label>
+        <input class="field-input" id="m-location" placeholder="e.g. Pistahan Festival" oninput="updatePreview()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Date / Deadline</label>
+        <input class="field-input" id="m-date" placeholder="e.g. July 15, 2026" oninput="updatePreview()">
+      </div>
+      <div class="field-group">
+        <label class="field-label">Sender Name</label>
+        <input class="field-input" id="m-sender" value="Arvin Zapanta" oninput="updatePreview()">
+      </div>
+    </div>
+  </div>
+
+  <!-- MAIN -->
+  <div class="main-area">
+    <div class="composer-header">
+      <h2 id="template-name">Influencer Pitch</h2>
+      <div class="action-btns">
+        <button class="btn btn-ghost" onclick="copyToClipboard()">📋 Copy</button>
+        <button class="btn btn-ghost" onclick="downloadTxt()">⬇ Download .txt</button>
+        <button class="btn btn-success" onclick="openMailtoModal()">✉️ Open in Email Client</button>
+      </div>
+    </div>
+
+    <div class="tabs">
+      <div class="tab active" onclick="switchTab('compose',this)">✏️ Compose</div>
+      <div class="tab" onclick="switchTab('preview',this)">👁 Preview</div>
+      <div class="tab" onclick="switchTab('bcc',this)">📋 BCC List</div>
+    </div>
+
+    <!-- COMPOSE -->
+    <div class="panel active" id="panel-compose">
+      <div class="compose-panel">
+        <div class="email-meta">
+          <div class="meta-row"><span class="meta-label">To:</span><input class="meta-input" id="m-to" placeholder="recipient@email.com"></div>
+          <div class="meta-row"><span class="meta-label">CC:</span><input class="meta-input" id="m-cc" placeholder="optional cc@email.com"></div>
+          <div class="meta-row"><span class="meta-label">Subject:</span><input class="meta-input subject-input" id="m-subject" oninput="updatePreview()"></div>
+        </div>
+        <textarea class="body-textarea" id="m-body" oninput="updatePreview();updateCharCount()" placeholder="Email body will appear here…"></textarea>
+        <div class="char-count" id="char-count"></div>
+      </div>
+    </div>
+
+    <!-- PREVIEW -->
+    <div class="panel" id="panel-preview">
+      <div class="preview-panel">
+        <div class="email-preview-wrapper">
+          <div class="preview-banner">
+            <div class="preview-banner-logo">🇵🇭 Pilipinas Fuel</div>
+            <div style="font-size:.8rem;opacity:.8">Fueled by Heritage. Built for Today.</div>
+          </div>
+          <div class="preview-meta">
+            <div class="pm-row"><span class="pm-label">To:</span><span id="prev-to">—</span></div>
+            <div class="pm-row"><span class="pm-label">Subject:</span><span id="prev-subject" style="font-weight:600"></span></div>
+          </div>
+          <div class="preview-body" id="preview-body"></div>
+          <div class="preview-footer">Pilipinas Fuel LLC · Centreville, Virginia · hello@pilipinasfuel.com</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- BCC -->
+    <div class="panel" id="panel-bcc">
+      <div class="bcc-panel">
+        <div>
+          <h3 style="font-size:1rem;font-weight:700;margin-bottom:.375rem">BCC / Recipient List</h3>
+          <p style="font-size:.875rem;color:var(--muted)">Add recipients for bulk outreach. Stays in-session only.</p>
+        </div>
+        <div class="bcc-input-row">
+          <input class="field-input" id="bcc-input" placeholder="name@email.com or Name &lt;email&gt;" style="flex:1" onkeydown="if(event.key==='Enter')addBcc()">
+          <button class="btn btn-primary" onclick="addBcc()">Add</button>
+        </div>
+        <div class="bcc-list" id="bcc-list"><span class="bcc-empty">No recipients yet — add above.</span></div>
+        <div style="font-size:.8rem;color:var(--muted)" id="bcc-count"></div>
+        <div style="display:flex;gap:.5rem;flex-wrap:wrap">
+          <button class="btn btn-ghost" onclick="copyBccList()">📋 Copy All Emails</button>
+          <button class="btn btn-ghost" onclick="openMailtoWithBcc()">✉️ Open in Email Client (BCC all)</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- MAILTO MODAL -->
+<div class="mailto-modal-overlay" id="mailto-overlay" onclick="if(event.target===this)closeMailtoModal()">
+  <div class="mailto-modal">
+    <div class="mm-header">
+      <h3>Open in Email Client</h3>
+      <button class="mm-close" onclick="closeMailtoModal()">✕</button>
+    </div>
+    <div class="mm-body">
+      <div class="mm-note">
+        ℹ️ This will open your default email app (Gmail, Outlook, Apple Mail) with the subject and body pre-filled. Very long emails may be truncated — use Copy + Paste for those.
+      </div>
+      <div class="field-group">
+        <label class="field-label">To (email address)</label>
+        <input type="email" class="mm-to-input" id="mm-to" placeholder="recipient@email.com">
+      </div>
+      <div class="mm-subject" id="mm-subject-preview"></div>
+    </div>
+    <div class="mm-footer">
+      <button class="btn btn-ghost" onclick="closeMailtoModal()">Cancel</button>
+      <button class="btn btn-success" onclick="launchMailto()">✉️ Open Email Client</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ── Theme ─────────────────────────────────────────
+(function(){
+  const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;
+  let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
+  r.setAttribute('data-theme',d);
+  t&&t.addEventListener('click',()=>{d=d==='dark'?'light':'dark';r.setAttribute('data-theme',d);});
+})();
+
+// ── Templates ─────────────────────────────────────
+const TEMPLATES = {
+influencer:{
+  name:'Influencer Pitch',
+  subject:'Collab opportunity — Filipino protein bars 🇵🇭 [{{name}}]',
+  body:`Hi {{name}},
+
+I've been following your content for a while — the way you authentically represent Filipino culture while crushing your fitness goals is exactly the energy we're building at Pilipinas Fuel.
+
+We're a Filipino-American protein bar brand launching in 2026 with flavors like Ube Velvet, Pandan Cream, and Turon Cinnamon — the first protein bars made with authentic Filipino flavors and clean nutrition (17–20g protein, <5g sugar).
+
+We'd love to send you a complimentary sample pack and explore a paid partnership. We're specifically looking for authentic Filipino voices in the health and fitness space — not just anyone with a following.
+
+Here's what we're thinking:
+• 1–3 sponsored posts/Reels on Instagram and/or TikTok
+• Full creative freedom — we want your authentic reaction
+• Competitive compensation based on your reach and engagement
+
+Would you be open to a quick call this week? I'd love to learn more about your audience and what would feel authentic for you.
+
+Looking forward to connecting, {{name}}!
+
+Salamat,
+{{sender}}
+Founder, Pilipinas Fuel
+Centreville, Virginia
+hello@pilipinasfuel.com`
+},
+retailer:{
+  name:'Retailer Introduction',
+  subject:'New Filipino protein bar brand — wholesale inquiry for {{brand}}',
+  body:`Dear {{name}},
+
+My name is {{sender}}, founder of Pilipinas Fuel — the first Filipino-American protein bar brand in the US.
+
+We're reaching out to {{brand}} because we believe our products would resonate strongly with your customer base, particularly Filipino-American shoppers who are increasingly seeking food products that reflect their heritage.
+
+About our products:
+• Ube Velvet, Pandan Cream, Turon Cinnamon, Dalandan Citrus
+• 17–20g protein, <5g sugar, clean label
+• Price point: $3.50–4.50/bar (SRP)
+• Gross margin for retailers: 40–45%
+
+We're looking to place our initial retail launch in select stores in the Mid-Atlantic region, and {{brand}} is at the top of our list.
+
+I'd love to set up a 15-minute call, bring samples, and walk you through our sell sheet. Would {{date}} work for a brief meeting?
+
+Thank you for your consideration.
+
+Maraming salamat,
+{{sender}}
+Founder, Pilipinas Fuel`
+},
+copacker:{
+  name:'Co-packer Inquiry',
+  subject:'New Filipino protein bar brand — co-manufacturing inquiry',
+  body:`Hi {{name}},
+
+I'm {{sender}}, founder of Pilipinas Fuel, a new Filipino-American protein bar brand launching in 2026.
+
+I'm reaching out to explore a co-manufacturing partnership for our initial production run.
+
+Product details:
+• Type: Protein bars (chewy/soft format)
+• Target macros: 17–20g protein, <5g sugar, ~200–250 cal
+• Key ingredients: Ube powder, pandan extract, saba banana, dalandan orange
+• Initial order: 500–1,000 units (2 SKUs)
+• Packaging: Flow-wrap individual bars, retail display box (12-count)
+
+Key questions:
+1. What is your minimum order quantity (MOQ) for a new brand?
+2. Are you SQF or BRC certified?
+3. Can you assist with recipe formulation and nutrition label generation?
+4. What is your typical lead time from final recipe to first production run?
+5. Ballpark cost per unit at 500 and 5,000 unit volumes?
+
+We're looking for a co-packer who can scale with us long-term. Happy to schedule a discovery call.
+
+Best,
+{{sender}}
+Founder, Pilipinas Fuel | hello@pilipinasfuel.com`
+},
+investor:{
+  name:'Investor Update',
+  subject:'Pilipinas Fuel — {{date}} Founder Update',
+  body:`Hi {{name}},
+
+Quick update on Pilipinas Fuel as we head into our launch phase.
+
+Key milestones since last update:
+✅ Virginia LLC registered + EIN obtained
+✅ Brand identity finalized (Ube, Pandan, Turon, Dalandan flavors)
+✅ 247+ people on our pre-launch email waitlist
+🔄 Co-packer vetted — contracts in progress
+🔄 USPTO trademark application filed
+
+Current traction:
+• Pre-launch waitlist: 247+ email subscribers (organic, no paid ads)
+• Target community: 4.2M Filipino-Americans in the US
+• Market: $15.8B protein bar market growing at 5.5% CAGR
+• Competitive advantage: First mover in Filipino-flavored functional nutrition
+
+Coming up:
+• First production run (500 units) — targeting {{date}}
+• DTC Shopify launch
+• First community event sales
+
+Happy to jump on a call to discuss further.
+
+Maraming salamat,
+{{sender}}
+Founder, Pilipinas Fuel`
+},
+event:{
+  name:'Community Event Invite',
+  subject:'🇵🇭 You\'re invited — Pilipinas Fuel at {{location}}!',
+  body:`Mabuhay {{name}}!
+
+We are thrilled to announce that Pilipinas Fuel will be at {{location}} on {{date}}, and we'd love for you and your community to join us!
+
+Come try the first Filipino-inspired protein bars in the US — and yes, they actually taste like home. 🍠🌿
+
+What we'll have:
+🍠 Ube Velvet — Purple yam + coconut milk + vanilla
+🌿 Pandan Cream — Pandan + coconut + jasmine
+🍌 Turon Cinnamon — Saba banana + cinnamon + brown sugar
+🍊 Dalandan Citrus — Philippine orange + ginger + zest
+
+All bars: 17–20g protein, <5g sugar, clean ingredients.
+
+Free samples for all attendees. First 50 purchases get a 20% founding member discount.
+
+We'd love to have {{brand}} involved! Reach out to co-promote or run a joint giveaway.
+
+Salamat at mabuhay! 🇵🇭
+{{sender}}
+Founder, Pilipinas Fuel`
+},
+wholesale:{
+  name:'Wholesale Inquiry',
+  subject:'Pilipinas Fuel — wholesale program introduction for {{brand}}',
+  body:`Dear {{name}},
+
+My name is {{sender}}, founder of Pilipinas Fuel, a Filipino-American protein bar brand based in Virginia.
+
+We're launching a wholesale program and wanted to reach out to {{brand}} as a priority partner.
+
+Our Wholesale Program:
+• Minimum order: 6 cases (72 bars) per SKU
+• Wholesale price: $2.00–2.40/bar (at 6-case MOQ)
+• Retail price: $3.50–4.50/bar
+• Retailer gross margin: ~40–45%
+• Payment terms: Net 15 (with approved credit)
+• Lead time: 5–7 business days
+
+Why Pilipinas Fuel:
+✓ No competitors in Filipino-flavored protein bars
+✓ 4.2M Filipino-Americans are your high-value, underserved customers
+✓ Clean label — no artificial colors, flavors, or sweeteners
+
+I'd love to send a complimentary sample box to {{name}} and your team at {{brand}}.
+
+What's the best address to ship samples?
+
+Maraming salamat,
+{{sender}}
+Founder, Pilipinas Fuel
+hello@pilipinasfuel.com`
+}
+};
+
+let currentTemplate = 'influencer';
+let bccList = [];
+
+// ── Core Functions ────────────────────────────────
+function loadTemplate(key, el) {
+  currentTemplate = key;
+  const t = TEMPLATES[key];
+  document.querySelectorAll('.template-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('template-name').textContent = t.name;
+  document.getElementById('m-subject').value = t.subject;
+  document.getElementById('m-body').value = t.body;
+  updatePreview();
+  updateCharCount();
+}
+
+function getMerged(text) {
+  return text
+    .replace(/\{\{name\}\}/g, document.getElementById('m-name').value || '[Name]')
+    .replace(/\{\{brand\}\}/g, document.getElementById('m-brand').value || '[Their Company]')
+    .replace(/\{\{location\}\}/g, document.getElementById('m-location').value || '[Event/Location]')
+    .replace(/\{\{date\}\}/g, document.getElementById('m-date').value || '[Date]')
+    .replace(/\{\{sender\}\}/g, document.getElementById('m-sender').value || '[Your Name]')
+    .replace(/\{\{m\}\}/g, '247+');
+}
+
+function updatePreview() {
+  const subject = getMerged(document.getElementById('m-subject').value);
+  const body = getMerged(document.getElementById('m-body').value);
+  const to = document.getElementById('m-to').value;
+  document.getElementById('preview-body').textContent = body;
+  document.getElementById('prev-to').textContent = to || '—';
+  document.getElementById('prev-subject').textContent = subject;
+}
+
+function updateCharCount() {
+  const body = document.getElementById('m-body').value;
+  const el = document.getElementById('char-count');
+  el.textContent = `${body.length} characters · ${body.split(/\n/).length} lines`;
+}
+
+function switchTab(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  el.classList.add('active');
+}
+
+// ── Copy ──────────────────────────────────────────
+function copyToClipboard() {
+  const subject = getMerged(document.getElementById('m-subject').value);
+  const body = getMerged(document.getElementById('m-body').value);
+  const full = `Subject: ${subject}\n\n${body}`;
+  navigator.clipboard.writeText(full)
+    .then(() => showToast('✅ Copied to clipboard!'))
+    .catch(() => {
+      const ta = document.createElement('textarea');
+      ta.value = full;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast('✅ Copied!');
+    });
+}
+
+// ── Download as .txt ──────────────────────────────
+function downloadTxt() {
+  const subject = getMerged(document.getElementById('m-subject').value);
+  const body = getMerged(document.getElementById('m-body').value);
+  const to = document.getElementById('m-to').value;
+  const cc = document.getElementById('m-cc').value;
+  const timestamp = new Date().toLocaleDateString('en-US');
+  const content = [
+    `Pilipinas Fuel — Email Draft`,
+    `Exported: ${timestamp}`,
+    `Template: ${TEMPLATES[currentTemplate]?.name || currentTemplate}`,
+    `──────────────────────────────────────`,
+    to ? `To: ${to}` : '',
+    cc ? `CC: ${cc}` : '',
+    `Subject: ${subject}`,
+    `──────────────────────────────────────`,
+    '',
+    body,
+    '',
+    `──────────────────────────────────────`,
+    `Pilipinas Fuel LLC · Centreville, Virginia`,
+    `hello@pilipinasfuel.com`,
+  ].filter(line => line !== undefined).join('\n');
+
+  const slug = (TEMPLATES[currentTemplate]?.name || 'email').toLowerCase().replace(/\s+/g, '-');
+  const filename = `pilipinas-fuel-${slug}-${timestamp.replace(/\//g,'-')}.txt`;
+
+  const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('⬇ Downloaded as ' + filename);
+}
+
+// ── Mailto Modal ──────────────────────────────────
+function openMailtoModal() {
+  const to = document.getElementById('m-to').value;
+  document.getElementById('mm-to').value = to;
+  const subject = getMerged(document.getElementById('m-subject').value);
+  document.getElementById('mm-subject-preview').textContent = 'Subject: ' + subject;
+  document.getElementById('mailto-overlay').classList.add('open');
+  setTimeout(() => document.getElementById('mm-to').focus(), 50);
+}
+
+function closeMailtoModal() {
+  document.getElementById('mailto-overlay').classList.remove('open');
+}
+
+function launchMailto() {
+  const to = document.getElementById('mm-to').value.trim();
+  const subject = getMerged(document.getElementById('m-subject').value);
+  const body = getMerged(document.getElementById('m-body').value);
+  const cc = document.getElementById('m-cc').value.trim();
+
+  let mailto = `mailto:${encodeURIComponent(to)}?subject=${encodeURIComponent(subject)}`;
+  if (cc) mailto += `&cc=${encodeURIComponent(cc)}`;
+
+  // Body may be truncated by browsers at ~2000 chars in mailto
+  const encodedBody = encodeURIComponent(body);
+  if (mailto.length + encodedBody.length + 6 < 1900) {
+    mailto += `&body=${encodedBody}`;
+  } else {
+    // Truncated body with note
+    const truncated = body.substring(0, 800) + '\n\n[Body truncated — paste the rest from clipboard]\n\n' + body.substring(body.length - 200);
+    mailto += `&body=${encodeURIComponent(truncated)}`;
+    copyToClipboard();
+    showToast('⚠️ Long email — body truncated. Full text copied to clipboard!');
+  }
+
+  window.location.href = mailto;
+  closeMailtoModal();
+}
+
+// ── Mailto with BCC ───────────────────────────────
+function openMailtoWithBcc() {
+  if (!bccList.length) { showToast('⚠️ No recipients in BCC list yet'); return; }
+  const subject = getMerged(document.getElementById('m-subject').value);
+  const body = getMerged(document.getElementById('m-body').value);
+  const bccStr = bccList.join(',');
+  let mailto = `mailto:?bcc=${encodeURIComponent(bccStr)}&subject=${encodeURIComponent(subject)}`;
+  const encodedBody = encodeURIComponent(body);
+  if (mailto.length + encodedBody.length + 6 < 1900) {
+    mailto += `&body=${encodedBody}`;
+  } else {
+    copyToClipboard();
+    showToast('Long email — body copied to clipboard. Paste it manually after opening.');
+  }
+  window.location.href = mailto;
+}
+
+// ── BCC ───────────────────────────────────────────
+function addBcc() {
+  const val = document.getElementById('bcc-input').value.trim();
+  if (!val) return;
+  if (!bccList.includes(val)) {
+    bccList.push(val);
+    renderBcc();
+  }
+  document.getElementById('bcc-input').value = '';
+}
+
+function removeBcc(idx) {
+  bccList.splice(idx, 1);
+  renderBcc();
+}
+
+function renderBcc() {
+  const el = document.getElementById('bcc-list');
+  if (!bccList.length) {
+    el.innerHTML = '<span class="bcc-empty">No recipients yet — add above.</span>';
+    document.getElementById('bcc-count').textContent = '';
+    return;
+  }
+  el.innerHTML = bccList.map((e, i) =>
+    `<span class="bcc-tag">${e}<button onclick="removeBcc(${i})">✕</button></span>`
+  ).join('');
+  document.getElementById('bcc-count').textContent = `${bccList.length} recipient${bccList.length > 1 ? 's' : ''} in list`;
+}
+
+function copyBccList() {
+  if (!bccList.length) { showToast('⚠️ No recipients yet'); return; }
+  navigator.clipboard.writeText(bccList.join(', '))
+    .then(() => showToast('✅ All emails copied!'))
+    .catch(() => showToast('Copy from the tags above'));
+}
+
+// ── Toast ─────────────────────────────────────────
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3500);
+}
+
+// ── Init ──────────────────────────────────────────
+loadTemplate('influencer', document.querySelector('.template-btn.active'));
+updateCharCount();
+</script>
+</body>
+</html>

@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilipinas Fuel — Finance Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300..700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root,[data-theme="light"]{
+--bg:#f7f6f2;--surface:#f9f8f5;--surface-2:#fbfbf9;--surface-offset:#f0ede9;
+--border:#d4d1ca;--divider:#dcd9d5;
+--text:#28251d;--muted:#7a7974;--faint:#bab9b4;
+--primary:#01696f;--primary-h:#cedcd8;
+--ube:#7B4FA6;--ube-l:#e8d9f5;
+--pandan:#2D7A4F;--pandan-l:#d4ede1;
+--gold:#E8A020;--gold-l:#faeacc;
+--error:#a12c7b;--error-l:#f5ddf0;
+--success:#437a22;--success-l:#d4dfcc;
+--r-sm:.375rem;--r-md:.5rem;--r-lg:.75rem;--r-xl:1rem;--r-full:9999px;
+--sh-sm:0 1px 2px oklch(0.2 0.01 80/0.06);--sh-md:0 4px 12px oklch(0.2 0.01 80/0.08);
+--font:'Work Sans','Helvetica Neue',sans-serif;
+}
+[data-theme="dark"]{
+--bg:#171614;--surface:#1c1b19;--surface-2:#201f1d;--surface-offset:#1d1c1a;
+--border:#393836;--divider:#262523;
+--text:#cdccca;--muted:#797876;--faint:#5a5957;
+--primary:#4f98a3;--primary-h:#313b3b;
+--ube:#a47cc4;--ube-l:#3a2850;
+--pandan:#5aad7a;--pandan-l:#1e3d2a;
+--gold:#f0b847;--gold-l:#3d2f0e;
+--error:#d163a7;--error-l:#4c3d46;
+--success:#6daa45;--success-l:#3a4435;
+--sh-sm:0 1px 2px oklch(0 0 0/0.25);--sh-md:0 4px 12px oklch(0 0 0/0.35);
+}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);font-size:1rem;color:var(--text);background:var(--bg);min-height:100dvh}
+button{cursor:pointer;border:none;font:inherit;color:inherit;background:none}
+input{font:inherit;color:inherit}
+.app-header{background:var(--surface);border-bottom:1px solid var(--border);padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.header-brand{display:flex;align-items:center;gap:.75rem;font-size:1.2rem;font-weight:700}
+.header-brand svg{width:28px;height:28px}
+.theme-btn{width:34px;height:34px;border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:color .15s,background .15s}
+.theme-btn:hover{color:var(--text);background:var(--surface-offset)}
+.main{max-width:1200px;margin:0 auto;padding:1.5rem}
+.section-title{font-size:1rem;font-weight:800;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--divider)}
+/* KPI GRID */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1rem;margin-bottom:2rem}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:1.25rem;display:flex;flex-direction:column;gap:.375rem}
+.kpi-label{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.kpi-val{font-size:1.8rem;font-weight:800;font-variant-numeric:tabular-nums lining-nums;line-height:1}
+.kpi-sub{font-size:.75rem;color:var(--muted)}
+.kpi-ube .kpi-val{color:var(--ube)}
+.kpi-pandan .kpi-val{color:var(--pandan)}
+.kpi-gold .kpi-val{color:var(--gold)}
+.kpi-primary .kpi-val{color:var(--primary)}
+/* 2-col grid */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:2rem}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:1.25rem}
+.card h3{font-size:.875rem;font-weight:700;margin-bottom:1rem;color:var(--muted);text-transform:uppercase;letter-spacing:.05em}
+/* TABLE */
+table{width:100%;border-collapse:collapse;font-size:.875rem}
+th{text-align:left;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:.5rem .75rem;border-bottom:1px solid var(--border)}
+td{padding:.625rem .75rem;border-bottom:1px solid var(--divider);font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:none}
+.td-bold{font-weight:700}
+.td-right{text-align:right}
+.td-green{color:var(--success)}
+.td-red{color:var(--error)}
+.td-muted{color:var(--muted);font-size:.8rem}
+.badge-cat{display:inline-block;padding:1px 7px;border-radius:var(--r-full);font-size:.7rem;font-weight:700}
+/* CALC */
+.calc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin-bottom:.75rem}
+.calc-input-group{display:flex;flex-direction:column;gap:.375rem}
+.calc-label{font-size:.75rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.calc-input{padding:.5rem .75rem;border-radius:var(--r-md);border:1.5px solid var(--border);background:var(--surface-2);font-size:.875rem;transition:border-color .15s;font-variant-numeric:tabular-nums}
+.calc-input:focus{outline:none;border-color:var(--ube)}
+.calc-result{background:var(--ube-l);border-radius:var(--r-lg);padding:1rem;display:grid;grid-template-columns:repeat(3,1fr);gap:.5rem;margin-top:.75rem}
+.res-item{text-align:center}
+.res-val{font-size:1.25rem;font-weight:800;color:var(--ube);font-variant-numeric:tabular-nums}
+.res-label{font-size:.7rem;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+/* CHART */
+.chart-wrap{position:relative;height:250px}
+@media(max-width:768px){.two-col{grid-template-columns:1fr}.calc-grid{grid-template-columns:1fr 1fr}.kpi-grid{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.kpi-grid{grid-template-columns:1fr}.calc-grid{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<header class="app-header">
+<div class="header-brand">
+<svg viewBox="0 0 28 28" fill="none">
+<circle cx="14" cy="14" r="13" fill="#7B4FA6"/>
+<path d="M7 20V8h6a4.5 4.5 0 0 1 0 9H11v3H7z" fill="white"/>
+<circle cx="13" cy="12.5" r="2.5" fill="#E8A020"/>
+</svg>
+Pilipinas Fuel · Finance Dashboard
+</div>
+<button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+</button>
+</header>
+
+<main class="main">
+<!-- KPIs -->
+<div class="kpi-grid">
+<div class="kpi kpi-ube"><div class="kpi-label">Startup Budget</div><div class="kpi-val" id="kpi-budget">$30K</div><div class="kpi-sub">Total planned Year 1</div></div>
+<div class="kpi kpi-gold"><div class="kpi-label">Spent So Far</div><div class="kpi-val" id="kpi-spent">$0</div><div class="kpi-sub">Tracking starts at launch</div></div>
+<div class="kpi kpi-pandan"><div class="kpi-label">COGS / Bar</div><div class="kpi-val" id="kpi-cogs">$1.50</div><div class="kpi-sub">At 1,000 unit MOQ</div></div>
+<div class="kpi kpi-primary"><div class="kpi-label">Gross Margin</div><div class="kpi-val" id="kpi-margin">62%</div><div class="kpi-sub">At $4.00 SRP</div></div>
+<div class="kpi"><div class="kpi-label">Break-even</div><div class="kpi-val" id="kpi-bep" style="color:var(--primary)">~417</div><div class="kpi-sub">Bars/month at $4.00</div></div>
+<div class="kpi"><div class="kpi-label">Y1 Rev Target</div><div class="kpi-val" style="color:var(--gold)">$75K</div><div class="kpi-sub">Conservative estimate</div></div>
+</div>
+
+<!-- Charts row -->
+<div class="two-col">
+<div class="card">
+<h3>3-Year Revenue Projection</h3>
+<div class="chart-wrap"><canvas id="revenueChart"></canvas></div>
+</div>
+<div class="card">
+<h3>Startup Cost Breakdown</h3>
+<div class="chart-wrap"><canvas id="costChart"></canvas></div>
+</div>
+</div>
+
+<!-- COGS Calculator -->
+<div class="section-title">COGS Calculator</div>
+<div class="card" style="margin-bottom:1.5rem">
+<h3>Per-Bar Cost Estimator</h3>
+<div class="calc-grid">
+<div class="calc-input-group"><label class="calc-label">Ingredients ($/bar)</label><input type="number" class="calc-input" id="c-ing" value="0.65" step="0.01" oninput="calcCOGS()"></div>
+<div class="calc-input-group"><label class="calc-label">Packaging ($/bar)</label><input type="number" class="calc-input" id="c-pkg" value="0.25" step="0.01" oninput="calcCOGS()"></div>
+<div class="calc-input-group"><label class="calc-label">Labor/Overhead ($/bar)</label><input type="number" class="calc-input" id="c-lab" value="0.30" step="0.01" oninput="calcCOGS()"></div>
+<div class="calc-input-group"><label class="calc-label">Co-packer Fee ($/bar)</label><input type="number" class="calc-input" id="c-cop" value="0.20" step="0.01" oninput="calcCOGS()"></div>
+<div class="calc-input-group"><label class="calc-label">Shipping/Logistics</label><input type="number" class="calc-input" id="c-ship" value="0.15" step="0.01" oninput="calcCOGS()"></div>
+<div class="calc-input-group"><label class="calc-label">Retail SRP ($/bar)</label><input type="number" class="calc-input" id="c-srp" value="4.00" step="0.25" oninput="calcCOGS()"></div>
+</div>
+<div class="calc-result">
+<div class="res-item"><div class="res-val" id="r-cogs">$1.55</div><div class="res-label">Total COGS</div></div>
+<div class="res-item"><div class="res-val" id="r-gp">$2.45</div><div class="res-label">Gross Profit</div></div>
+<div class="res-item"><div class="res-val" id="r-gm">61%</div><div class="res-label">Gross Margin</div></div>
+</div>
+</div>
+
+<!-- Startup Costs Table -->
+<div class="section-title">Startup Cost Tracker</div>
+<div class="card" style="margin-bottom:1.5rem">
+<h3>Pre-Launch Expenses (Year 1 Budget)</h3>
+<table>
+<thead><tr><th>Category</th><th>Item</th><th class="td-right">Estimated</th><th class="td-right">Actual</th><th>Status</th></tr></thead>
+<tbody id="cost-table"></tbody>
+<tfoot><tr>
+<td colspan="2" class="td-bold">TOTAL</td>
+<td class="td-right td-bold" id="total-est"></td>
+<td class="td-right td-bold td-pandan" id="total-act"></td>
+<td></td>
+</tr></tfoot>
+</table>
+</div>
+
+<!-- Break-even Analysis -->
+<div class="section-title">Break-Even Analysis</div>
+<div class="card" style="margin-bottom:2rem">
+<h3>Monthly Units to Break Even</h3>
+<div class="calc-grid" style="grid-template-columns:repeat(3,1fr)">
+<div class="calc-input-group"><label class="calc-label">Fixed Monthly Costs ($)</label><input type="number" class="calc-input" id="be-fixed" value="2500" oninput="calcBEP()"></div>
+<div class="calc-input-group"><label class="calc-label">Price Per Unit ($)</label><input type="number" class="calc-input" id="be-price" value="4.00" step="0.25" oninput="calcBEP()"></div>
+<div class="calc-input-group"><label class="calc-label">Variable Cost/Unit ($)</label><input type="number" class="calc-input" id="be-var" value="1.55" step="0.05" oninput="calcBEP()"></div>
+</div>
+<div class="calc-result" style="grid-template-columns:repeat(4,1fr)">
+<div class="res-item"><div class="res-val" id="be-units">1,020</div><div class="res-label">Units to BEP</div></div>
+<div class="res-item"><div class="res-val" id="be-rev">$4,082</div><div class="res-label">Revenue at BEP</div></div>
+<div class="res-item"><div class="res-val" id="be-contrib">$2.45</div><div class="res-label">Contribution Margin</div></div>
+<div class="res-item"><div class="res-val" id="be-days">~34</div><div class="res-label">Days to BEP (est.)</div></div>
+</div>
+</div>
+</main>
+
+<script>
+// Theme
+(function(){const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';r.setAttribute('data-theme',d);t&&t.addEventListener('click',()=>{d=d==='dark'?'light':'dark';r.setAttribute('data-theme',d);});})();
+
+// Startup costs
+const COSTS = [
+{cat:'Legal',item:'Virginia LLC Filing',est:100,act:0,status:'Planned'},
+{cat:'Legal',item:'EIN Application',est:0,act:0,status:'Planned'},
+{cat:'Legal',item:'USPTO Trademark (2 classes)',est:700,act:0,status:'Planned'},
+{cat:'Legal',item:'Product Liability Insurance',est:1000,act:0,status:'Planned'},
+{cat:'Legal',item:'Legal/Attorney Fees',est:1500,act:0,status:'Planned'},
+{cat:'Finance',item:'Business Bank Account Setup',est:0,act:0,status:'Planned'},
+{cat:'Finance',item:'QuickBooks Online (1 yr)',est:540,act:0,status:'Planned'},
+{cat:'Finance',item:'CPA / Bookkeeper (1 yr)',est:2400,act:0,status:'Planned'},
+{cat:'Product',item:'Recipe Development / R&D',est:800,act:0,status:'Planned'},
+{cat:'Product',item:'Prototype Production (samples)',est:500,act:0,status:'Planned'},
+{cat:'Product',item:'Nutrition Label (FDA compliant)',est:400,act:0,status:'Planned'},
+{cat:'Product',item:'UPC Barcodes (GS1 US)',est:250,act:0,status:'Planned'},
+{cat:'Product',item:'First Production Run (1,000 units)',est:2500,act:0,status:'Planned'},
+{cat:'Marketing',item:'Brand Identity Design',est:2000,act:0,status:'Planned'},
+{cat:'Marketing',item:'Packaging Design',est:1500,act:0,status:'Planned'},
+{cat:'Marketing',item:'Shopify Store (1 yr)',est:792,act:0,status:'Planned'},
+{cat:'Marketing',item:'Klaviyo Email (6 months)',est:360,act:0,status:'Planned'},
+{cat:'Marketing',item:'Photography / Content Creation',est:1500,act:0,status:'Planned'},
+{cat:'Marketing',item:'Influencer Samples & Gifting',est:500,act:0,status:'Planned'},
+{cat:'Marketing',item:'Launch Event / Festival Booth',est:300,act:0,status:'Planned'},
+{cat:'Operations',item:'Initial Inventory (500 extra)',est:1250,act:0,status:'Planned'},
+{cat:'Operations',item:'Packaging Supplies',est:400,act:0,status:'Planned'},
+{cat:'Operations',item:'Shipping Materials',est:300,act:0,status:'Planned'},
+{cat:'Operations',item:'Domain + Email Hosting',est:120,act:0,status:'Planned'},
+{cat:'Operations',item:'Working Capital Buffer',est:5000,act:0,status:'Planned'},
+];
+
+const CAT_COLORS = {Legal:'#e8d9f5',Product:'#d4ede1',Marketing:'#faeacc',Finance:'#d4dfcc',Operations:'#cedcd8'};
+const CAT_TEXT = {Legal:'#7B4FA6',Product:'#2D7A4F',Marketing:'#8a5b00',Finance:'#437a22',Operations:'#01696f'};
+
+function renderCosts(){
+const tbody = document.getElementById('cost-table');
+tbody.innerHTML='';
+let totalEst=0,totalAct=0;
+COSTS.forEach((c,i)=>{
+totalEst+=c.est;totalAct+=c.act;
+const tr=document.createElement('tr');
+tr.innerHTML=`<td><span class="badge-cat" style="background:${CAT_COLORS[c.cat]};color:${CAT_TEXT[c.cat]}">${c.cat}</span></td>
+<td>${c.item}</td>
+<td class="td-right">$${c.est.toLocaleString()}</td>
+<td class="td-right"><input style="width:80px;padding:3px 6px;border:1px solid var(--border);border-radius:var(--r-sm);background:var(--surface-2);font-variant-numeric:tabular-nums;font-size:.8rem" type="number" value="${c.act}" onchange="COSTS[${i}].act=+this.value;renderCosts()"></td>
+<td><span style="font-size:.75rem;color:var(--muted)">${c.status}</span></td>`;
+tbody.appendChild(tr);
+});
+document.getElementById('total-est').textContent='$'+totalEst.toLocaleString();
+document.getElementById('total-act').textContent='$'+totalAct.toLocaleString();
+}
+
+// COGS Calculator
+function calcCOGS(){
+const ing=+document.getElementById('c-ing').value||0;
+const pkg=+document.getElementById('c-pkg').value||0;
+const lab=+document.getElementById('c-lab').value||0;
+const cop=+document.getElementById('c-cop').value||0;
+const ship=+document.getElementById('c-ship').value||0;
+const srp=+document.getElementById('c-srp').value||4;
+const cogs=ing+pkg+lab+cop+ship;
+const gp=srp-cogs;
+const gm=srp>0?gp/srp*100:0;
+document.getElementById('r-cogs').textContent='$'+cogs.toFixed(2);
+document.getElementById('r-gp').textContent='$'+gp.toFixed(2);
+document.getElementById('r-gm').textContent=gm.toFixed(0)+'%';
+document.getElementById('kpi-cogs').textContent='$'+cogs.toFixed(2);
+document.getElementById('kpi-margin').textContent=gm.toFixed(0)+'%';
+}
+
+// BEP
+function calcBEP(){
+const fixed=+document.getElementById('be-fixed').value||0;
+const price=+document.getElementById('be-price').value||4;
+const vari=+document.getElementById('be-var').value||1.55;
+const cm=price-vari;
+if(cm<=0){document.getElementById('be-units').textContent='N/A';return;}
+const units=Math.ceil(fixed/cm);
+const rev=units*price;
+const days=Math.ceil(units/30);
+document.getElementById('be-units').textContent=units.toLocaleString();
+document.getElementById('be-rev').textContent='$'+rev.toFixed(0).replace(/\B(?=(\d{3})+(?!\d))/g,',');
+document.getElementById('be-contrib').textContent='$'+cm.toFixed(2);
+document.getElementById('be-days').textContent='~'+days;
+document.getElementById('kpi-bep').textContent='~'+Math.ceil(fixed/cm);
+}
+
+// Charts
+function initCharts(){
+const isDark = document.documentElement.getAttribute('data-theme')==='dark';
+const textColor = isDark ? '#797876':'#7a7974';
+const gridColor = isDark ? 'rgba(255,255,255,0.06)':'rgba(0,0,0,0.06)';
+Chart.defaults.color = textColor;
+
+// Revenue chart
+const revCtx = document.getElementById('revenueChart').getContext('2d');
+if(window._revChart) window._revChart.destroy();
+window._revChart = new Chart(revCtx,{
+type:'bar',
+data:{
+labels:['Q1 Y1','Q2 Y1','Q3 Y1','Q4 Y1','Q1 Y2','Q2 Y2','Q3 Y2','Q4 Y2','Q1 Y3','Q2 Y3','Q3 Y3','Q4 Y3'],
+datasets:[
+{label:'Revenue',data:[3000,8000,15000,20000,40000,55000,70000,85000,120000,150000,180000,200000],backgroundColor:'rgba(123,79,166,0.75)',borderRadius:4},
+{label:'COGS',data:[1200,3200,6000,8000,16000,22000,28000,34000,48000,60000,72000,80000],backgroundColor:'rgba(123,79,166,0.25)',borderRadius:4}
+]},
+options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'top'}},scales:{x:{grid:{color:gridColor}},y:{grid:{color:gridColor},ticks:{callback:v=>'$'+v.toLocaleString()}}}}
+});
+
+// Cost donut
+const costCtx = document.getElementById('costChart').getContext('2d');
+if(window._costChart) window._costChart.destroy();
+const catTotals={Legal:0,Product:0,Marketing:0,Finance:0,Operations:0};
+COSTS.forEach(c=>catTotals[c.cat]+=c.est);
+window._costChart = new Chart(costCtx,{
+type:'doughnut',
+data:{
+labels:Object.keys(catTotals),
+datasets:[{data:Object.values(catTotals),backgroundColor:['#7B4FA6','#2D7A4F','#E8A020','#437a22','#01696f'],borderWidth:2,borderColor:isDark?'#1c1b19':'#f9f8f5'}]
+},
+options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{position:'bottom',labels:{padding:12,boxWidth:12}}},cutout:'60%'}
+});
+}
+
+renderCosts();
+calcCOGS();
+calcBEP();
+initCharts();
+</script>
+</body>
+</html>

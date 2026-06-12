@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilipinas Fuel — Fueled by Heritage. Built for Today.</title>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300..800&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root,[data-theme="light"]{
+--bg:#f7f6f2;--surface:#f9f8f5;--surface-2:#fbfbf9;--surface-offset:#f0ede9;
+--border:#d4d1ca;--divider:#dcd9d5;
+--text:#28251d;--text-2:#4a453e;--text-3:#7a7570;
+--muted:#7a7974;--faint:#bab9b4;
+--primary:#01696f;--primary-h:#cedcd8;
+--ube:#7B4FA6;--ube-dark:#5a3278;--ube-l:#e8d9f5;
+--pandan:#2D7A4F;--pandan-dark:#1d5235;--pandan-l:#d4ede1;
+--gold:#E8A020;--gold-dark:#b87b10;--gold-l:#faeacc;
+--error:#a12c7b;--success:#437a22;--success-l:#d4dfcc;
+--r-sm:.375rem;--r-md:.5rem;--r-lg:.75rem;--r-xl:1rem;--r-2xl:1.5rem;--r-full:9999px;
+--sh-sm:0 1px 4px rgba(26,23,20,.07);--sh-md:0 6px 24px rgba(26,23,20,.1);--sh-lg:0 20px 60px rgba(26,23,20,.14);
+--font:'Work Sans','Helvetica Neue',sans-serif;--font-display:'Instrument Serif',Georgia,serif;
+}
+[data-theme="dark"]{
+--bg:#171614;--surface:#1c1b19;--surface-2:#201f1d;--surface-offset:#1d1c1a;
+--border:#393836;--divider:#262523;
+--text:#cdccca;--text-2:#9a9590;--text-3:#7a7570;
+--muted:#797876;--faint:#5a5957;
+--primary:#4f98a3;--primary-h:#313b3b;
+--ube:#a47cc4;--ube-dark:#7B4FA6;--ube-l:#3a2850;
+--pandan:#5aad7a;--pandan-dark:#2D7A4F;--pandan-l:#1e3d2a;
+--gold:#f0b847;--gold-dark:#E8A020;--gold-l:#3d2f0e;
+--success:#6daa45;--success-l:#3a4435;
+--sh-sm:0 1px 4px rgba(0,0,0,.25);--sh-md:0 6px 24px rgba(0,0,0,.35);--sh-lg:0 20px 60px rgba(0,0,0,.4);
+}
+html{scroll-behavior:smooth;-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);font-size:1rem;color:var(--text);background:var(--bg);line-height:1.6}
+a{text-decoration:none;color:inherit}
+button{cursor:pointer;border:none;font:inherit;color:inherit;background:none}
+img{max-width:100%}
+
+/* ── NAV ── */
+.nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;transition:background .25s,box-shadow .25s,backdrop-filter .25s}
+.nav.scrolled{background:rgba(249,248,245,.93);backdrop-filter:blur(12px);box-shadow:var(--sh-sm)}
+[data-theme="dark"] .nav.scrolled{background:rgba(28,27,25,.93)}
+.nav-logo{display:flex;align-items:center;gap:.625rem;font-size:1.1rem;font-weight:800;letter-spacing:-.01em}
+.nav-logo svg{width:30px;height:30px;flex-shrink:0}
+.nav-links{display:flex;align-items:center;gap:1.75rem;list-style:none}
+.nav-links a{font-size:.875rem;font-weight:600;color:var(--text-2);transition:color .15s}
+.nav-links a:hover{color:var(--ube)}
+.nav-right{display:flex;align-items:center;gap:.75rem}
+.theme-btn{width:32px;height:32px;border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:color .15s,background .15s;flex-shrink:0}
+.theme-btn:hover{color:var(--text);background:var(--surface-offset)}
+.nav-cta{opacity:0;pointer-events:none;transform:translateY(-4px);transition:opacity .25s,transform .25s}
+.nav.scrolled .nav-cta{opacity:1;pointer-events:auto;transform:translateY(0)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.5rem;border-radius:var(--r-full);font-family:var(--font);font-weight:700;cursor:pointer;transition:background .15s,transform .1s,box-shadow .15s;text-decoration:none;border:none}
+.btn-sm{padding:.375rem 1rem;font-size:.85rem}
+.btn-md{padding:.625rem 1.5rem;font-size:.95rem}
+.btn-lg{padding:.8rem 2rem;font-size:1rem}
+.btn-ube{background:var(--ube);color:#fff}
+.btn-ube:hover{background:var(--ube-dark);transform:translateY(-1px);box-shadow:0 4px 16px rgba(123,79,166,.35)}
+.btn-gold{background:var(--gold);color:#fff}
+.btn-gold:hover{background:var(--gold-dark);transform:translateY(-1px)}
+.btn-outline{background:transparent;border:2px solid var(--ube);color:var(--ube)}
+.btn-outline:hover{background:var(--ube);color:#fff}
+.btn-ghost{color:var(--muted);border:1px solid var(--border)}
+.btn-ghost:hover{color:var(--text);background:var(--surface-offset)}
+
+/* ── SECTION ── */
+.section{padding:5rem 1.5rem}
+.section-inner{max-width:1100px;margin:0 auto}
+.section-label{font-size:.7rem;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--ube);margin-bottom:.625rem}
+.section-title{font-family:var(--font-display);font-size:clamp(1.9rem,3.5vw,2.8rem);line-height:1.2;letter-spacing:-.01em;color:var(--text);margin-bottom:1rem}
+.section-sub{font-size:1rem;color:var(--text-2);max-width:560px;line-height:1.7;margin-bottom:2.5rem}
+
+/* ── HERO ── */
+.hero{min-height:100dvh;display:flex;align-items:center;justify-content:center;padding:7rem 1.5rem 5rem;text-align:center;background:
+  radial-gradient(ellipse 80% 50% at 50% 0%,rgba(123,79,166,.1) 0%,transparent 70%),
+  radial-gradient(ellipse 50% 40% at 80% 80%,rgba(45,122,79,.07) 0%,transparent 60%),
+  var(--bg)}
+.hero-inner{max-width:740px;margin:0 auto}
+.hero-badge{display:inline-flex;align-items:center;gap:.5rem;background:var(--ube-l);color:var(--ube);font-size:.75rem;font-weight:700;letter-spacing:.05em;text-transform:uppercase;padding:.35rem .875rem;border-radius:var(--r-full);margin-bottom:1.75rem}
+.hero h1{font-family:var(--font-display);font-size:clamp(2.5rem,6vw,5rem);line-height:1.08;letter-spacing:-.02em;color:var(--text);margin-bottom:1.25rem}
+.hero h1 em{font-style:italic;color:var(--ube)}
+.hero-sub{font-size:1.1rem;color:var(--text-2);max-width:500px;margin:0 auto 2.25rem;line-height:1.75}
+.hero-actions{display:flex;gap:.875rem;justify-content:center;flex-wrap:wrap;margin-bottom:2.75rem}
+.hero-flavors{display:flex;gap:.625rem;justify-content:center;flex-wrap:wrap}
+.flavor-chip{display:inline-flex;align-items:center;gap:.375rem;padding:.35rem .875rem;border-radius:var(--r-full);font-size:.78rem;font-weight:600;border:1.5px solid transparent;transition:transform .15s}
+.flavor-chip:hover{transform:translateY(-1px)}
+.flavor-ube{background:var(--ube-l);color:var(--ube);border-color:rgba(123,79,166,.2)}
+.flavor-pandan{background:var(--pandan-l);color:var(--pandan);border-color:rgba(45,122,79,.2)}
+.flavor-turon{background:var(--gold-l);color:var(--gold-dark);border-color:rgba(232,160,32,.2)}
+.flavor-dalandan{background:#fff3e8;color:#b86000;border-color:rgba(232,120,0,.2)}
+[data-theme="dark"] .flavor-dalandan{background:#2d1c0a;color:#f0a050}
+
+/* ── STATS STRIP ── */
+.stats-strip{background:var(--ube);color:#fff;padding:1.25rem 1.5rem}
+.stats-strip-inner{max-width:1100px;margin:0 auto;display:flex;gap:0;align-items:stretch;flex-wrap:wrap}
+.stat-item{flex:1;min-width:180px;text-align:center;padding:0 1.5rem;border-right:1px solid rgba(255,255,255,.2)}
+.stat-item:last-child{border-right:none}
+.stat-val{font-size:1.75rem;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;margin-bottom:.25rem}
+.stat-label{font-size:.75rem;font-weight:600;opacity:.75;text-transform:uppercase;letter-spacing:.06em}
+
+/* ── PRODUCTS ── */
+.products-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:1.25rem}
+.product-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-2xl);overflow:hidden;transition:transform .2s,box-shadow .2s;display:flex;flex-direction:column}
+.product-card:hover{transform:translateY(-4px);box-shadow:var(--sh-md)}
+.product-card-img{height:190px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.5rem;position:relative}
+.product-card-img-ube{background:linear-gradient(135deg,var(--ube-l) 0%,rgba(123,79,166,.3) 100%)}
+.product-card-img-pandan{background:linear-gradient(135deg,var(--pandan-l) 0%,rgba(45,122,79,.3) 100%)}
+.product-card-img-turon{background:linear-gradient(135deg,var(--gold-l) 0%,rgba(232,160,32,.3) 100%)}
+.product-card-img-dalandan{background:linear-gradient(135deg,#fff3e8 0%,rgba(232,120,0,.22) 100%)}
+[data-theme="dark"] .product-card-img-dalandan{background:linear-gradient(135deg,#2d1c0a 0%,rgba(232,120,0,.2) 100%)}
+.product-card-emoji{font-size:3.5rem}
+.product-card-macros-preview{display:flex;gap:.625rem}
+.macro-pill{font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:var(--r-full);background:rgba(255,255,255,.65);color:#28251d}
+.product-card-body{padding:1.25rem;flex:1;display:flex;flex-direction:column}
+.product-card-name{font-family:var(--font-display);font-size:1.35rem;margin-bottom:.2rem}
+.product-card-flavor{font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);margin-bottom:.625rem}
+.product-card-desc{font-size:.85rem;color:var(--text-2);line-height:1.65;flex:1;margin-bottom:1.1rem}
+.product-card-price{font-size:.85rem;font-weight:700;color:var(--text-2);margin-bottom:1rem}
+.product-card-cta{display:block;text-align:center;padding:.5rem;border-radius:var(--r-lg);font-size:.85rem;font-weight:700;background:var(--surface-offset);color:var(--ube);transition:background .15s,color .15s}
+.product-card-cta:hover{background:var(--ube);color:#fff}
+
+/* ── MISSION ── */
+.mission-grid{display:grid;grid-template-columns:1fr 1fr;gap:4rem;align-items:center}
+.mission-visual{background:linear-gradient(135deg,var(--ube-l),var(--pandan-l));border-radius:var(--r-2xl);aspect-ratio:4/3;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:.875rem;box-shadow:var(--sh-md)}
+.mission-visual-emoji{font-size:5rem}
+.mission-visual-tag{font-size:.75rem;font-weight:800;text-transform:uppercase;letter-spacing:.07em;color:var(--ube);background:rgba(255,255,255,.5);padding:.3rem .875rem;border-radius:var(--r-full)}
+.mission-values{display:flex;flex-direction:column;gap:1.1rem;margin-top:1.75rem}
+.value-item{display:flex;align-items:flex-start;gap:.875rem}
+.value-icon{width:38px;height:38px;border-radius:var(--r-md);background:var(--ube-l);display:flex;align-items:center;justify-content:center;font-size:1.1rem;flex-shrink:0}
+.value-text h4{font-weight:700;font-size:.9rem;margin-bottom:.2rem}
+.value-text p{font-size:.82rem;color:var(--text-2);line-height:1.6}
+
+/* ── FOUNDERS ── */
+.founders-section{background:var(--surface-offset)}
+.founders-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem}
+.founder-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-2xl);padding:1.5rem;display:flex;gap:1.25rem;align-items:flex-start;transition:box-shadow .15s}
+.founder-card:hover{box-shadow:var(--sh-md)}
+.founder-avatar{width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0;font-weight:800}
+.founder-info h4{font-size:1rem;font-weight:800;margin-bottom:.2rem}
+.founder-role{font-size:.78rem;font-weight:700;margin-bottom:.375rem}
+.founder-bio{font-size:.82rem;color:var(--text-2);line-height:1.6}
+.founder-badge{display:inline-block;padding:2px 8px;border-radius:var(--r-full);font-size:.68rem;font-weight:700;margin-top:.5rem}
+
+/* ── HOW IT WORKS ── */
+.how-bg{background:var(--surface-offset)}
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5rem;margin-top:3rem}
+.step{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:1.75rem 1.5rem;text-align:center}
+.step-num{width:44px;height:44px;border-radius:var(--r-full);background:var(--ube);color:#fff;font-size:1.1rem;font-weight:800;display:flex;align-items:center;justify-content:center;margin:0 auto .875rem}
+.step-icon{font-size:1.75rem;margin-bottom:.75rem}
+.step h3{font-weight:700;font-size:.95rem;margin-bottom:.5rem}
+.step p{font-size:.85rem;color:var(--text-2);line-height:1.65}
+
+/* ── WAITLIST ── */
+.waitlist{background:linear-gradient(135deg,var(--ube) 0%,var(--ube-dark) 60%,#3d1f5c 100%);color:#fff;text-align:center}
+.waitlist .section-label{color:rgba(255,255,255,.65)}
+.waitlist .section-title{color:#fff}
+.waitlist .section-sub{color:rgba(255,255,255,.75);margin:0 auto 2.25rem}
+.waitlist-counter{font-family:var(--font-display);font-size:clamp(3rem,8vw,5.5rem);line-height:1;margin-bottom:.375rem}
+.waitlist-counter-label{font-size:.8rem;font-weight:700;color:rgba(255,255,255,.55);text-transform:uppercase;letter-spacing:.09em;margin-bottom:2.25rem}
+.waitlist-form{display:flex;gap:.75rem;max-width:460px;margin:0 auto 1rem;flex-wrap:wrap}
+.waitlist-input{flex:1;min-width:200px;padding:.7rem 1.25rem;border-radius:var(--r-full);border:2px solid rgba(255,255,255,.25);background:rgba(255,255,255,.12);color:#fff;font-family:var(--font);font-size:.9rem;outline:none;transition:border-color .15s}
+.waitlist-input::placeholder{color:rgba(255,255,255,.45)}
+.waitlist-input:focus{border-color:rgba(255,255,255,.55)}
+.waitlist-note{font-size:.77rem;color:rgba(255,255,255,.45);margin-bottom:.5rem}
+.waitlist-success{display:none;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.3);border-radius:var(--r-lg);padding:.875rem 1.5rem;font-size:.9rem;color:#fff;max-width:460px;margin:0 auto}
+
+/* ── FUTURE SECTIONS ── */
+.coming-soon{background:var(--surface)}
+.coming-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:1rem}
+.coming-card{background:var(--bg);border:2px dashed var(--border);border-radius:var(--r-xl);padding:1.5rem;text-align:center;display:flex;flex-direction:column;align-items:center;gap:.625rem}
+.coming-icon{font-size:2rem}
+.coming-title{font-size:.875rem;font-weight:700}
+.coming-desc{font-size:.78rem;color:var(--muted);line-height:1.55}
+.coming-badge{font-size:.68rem;font-weight:700;padding:2px 8px;border-radius:var(--r-full);background:var(--gold-l);color:var(--gold-dark)}
+
+/* ── SOCIAL PROOF ── */
+.testimonials-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:1.25rem;margin-top:2.25rem}
+.testimonial{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:1.5rem;transition:box-shadow .15s}
+.testimonial:hover{box-shadow:var(--sh-sm)}
+.testimonial-stars{color:var(--gold);font-size:.95rem;letter-spacing:.1em;margin-bottom:.75rem}
+.testimonial-text{font-size:.88rem;line-height:1.75;color:var(--text-2);margin-bottom:1rem;font-style:italic}
+.testimonial-author{display:flex;align-items:center;gap:.75rem}
+.testimonial-avatar{width:34px;height:34px;border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;font-weight:800;font-size:.8rem;color:#fff;flex-shrink:0}
+.testimonial-name{font-weight:700;font-size:.85rem}
+.testimonial-role{font-size:.73rem;color:var(--muted)}
+
+/* ── FOOTER ── */
+.footer{background:var(--text);color:rgba(255,255,255,.65);padding:3rem 1.5rem 1.75rem}
+.footer-inner{max-width:1100px;margin:0 auto}
+.footer-top{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:2.5rem;margin-bottom:2.5rem}
+.footer-brand{color:#fff;font-size:1.05rem;font-weight:800;display:flex;align-items:center;gap:.625rem;margin-bottom:.625rem}
+.footer-tagline{font-size:.83rem;line-height:1.65;margin-bottom:1.1rem;max-width:220px;color:rgba(255,255,255,.5)}
+.footer-col h5{font-size:.7rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:#fff;margin-bottom:.875rem}
+.footer-links{list-style:none;display:flex;flex-direction:column;gap:.5rem}
+.footer-links a{font-size:.85rem;transition:color .15s}
+.footer-links a:hover{color:#fff}
+.footer-socials{display:flex;gap:.625rem}
+.social-btn{width:32px;height:32px;border-radius:var(--r-full);border:1px solid rgba(255,255,255,.15);display:flex;align-items:center;justify-content:center;transition:border-color .15s,color .15s}
+.social-btn:hover{border-color:rgba(255,255,255,.5);color:#fff}
+.footer-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:1.25rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.75rem;font-size:.78rem}
+
+@media(max-width:900px){.mission-grid{grid-template-columns:1fr;gap:2rem}.mission-visual{display:none}.footer-top{grid-template-columns:1fr 1fr;gap:2rem}.steps{grid-template-columns:1fr}}
+@media(max-width:640px){.nav-links{display:none}.footer-top{grid-template-columns:1fr}.footer-bottom{flex-direction:column;text-align:center}.section{padding:3.5rem 1.25rem}.stats-strip-inner{gap:1rem}.stat-item{border-right:none;border-bottom:1px solid rgba(255,255,255,.15);padding:1rem 0}.stat-item:last-child{border-bottom:none}}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav" id="site-nav">
+  <a href="#" class="nav-logo">
+    <svg viewBox="0 0 30 30" fill="none">
+      <circle cx="15" cy="15" r="14" fill="#7B4FA6"/>
+      <path d="M8 22V8h6.5a5 5 0 0 1 0 10H12v4H8z" fill="white"/>
+      <circle cx="14.5" cy="13" r="2.8" fill="#E8A020"/>
+    </svg>
+    Pilipinas Fuel
+  </a>
+  <ul class="nav-links">
+    <li><a href="#products">Flavors</a></li>
+    <li><a href="#founders">Our Team</a></li>
+    <li><a href="#how-it-works">How It Works</a></li>
+    <li><a href="#waitlist">Pre-Order</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+    <a href="#waitlist" class="btn btn-sm btn-ube nav-cta">Join Waitlist</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="hero-inner">
+    <div class="hero-badge">🌺 Pre-Launch · Centreville, Virginia</div>
+    <h1>Fueled by <em>Heritage.</em><br>Built for Today.</h1>
+    <p class="hero-sub">The first Filipino-American functional protein bar — authentic flavors you grew up loving, rebuilt for the athlete you are now.</p>
+    <div class="hero-actions">
+      <a href="#waitlist" class="btn btn-lg btn-ube">Join the Waitlist</a>
+      <a href="#products" class="btn btn-lg btn-outline">Explore Flavors</a>
+    </div>
+    <div class="hero-flavors">
+      <a href="#ube" class="flavor-chip flavor-ube">🫐 Ube Velvet</a>
+      <a href="#pandan" class="flavor-chip flavor-pandan">🌿 Pandan Cream</a>
+      <a href="#turon" class="flavor-chip flavor-turon">🍌 Turon Cinnamon</a>
+      <a href="#dalandan" class="flavor-chip flavor-dalandan">🍊 Dalandan Citrus</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS STRIP -->
+<div class="stats-strip">
+  <div class="stats-strip-inner">
+    <div class="stat-item"><div class="stat-val">17–20g</div><div class="stat-label">Protein Per Bar</div></div>
+    <div class="stat-item"><div class="stat-val">&lt;5g</div><div class="stat-label">Sugar Per Bar</div></div>
+    <div class="stat-item"><div class="stat-val">4</div><div class="stat-label">Filipino Flavors</div></div>
+    <div class="stat-item"><div class="stat-val">$4</div><div class="stat-label">Starting Price</div></div>
+    <div class="stat-item"><div class="stat-val" id="waitlist-strip-count">247</div><div class="stat-label">On Waitlist</div></div>
+  </div>
+</div>
+
+<!-- PRODUCTS -->
+<section class="section" id="products" style="background:var(--surface-offset)">
+  <div class="section-inner">
+    <div class="section-label">Our Flavors</div>
+    <h2 class="section-title">Real Filipino Flavors. Real Nutrition.</h2>
+    <p class="section-sub">Each bar hits 17–20g protein with a clean label and authentic Filipino-inspired ingredients you can actually pronounce.</p>
+    <div class="products-grid">
+
+      <div class="product-card" id="ube">
+        <div class="product-card-img product-card-img-ube">
+          <div class="product-card-emoji">🫐</div>
+          <div class="product-card-macros-preview">
+            <span class="macro-pill">19g protein</span>
+            <span class="macro-pill">4g sugar</span>
+            <span class="macro-pill">220 cal</span>
+          </div>
+        </div>
+        <div class="product-card-body">
+          <div class="product-card-name">Ube Velvet</div>
+          <div class="product-card-flavor" style="color:var(--ube)">Purple Yam · Coconut Milk · Vanilla</div>
+          <p class="product-card-desc">Creamy, earthy, unmistakably Filipino — ube purple yam paired with coconut milk and a whisper of vanilla bean.</p>
+          <div class="product-card-price">$4.00 · Coming Soon</div>
+        </div>
+        <a href="#waitlist" class="product-card-cta">Notify Me at Launch →</a>
+      </div>
+
+      <div class="product-card" id="pandan">
+        <div class="product-card-img product-card-img-pandan">
+          <div class="product-card-emoji">🌿</div>
+          <div class="product-card-macros-preview">
+            <span class="macro-pill">18g protein</span>
+            <span class="macro-pill">3g sugar</span>
+            <span class="macro-pill">210 cal</span>
+          </div>
+        </div>
+        <div class="product-card-body">
+          <div class="product-card-name">Pandan Cream</div>
+          <div class="product-card-flavor" style="color:var(--pandan)">Pandan Leaf · Coconut · Jasmine</div>
+          <p class="product-card-desc">Southeast Asia's beloved green fragrance — sweet, grassy pandan extract with light coconut cream. A taste of home.</p>
+          <div class="product-card-price">$4.00 · Coming Soon</div>
+        </div>
+        <a href="#waitlist" class="product-card-cta">Notify Me at Launch →</a>
+      </div>
+
+      <div class="product-card" id="turon">
+        <div class="product-card-img product-card-img-turon">
+          <div class="product-card-emoji">🍌</div>
+          <div class="product-card-macros-preview">
+            <span class="macro-pill">20g protein</span>
+            <span class="macro-pill">5g sugar</span>
+            <span class="macro-pill">230 cal</span>
+          </div>
+        </div>
+        <div class="product-card-body">
+          <div class="product-card-name">Turon Cinnamon</div>
+          <div class="product-card-flavor" style="color:var(--gold-dark)">Saba Banana · Cinnamon · Brown Sugar</div>
+          <p class="product-card-desc">All the comfort of crispy turon — caramelized saba banana and cinnamon that tastes like a street food memory.</p>
+          <div class="product-card-price">$4.00 · Coming Soon</div>
+        </div>
+        <a href="#waitlist" class="product-card-cta">Notify Me at Launch →</a>
+      </div>
+
+      <div class="product-card" id="dalandan">
+        <div class="product-card-img product-card-img-dalandan">
+          <div class="product-card-emoji">🍊</div>
+          <div class="product-card-macros-preview">
+            <span class="macro-pill">17g protein</span>
+            <span class="macro-pill">4g sugar</span>
+            <span class="macro-pill">205 cal</span>
+          </div>
+        </div>
+        <div class="product-card-body">
+          <div class="product-card-name">Dalandan Citrus</div>
+          <div class="product-card-flavor" style="color:#b86000">Philippine Orange · Ginger · Zest</div>
+          <p class="product-card-desc">Bright, zippy, and energizing — dalandan (Philippine orange) zest with a hint of ginger. Wakes up your workout.</p>
+          <div class="product-card-price">$4.00 · Coming Soon</div>
+        </div>
+        <a href="#waitlist" class="product-card-cta">Notify Me at Launch →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- MISSION -->
+<section class="section" id="mission">
+  <div class="section-inner">
+    <div class="mission-grid">
+      <div>
+        <div class="section-label">Our Story</div>
+        <h2 class="section-title">Built for the Filipino-American who never saw themselves on the shelf.</h2>
+        <p class="section-sub">Walk into any supplement store and you'll find zero Filipino flavors. We built Pilipinas Fuel to change that.</p>
+        <div class="mission-values">
+          <div class="value-item">
+            <div class="value-icon">🌺</div>
+            <div class="value-text"><h4>Authentically Filipino</h4><p>Every flavor traces back to a real Filipino ingredient — not an approximation, not a gimmick.</p></div>
+          </div>
+          <div class="value-item">
+            <div class="value-icon" style="background:var(--pandan-l)">🌿</div>
+            <div class="value-text"><h4>Clean Label Commitment</h4><p>No artificial colors, no proprietary blends. You can read every ingredient on the label.</p></div>
+          </div>
+          <div class="value-item">
+            <div class="value-icon" style="background:var(--gold-l)">⚡</div>
+            <div class="value-text"><h4>Built for Performance</h4><p>17–20g protein, high fiber, minimal sugar — engineered for athletes and active people.</p></div>
+          </div>
+        </div>
+      </div>
+      <div class="mission-visual">
+        <div class="mission-visual-emoji">🇵🇭</div>
+        <div class="mission-visual-tag">Centreville, Virginia</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOUNDING TEAM -->
+<section class="section founders-section" id="founders">
+  <div class="section-inner">
+    <div class="section-label">Founding Team</div>
+    <h2 class="section-title">Built by the community it serves.</h2>
+    <p class="section-sub">Filipino-American founders with the engineering, operations, and cultural roots to build this brand the right way.</p>
+    <div class="founders-grid">
+      <div class="founder-card">
+        <div class="founder-avatar" style="background:var(--ube-l);color:var(--ube)">AZ</div>
+        <div class="founder-info">
+          <h4>Arvin Zapanta</h4>
+          <div class="founder-role" style="color:var(--ube)">Founder & CEO</div>
+          <p class="founder-bio">Engineering background. Leads brand vision, technology, strategy, and marketing. Born from a Filipino-American family story and a gap he saw in the nutrition market.</p>
+          <span class="founder-badge" style="background:var(--ube-l);color:var(--ube)">Centreville, VA</span>
+        </div>
+      </div>
+      <div class="founder-card">
+        <div class="founder-avatar" style="background:var(--pandan-l);color:var(--pandan)">CD</div>
+        <div class="founder-info">
+          <h4>Christian Dayo</h4>
+          <div class="founder-role" style="color:var(--pandan)">Co-Founder & COO</div>
+          <p class="founder-bio">Product development and operations lead. Heads co-packer relationships, recipe formulation, production logistics, and supply chain — turning the vision into a real product.</p>
+          <span class="founder-badge" style="background:var(--pandan-l);color:var(--pandan)">Co-Founder</span>
+        </div>
+      </div>
+      <div class="founder-card" style="border-style:dashed">
+        <div class="founder-avatar" style="background:var(--gold-l);color:var(--gold-dark)">DV</div>
+        <div class="founder-info">
+          <h4>Daniel Villano</h4>
+          <div class="founder-role" style="color:var(--gold-dark)">Potential Member</div>
+          <p class="founder-bio">In discussions to join the founding team. Role and equity TBD — bringing additional expertise to the table as we scale.</p>
+          <span class="founder-badge" style="background:var(--gold-l);color:var(--gold-dark)">In Discussion</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how-bg" id="how-it-works">
+  <div class="section-inner" style="text-align:center">
+    <div class="section-label">How It Works</div>
+    <h2 class="section-title">From community to cart.</h2>
+    <p class="section-sub" style="margin:0 auto 0">We're building this with the Filipino-American community in the DMV before going national.</p>
+    <div class="steps">
+      <div class="step">
+        <div class="step-num">1</div>
+        <div class="step-icon">📋</div>
+        <h3>Join the Waitlist</h3>
+        <p>Sign up early for founding member discount and first access when we launch on Shopify.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">2</div>
+        <div class="step-icon">🎯</div>
+        <h3>Taste Test First</h3>
+        <p>Waitlist members get invited to in-person community taste events in Centreville, VA before public launch.</p>
+      </div>
+      <div class="step">
+        <div class="step-num">3</div>
+        <div class="step-icon">📦</div>
+        <h3>Order Anywhere</h3>
+        <p>Shopify DTC, Amazon, and Filipino community stores. Subscribe and save — delivered to your door.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WAITLIST -->
+<section class="section waitlist" id="waitlist">
+  <div class="section-inner">
+    <div class="section-label">Pre-Launch Waitlist</div>
+    <h2 class="section-title">Be the first to taste the future.</h2>
+    <p class="section-sub">Join our waitlist for a founding member discount, early access, and an invite to our first community tasting in Virginia.</p>
+    <div class="waitlist-counter" id="waitlist-count">0</div>
+    <div class="waitlist-counter-label">Filipinos + Allies signed up</div>
+    <form class="waitlist-form" id="waitlist-form" onsubmit="submitWaitlist(event)">
+      <input class="waitlist-input" id="wl-email" type="email" placeholder="your@email.com" required autocomplete="email">
+      <button type="submit" class="btn btn-md btn-gold">Claim My Spot</button>
+    </form>
+    <p class="waitlist-note">No spam. Unsubscribe anytime. Filipino-American owned &amp; operated.</p>
+    <div class="waitlist-success" id="wl-success">🎉 You're in! Welcome to the Pilipinas Fuel community.</div>
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section class="section" id="testimonials">
+  <div class="section-inner">
+    <div class="section-label">Community Love</div>
+    <h2 class="section-title">The DMV is ready.</h2>
+    <p class="section-sub">Feedback from our early community taste tests in Centreville and Fairfax County.</p>
+    <div class="testimonials-grid">
+      <div class="testimonial">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"The ube bar brought me right back to my lola's kitchen. I've been waiting for this my whole life."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:var(--ube)">MR</div>
+          <div><div class="testimonial-name">Maria R.</div><div class="testimonial-role">Nurse · Fairfax, VA</div></div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="testimonial-stars">★★★★★</div>
+        <p class="testimonial-text">"The pandan one is incredibly unique. Nothing on the market comes close. As a trainer I'd rec this to every Filipino client."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:var(--pandan)">JB</div>
+          <div><div class="testimonial-name">Jerome B.</div><div class="testimonial-role">Personal Trainer · Centreville, VA</div></div>
+        </div>
+      </div>
+      <div class="testimonial">
+        <div class="testimonial-stars">★★★★☆</div>
+        <p class="testimonial-text">"Finally a bar that doesn't taste like chalk. The turon flavor is insanely good. My whole barkada is waiting for this to drop."</p>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar" style="background:var(--gold)">KC</div>
+          <div><div class="testimonial-name">Kristine C.</div><div class="testimonial-role">2nd-Gen Filipina · Woodbridge, VA</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COMING SOON SECTIONS -->
+<section class="section coming-soon" id="coming-soon">
+  <div class="section-inner">
+    <div class="section-label">Coming to This Page</div>
+    <h2 class="section-title">More content on the way.</h2>
+    <p class="section-sub">These sections are planned for the next phase of the site build.</p>
+    <div class="coming-grid">
+      <div class="coming-card">
+        <div class="coming-icon">🎬</div>
+        <div class="coming-title">Brand Video</div>
+        <div class="coming-desc">Hero video showcasing the founders, flavors, and Filipino-American story.</div>
+        <span class="coming-badge">Phase 2</span>
+      </div>
+      <div class="coming-card">
+        <div class="coming-icon">⭐</div>
+        <div class="coming-title">Verified Reviews</div>
+        <div class="coming-desc">Post-launch customer reviews via Judge.me or Okendo (Shopify apps).</div>
+        <span class="coming-badge">Post-Launch</span>
+      </div>
+      <div class="coming-card">
+        <div class="coming-icon">📱</div>
+        <div class="coming-title">Social Feed</div>
+        <div class="coming-desc">Live Instagram &amp; TikTok feed embed from @PilipinasFuel.</div>
+        <span class="coming-badge">Phase 2</span>
+      </div>
+      <div class="coming-card">
+        <div class="coming-icon">🤳</div>
+        <div class="coming-title">Influencer Wall</div>
+        <div class="coming-desc">UGC content from Filipino-American fitness influencers and micro-creators.</div>
+        <span class="coming-badge">Phase 3</span>
+      </div>
+      <div class="coming-card">
+        <div class="coming-icon">📰</div>
+        <div class="coming-title">Press &amp; Media</div>
+        <div class="coming-desc">Coverage from Filipino media, food blogs, and health publications.</div>
+        <span class="coming-badge">Phase 3</span>
+      </div>
+      <div class="coming-card">
+        <div class="coming-icon">🎯</div>
+        <div class="coming-title">Ad Retargeting</div>
+        <div class="coming-desc">Meta Pixel + TikTok Pixel for retargeting waitlist visitors.</div>
+        <span class="coming-badge">Phase 2</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div>
+        <div class="footer-brand">
+          <svg viewBox="0 0 28 28" fill="none" width="26" height="26"><circle cx="14" cy="14" r="13" fill="#7B4FA6"/><path d="M7 20V8h6a4.5 4.5 0 0 1 0 9H11v3H7z" fill="white"/><circle cx="13" cy="12.5" r="2.5" fill="#E8A020"/></svg>
+          Pilipinas Fuel
+        </div>
+        <p class="footer-tagline">Fueled by Heritage. Built for Today. Filipino-American functional nutrition, Centreville VA.</p>
+        <div class="footer-socials">
+          <a href="#" class="social-btn" aria-label="Instagram">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="3"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          </a>
+          <a href="#" class="social-btn" aria-label="TikTok">
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.34 6.34 0 0 0-6.13 6.33 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V9.17a8.28 8.28 0 0 0 4.84 1.55V7.27a4.85 4.85 0 0 1-1.07-.58z"/></svg>
+          </a>
+        </div>
+      </div>
+      <div>
+        <h5>Flavors</h5>
+        <ul class="footer-links">
+          <li><a href="#ube">Ube Velvet</a></li>
+          <li><a href="#pandan">Pandan Cream</a></li>
+          <li><a href="#turon">Turon Cinnamon</a></li>
+          <li><a href="#dalandan">Dalandan Citrus</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Company</h5>
+        <ul class="footer-links">
+          <li><a href="#mission">Our Story</a></li>
+          <li><a href="#founders">Our Team</a></li>
+          <li><a href="#how-it-works">How It Works</a></li>
+          <li><a href="#">Wholesale</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Connect</h5>
+        <ul class="footer-links">
+          <li><a href="#waitlist">Join Waitlist</a></li>
+          <li><a href="mailto:hello@pilipinasfuel.com">hello@pilipinasfuel.com</a></li>
+          <li><a href="#">@PilipinasFuel</a></li>
+          <li><a href="#">Centreville, VA</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Pilipinas Fuel LLC · Centreville, Virginia · All rights reserved.</span>
+      <span>Made with 🌺 by Filipino-American founders</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+// ── Theme ─────────────────────────────────────────
+(function(){
+  const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;
+  let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
+  r.setAttribute('data-theme',d);
+  if(t){
+    const moonSvg='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>';
+    const sunSvg='<svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+    t.innerHTML=d==='dark'?sunSvg:moonSvg;
+    t.addEventListener('click',()=>{
+      d=d==='dark'?'light':'dark';
+      r.setAttribute('data-theme',d);
+      t.innerHTML=d==='dark'?sunSvg:moonSvg;
+    });
+  }
+})();
+
+// ── Sticky nav ────────────────────────────────────
+const nav=document.getElementById('site-nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>60),{passive:true});
+
+// ── Waitlist counter ──────────────────────────────
+let signupCount=247;
+const countEl=document.getElementById('waitlist-count');
+const stripEl=document.getElementById('waitlist-strip-count');
+
+function animateCount(el,target){
+  const start=parseInt(el.textContent)||0;
+  const t0=performance.now();
+  const dur=900;
+  (function tick(now){
+    const p=Math.min((now-t0)/dur,1);
+    const e=1-Math.pow(1-p,3);
+    el.textContent=Math.round(start+(target-start)*e);
+    if(p<1)requestAnimationFrame(tick);
+  })(performance.now());
+}
+
+const obs=new IntersectionObserver(entries=>{
+  if(entries[0].isIntersecting){animateCount(countEl,signupCount);obs.disconnect();}
+},{threshold:.5});
+obs.observe(countEl);
+
+function submitWaitlist(e){
+  e.preventDefault();
+  const email=document.getElementById('wl-email').value.trim();
+  if(!email)return;
+  signupCount++;
+  animateCount(countEl,signupCount);
+  if(stripEl)stripEl.textContent=signupCount;
+  document.getElementById('waitlist-form').style.display='none';
+  document.getElementById('wl-success').style.display='block';
+  document.querySelector('.waitlist-note').style.display='none';
+}
+</script>
+</body>
+</html>

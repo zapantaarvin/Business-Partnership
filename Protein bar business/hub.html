@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilipinas Fuel — Command Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300..700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root,[data-theme="light"]{
+--bg:#f7f6f2;--surface:#f9f8f5;--surface-2:#fbfbf9;--surface-offset:#f0ede9;
+--border:#d4d1ca;--divider:#dcd9d5;
+--text:#28251d;--muted:#7a7974;--faint:#bab9b4;
+--primary:#01696f;--primary-h:#cedcd8;
+--ube:#7B4FA6;--ube-l:#e8d9f5;
+--pandan:#2D7A4F;--pandan-l:#d4ede1;
+--gold:#E8A020;--gold-l:#faeacc;
+--error:#a12c7b;--error-l:#f5ddf0;
+--success:#437a22;--success-l:#d4dfcc;
+--r-sm:.375rem;--r-md:.5rem;--r-lg:.75rem;--r-xl:1rem;--r-2xl:1.5rem;--r-full:9999px;
+--sh-sm:0 1px 2px oklch(0.2 0.01 80/0.06);--sh-md:0 4px 12px oklch(0.2 0.01 80/0.08);
+--font:'Work Sans','Helvetica Neue',sans-serif;
+--font-display:'Instrument Serif',Georgia,serif;
+}
+[data-theme="dark"]{
+--bg:#171614;--surface:#1c1b19;--surface-2:#201f1d;--surface-offset:#1d1c1a;
+--border:#393836;--divider:#262523;
+--text:#cdccca;--muted:#797876;--faint:#5a5957;
+--primary:#4f98a3;--primary-h:#313b3b;
+--ube:#a47cc4;--ube-l:#3a2850;
+--pandan:#5aad7a;--pandan-l:#1e3d2a;
+--gold:#f0b847;--gold-l:#3d2f0e;
+--error:#d163a7;--error-l:#4c3d46;
+--success:#6daa45;--success-l:#3a4435;
+--sh-sm:0 1px 2px oklch(0 0 0/0.25);--sh-md:0 4px 12px oklch(0 0 0/0.35);
+}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);font-size:1rem;color:var(--text);background:var(--bg);min-height:100dvh}
+button{cursor:pointer;border:none;font:inherit;color:inherit;background:none}
+a{text-decoration:none;color:inherit}
+
+/* HEADER */
+.app-header{background:var(--surface);border-bottom:1px solid var(--border);padding:.875rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.header-brand{display:flex;align-items:center;gap:.75rem}
+.brand-logo{width:36px;height:36px;border-radius:50%;background:var(--ube);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.brand-name{font-size:1.15rem;font-weight:800;letter-spacing:-.01em}
+.brand-sub{font-size:.75rem;color:var(--muted);font-weight:400}
+.header-right{display:flex;align-items:center;gap:1rem}
+.header-date{font-size:.8rem;color:var(--muted)}
+.theme-btn{width:34px;height:34px;border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:color .15s,background .15s}
+.theme-btn:hover{color:var(--text);background:var(--surface-offset)}
+
+/* MAIN */
+.main{max-width:1280px;margin:0 auto;padding:1.5rem;display:flex;flex-direction:column;gap:1.75rem}
+
+/* KPI STRIP */
+.kpi-strip{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:1rem}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:1.1rem 1.25rem;display:flex;flex-direction:column;gap:.25rem;transition:box-shadow .15s,transform .15s}
+.kpi:hover{box-shadow:var(--sh-md);transform:translateY(-2px)}
+.kpi-label{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--muted)}
+.kpi-val{font-size:1.6rem;font-weight:800;font-variant-numeric:tabular-nums;line-height:1.1}
+.kpi-sub{font-size:.72rem;color:var(--muted)}
+.kpi-ube .kpi-val{color:var(--ube)}
+.kpi-pandan .kpi-val{color:var(--pandan)}
+.kpi-gold .kpi-val{color:var(--gold)}
+.kpi-primary .kpi-val{color:var(--primary)}
+.kpi-success .kpi-val{color:var(--success)}
+
+/* SECTION LABEL */
+.section-label{font-size:.7rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:.75rem}
+
+/* LAUNCH GRID */
+.launch-section{}
+.app-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1rem}
+.app-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-2xl);padding:1.5rem 1rem 1.25rem;text-align:center;transition:box-shadow .2s,transform .2s,border-color .2s;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:.75rem}
+.app-card:hover{box-shadow:var(--sh-md);transform:translateY(-3px)}
+.app-card-ube:hover{border-color:var(--ube)}
+.app-card-pandan:hover{border-color:var(--pandan)}
+.app-card-gold:hover{border-color:var(--gold)}
+.app-card-primary:hover{border-color:var(--primary)}
+.app-card-success:hover{border-color:var(--success)}
+.app-icon{width:52px;height:52px;border-radius:var(--r-xl);display:flex;align-items:center;justify-content:center;font-size:1.5rem;flex-shrink:0}
+.app-name{font-size:.875rem;font-weight:700;line-height:1.3}
+.app-desc{font-size:.75rem;color:var(--muted);line-height:1.4}
+
+/* BOTTOM GRID */
+.bottom-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+
+/* TODAY'S FOCUS */
+.focus-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-2xl);padding:1.25rem;display:flex;flex-direction:column;gap:1rem}
+.focus-card{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-lg);padding:.875rem;display:flex;align-items:flex-start;gap:.875rem;transition:box-shadow .15s}
+.focus-card:hover{box-shadow:var(--sh-sm)}
+.focus-status-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;margin-top:.25rem}
+.focus-card-body{flex:1;min-width:0}
+.focus-card-title{font-size:.875rem;font-weight:600;line-height:1.4;margin-bottom:.375rem}
+.focus-card-meta{display:flex;gap:.5rem;flex-wrap:wrap;align-items:center}
+.tag{display:inline-block;padding:1px 7px;border-radius:var(--r-full);font-size:.68rem;font-weight:700;letter-spacing:.03em}
+.tag-legal{background:var(--ube-l);color:var(--ube)}
+.tag-product{background:var(--pandan-l);color:var(--pandan)}
+.tag-marketing{background:var(--gold-l);color:#8a5b00}
+.tag-finance{background:var(--success-l);color:var(--success)}
+.tag-operations{background:var(--primary-h);color:var(--primary)}
+.priority{font-size:.65rem;font-weight:800;padding:1px 6px;border-radius:var(--r-full);letter-spacing:.04em}
+.p-critical{background:#fee;color:#c0392b}
+.p-high{background:var(--gold-l);color:#8a5b00}
+.p-medium{background:var(--primary-h);color:var(--primary)}
+.p-low{background:var(--surface-offset);color:var(--muted)}
+.phase-chip{font-size:.65rem;font-weight:600;color:var(--faint)}
+
+/* CHECKLIST & RING */
+.checklist-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-2xl);padding:1.25rem;display:flex;flex-direction:column;gap:1rem}
+.ring-row{display:flex;align-items:center;gap:1.5rem;margin-bottom:.25rem}
+.ring-container{position:relative;width:100px;height:100px;flex-shrink:0}
+.ring-container svg{transform:rotate(-90deg)}
+.ring-track{fill:none;stroke:var(--border);stroke-width:8}
+.ring-fill{fill:none;stroke:var(--ube);stroke-width:8;stroke-linecap:round;transition:stroke-dasharray .5s ease}
+.ring-label{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.ring-pct{font-size:1.4rem;font-weight:800;color:var(--ube);line-height:1;font-variant-numeric:tabular-nums}
+.ring-sub{font-size:.65rem;color:var(--muted);font-weight:600}
+.ring-stats{display:flex;flex-direction:column;gap:.375rem}
+.ring-stat{font-size:.8rem;color:var(--muted)}
+.ring-stat strong{color:var(--text);font-weight:700}
+.checklist-items{display:flex;flex-direction:column;gap:.375rem}
+.check-item{display:flex;align-items:center;gap:.75rem;padding:.5rem .625rem;border-radius:var(--r-md);transition:background .15s;cursor:pointer;user-select:none}
+.check-item:hover{background:var(--surface-offset)}
+.check-item input[type=checkbox]{width:16px;height:16px;accent-color:var(--ube);cursor:pointer;flex-shrink:0}
+.check-item-label{font-size:.85rem;flex:1;line-height:1.4;transition:color .15s}
+.check-item.checked .check-item-label{text-decoration:line-through;color:var(--faint)}
+.check-cat{font-size:.65rem;font-weight:700;padding:1px 6px;border-radius:var(--r-full)}
+
+/* FOOTER */
+.hub-footer{text-align:center;padding:1.5rem;font-size:.75rem;color:var(--faint);border-top:1px solid var(--border)}
+
+@media(max-width:1024px){.app-grid{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:768px){.app-grid{grid-template-columns:repeat(2,1fr)}.bottom-grid{grid-template-columns:1fr}.kpi-strip{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:480px){.kpi-strip{grid-template-columns:1fr}.app-grid{grid-template-columns:repeat(2,1fr)}}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-brand">
+    <div class="brand-logo">
+      <svg viewBox="0 0 36 36" fill="none" width="22" height="22">
+        <path d="M5 26V10h8.5a7 7 0 0 1 0 14H12v2H5z" fill="white"/>
+        <circle cx="13" cy="17" r="3.5" fill="#E8A020"/>
+      </svg>
+    </div>
+    <div>
+      <div class="brand-name">Pilipinas Fuel</div>
+      <div class="brand-sub">Command Hub</div>
+    </div>
+  </div>
+  <div class="header-right">
+    <span class="header-date" id="hub-date"></span>
+    <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<main class="main">
+
+  <!-- KPI STRIP -->
+  <div>
+    <div class="section-label">Financial Targets — Year 1</div>
+    <div class="kpi-strip">
+      <div class="kpi kpi-ube">
+        <div class="kpi-label">Startup Budget</div>
+        <div class="kpi-val">$20–50K</div>
+        <div class="kpi-sub">Year 1 total planned</div>
+      </div>
+      <div class="kpi kpi-pandan">
+        <div class="kpi-label">COGS / Bar</div>
+        <div class="kpi-val">$1.50</div>
+        <div class="kpi-sub">Target at 1K+ MOQ</div>
+      </div>
+      <div class="kpi kpi-gold">
+        <div class="kpi-label">Gross Margin</div>
+        <div class="kpi-val">50–60%</div>
+        <div class="kpi-sub">At $4.00 SRP</div>
+      </div>
+      <div class="kpi kpi-primary">
+        <div class="kpi-label">Break-even</div>
+        <div class="kpi-val">~500</div>
+        <div class="kpi-sub">Bars/mo at $4.00</div>
+      </div>
+      <div class="kpi kpi-success">
+        <div class="kpi-label">Y1 Revenue Target</div>
+        <div class="kpi-val">$75K</div>
+        <div class="kpi-sub">$50K–100K range</div>
+      </div>
+      <div class="kpi kpi-ube">
+        <div class="kpi-label">Y2 Revenue Target</div>
+        <div class="kpi-val">$375K</div>
+        <div class="kpi-sub">$250K–500K range</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- QUICK LAUNCH -->
+  <div class="launch-section">
+    <div class="section-label">App Suite — Quick Launch</div>
+    <div class="app-grid">
+      <a href="website.html" class="app-card app-card-ube" target="_blank">
+        <div class="app-icon" style="background:var(--ube-l);color:var(--ube)">🌐</div>
+        <div>
+          <div class="app-name">Website</div>
+          <div class="app-desc">Shopify-ready brand landing page</div>
+        </div>
+      </a>
+      <a href="kanban.html" class="app-card app-card-pandan" target="_blank">
+        <div class="app-icon" style="background:var(--pandan-l);color:var(--pandan)">📋</div>
+        <div>
+          <div class="app-name">Kanban Board</div>
+          <div class="app-desc">Launch tasks by phase &amp; status</div>
+        </div>
+      </a>
+      <a href="finance.html" class="app-card app-card-gold" target="_blank">
+        <div class="app-icon" style="background:var(--gold-l);color:#8a5b00">💰</div>
+        <div>
+          <div class="app-name">Finance</div>
+          <div class="app-desc">Budget, COGS, revenue projections</div>
+        </div>
+      </a>
+      <a href="email-tool.html" class="app-card app-card-primary" target="_blank">
+        <div class="app-icon" style="background:var(--primary-h);color:var(--primary)">✉️</div>
+        <div>
+          <div class="app-name">Email Tool</div>
+          <div class="app-desc">Outreach templates + mailto</div>
+        </div>
+      </a>
+      <a href="operations.html" class="app-card app-card-success" target="_blank">
+        <div class="app-icon" style="background:var(--success-l);color:var(--success)">⚙️</div>
+        <div>
+          <div class="app-name">Operations</div>
+          <div class="app-desc">Vendors, timeline, team</div>
+        </div>
+      </a>
+    </div>
+  </div>
+
+  <!-- BOTTOM ROW -->
+  <div class="bottom-grid">
+
+    <!-- TODAY'S FOCUS -->
+    <div class="focus-section">
+      <div class="section-label">Today's Focus — Critical &amp; In Progress</div>
+      <div id="focus-list"></div>
+    </div>
+
+    <!-- REGULATORY CHECKLIST -->
+    <div class="checklist-section">
+      <div class="section-label">Regulatory Checklist</div>
+      <div class="ring-row">
+        <div class="ring-container">
+          <svg viewBox="0 0 100 100" width="100" height="100">
+            <circle class="ring-track" cx="50" cy="50" r="42"/>
+            <circle class="ring-fill" cx="50" cy="50" r="42" id="ring-fill"
+              stroke-dasharray="0 264" stroke-dashoffset="0"/>
+          </svg>
+          <div class="ring-label">
+            <div class="ring-pct" id="ring-pct">0%</div>
+            <div class="ring-sub">complete</div>
+          </div>
+        </div>
+        <div class="ring-stats">
+          <div class="ring-stat"><strong id="ring-done">0</strong> of <strong id="ring-total">10</strong> items complete</div>
+          <div class="ring-stat" id="ring-remaining-text"></div>
+          <div class="ring-stat" style="margin-top:.25rem;font-size:.72rem;color:var(--faint)">Click items to mark complete</div>
+        </div>
+      </div>
+      <div class="checklist-items" id="checklist-items"></div>
+    </div>
+
+  </div>
+
+</main>
+
+<footer class="hub-footer">
+  Pilipinas Fuel LLC · Centreville, Virginia · &ldquo;Fueled by Heritage. Built for Today.&rdquo;
+</footer>
+
+<script>
+// ── Theme ─────────────────────────────────────────
+(function(){
+  const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;
+  let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
+  r.setAttribute('data-theme',d);
+  t&&t.addEventListener('click',()=>{d=d==='dark'?'light':'dark';r.setAttribute('data-theme',d);});
+})();
+
+// ── Date ──────────────────────────────────────────
+document.getElementById('hub-date').textContent = new Date().toLocaleDateString('en-US',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+// ── Today's Focus Data (from kanban) ──────────────
+const focusCards = [
+  {title:'Develop 2–3 Prototype Recipes',cat:'product',pri:'critical',col:'doing',phase:1,desc:'Ube, Pandan, Turon. Target: 17–20g protein, <5g sugar.'},
+  {title:'Source & Vet Co-Packer',cat:'operations',pri:'critical',col:'doing',phase:1,desc:'Contact YouBar, Econo-Pak. Ask: MOQ, SQF cert, lead time.'},
+  {title:'Design Brand Identity System',cat:'marketing',pri:'critical',col:'doing',phase:2,desc:'Logo, packaging, color system. Hire Filipino-American designer.'},
+  {title:'Open Business Bank Account',cat:'finance',pri:'critical',col:'todo',phase:0,desc:'Mercury Bank (no fees) or Chase Business. Required for operations.'},
+  {title:'Build Pre-Launch Waitlist',cat:'marketing',pri:'high',col:'doing',phase:2,desc:'Target 500 emails before launch. Waitlist form + giveaway campaign.'},
+  {title:'Create Instagram & TikTok',cat:'marketing',pri:'medium',col:'doing',phase:2,desc:'@PilipinasFuel on both. Brand bio, first 9 posts planned.'},
+];
+
+const CAT_TAG = {product:'tag-product',marketing:'tag-marketing',finance:'tag-finance',operations:'tag-operations',legal:'tag-legal'};
+const CAT_LABEL = {product:'Product',marketing:'Marketing',finance:'Finance',operations:'Operations',legal:'Legal'};
+const PRI_CLASS = {critical:'p-critical',high:'p-high',medium:'p-medium',low:'p-low'};
+const PRI_LABEL = {critical:'CRITICAL',high:'HIGH',medium:'MEDIUM',low:'LOW'};
+const COL_COLORS = {doing:'#7B4FA6',todo:'#E8A020',backlog:'#bab9b4',review:'#2D7A4F',done:'#437a22'};
+const COL_LABEL = {doing:'In Progress',todo:'To Do',backlog:'Backlog',review:'Review',done:'Done'};
+const PHASE_LABEL = {0:'Phase 0',1:'Phase 1',2:'Phase 2',3:'Phase 3',4:'Phase 4'};
+
+function renderFocus() {
+  const container = document.getElementById('focus-list');
+  container.innerHTML = focusCards.map(c => `
+    <div class="focus-card">
+      <span class="focus-status-dot" style="background:${COL_COLORS[c.col]}"></span>
+      <div class="focus-card-body">
+        <div class="focus-card-title">${c.title}</div>
+        <div class="focus-card-meta">
+          <span class="tag ${CAT_TAG[c.cat]}">${CAT_LABEL[c.cat]}</span>
+          <span class="priority ${PRI_CLASS[c.pri]}">${PRI_LABEL[c.pri]}</span>
+          <span class="phase-chip">${PHASE_LABEL[c.phase]} · ${COL_LABEL[c.col]}</span>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+// ── Regulatory Checklist ─────────────────────────
+const CHECKLIST = [
+  {label:'LLC registered (Virginia SCC)',cat:'Legal',done:false},
+  {label:'EIN obtained (IRS)',cat:'Legal',done:false},
+  {label:'Business bank account opened',cat:'Finance',done:false},
+  {label:'Product liability insurance active',cat:'Legal',done:false},
+  {label:'Co-packer SQF/BRC certified',cat:'Operations',done:false},
+  {label:'Nutrition facts panel FDA-compliant',cat:'Product',done:false},
+  {label:'Allergen labeling (Big 9) complete',cat:'Product',done:false},
+  {label:'Net weight statement accurate',cat:'Product',done:false},
+  {label:'UPC barcode purchased (GS1 US)',cat:'Operations',done:false},
+  {label:'Shelf-life / expiration date system in place',cat:'Operations',done:false},
+];
+
+const CAT_CHIP_BG = {Legal:'var(--ube-l)',Product:'var(--pandan-l)',Finance:'var(--success-l)',Operations:'var(--primary-h)'};
+const CAT_CHIP_TEXT = {Legal:'var(--ube)',Product:'var(--pandan)',Finance:'var(--success)',Operations:'var(--primary)'};
+
+const CIRCUMFERENCE = 2 * Math.PI * 42; // ~264
+
+function renderChecklist() {
+  const container = document.getElementById('checklist-items');
+  container.innerHTML = CHECKLIST.map((item, i) => `
+    <label class="check-item${item.done?' checked':''}" onclick="toggleCheck(${i})">
+      <input type="checkbox" ${item.done?'checked':''} onclick="event.stopPropagation();toggleCheck(${i})">
+      <span class="check-item-label">${item.label}</span>
+      <span class="check-cat" style="background:${CAT_CHIP_BG[item.cat]};color:${CAT_CHIP_TEXT[item.cat]}">${item.cat}</span>
+    </label>`).join('');
+  updateRing();
+}
+
+function toggleCheck(i) {
+  CHECKLIST[i].done = !CHECKLIST[i].done;
+  renderChecklist();
+}
+
+function updateRing() {
+  const done = CHECKLIST.filter(c => c.done).length;
+  const total = CHECKLIST.length;
+  const pct = Math.round(done / total * 100);
+  const filled = (done / total) * CIRCUMFERENCE;
+
+  document.getElementById('ring-fill').setAttribute('stroke-dasharray', `${filled} ${CIRCUMFERENCE - filled}`);
+  document.getElementById('ring-pct').textContent = pct + '%';
+  document.getElementById('ring-done').textContent = done;
+  document.getElementById('ring-total').textContent = total;
+
+  const remaining = total - done;
+  const ringFill = document.getElementById('ring-fill');
+  if (pct === 100) {
+    ringFill.style.stroke = 'var(--success)';
+    document.getElementById('ring-pct').style.color = 'var(--success)';
+    document.getElementById('ring-remaining-text').textContent = '🎉 All items complete!';
+  } else {
+    ringFill.style.stroke = 'var(--ube)';
+    document.getElementById('ring-pct').style.color = 'var(--ube)';
+    document.getElementById('ring-remaining-text').textContent = `${remaining} item${remaining !== 1 ? 's' : ''} remaining`;
+  }
+}
+
+// ── Init ──────────────────────────────────────────
+renderFocus();
+renderChecklist();
+</script>
+</body>
+</html>

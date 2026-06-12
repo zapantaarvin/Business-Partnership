@@ -1,0 +1,607 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilipinas Fuel — Launch Kanban Board</title>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300..700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root,[data-theme="light"]{
+--bg:#f7f6f2;--surface:#f9f8f5;--surface-2:#fbfbf9;--surface-offset:#f0ede9;
+--border:#d4d1ca;--divider:#dcd9d5;
+--text:#28251d;--muted:#7a7974;--faint:#bab9b4;
+--primary:#01696f;--primary-h:#cedcd8;
+--brand-ube:#7B4FA6;--brand-ube-l:#e8d9f5;
+--brand-pandan:#2D7A4F;--brand-pandan-l:#d4ede1;
+--brand-gold:#E8A020;--brand-gold-l:#faeacc;
+--error:#a12c7b;--error-l:#f5ddf0;
+--success:#437a22;--success-l:#d4dfcc;
+--r-sm:.375rem;--r-md:.5rem;--r-lg:.75rem;--r-xl:1rem;--r-full:9999px;
+--sh-sm:0 1px 2px oklch(0.2 0.01 80/0.06);--sh-md:0 4px 12px oklch(0.2 0.01 80/0.08);
+--font:'Work Sans','Helvetica Neue',sans-serif;
+--ts:.75rem;--tb:.875rem;--tbase:1rem;--tlg:1.25rem;--txl:1.5rem;
+}
+[data-theme="dark"]{
+--bg:#171614;--surface:#1c1b19;--surface-2:#201f1d;--surface-offset:#1d1c1a;
+--border:#393836;--divider:#262523;
+--text:#cdccca;--muted:#797876;--faint:#5a5957;
+--primary:#4f98a3;--primary-h:#313b3b;
+--brand-ube:#a47cc4;--brand-ube-l:#3a2850;
+--brand-pandan:#5aad7a;--brand-pandan-l:#1e3d2a;
+--brand-gold:#f0b847;--brand-gold-l:#3d2f0e;
+--error:#d163a7;--error-l:#4c3d46;
+--success:#6daa45;--success-l:#3a4435;
+--sh-sm:0 1px 2px oklch(0 0 0/0.25);--sh-md:0 4px 12px oklch(0 0 0/0.35);
+}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);font-size:var(--tbase);color:var(--text);background:var(--bg);min-height:100dvh;display:flex;flex-direction:column}
+button{cursor:pointer;border:none;font:inherit;color:inherit;background:none}
+input,textarea,select{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+
+/* HEADER */
+.app-header{background:var(--surface);border-bottom:1px solid var(--border);padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;gap:1rem;position:sticky;top:0;z-index:50}
+.header-brand{display:flex;align-items:center;gap:.75rem;font-size:var(--tlg);font-weight:700}
+.header-brand svg{width:30px;height:30px}
+.header-actions{display:flex;align-items:center;gap:.75rem}
+.btn{padding:.375rem .875rem;border-radius:var(--r-full);font-size:var(--tb);font-weight:600;transition:background .15s,transform .1s;cursor:pointer;display:inline-flex;align-items:center;gap:.375rem}
+.btn-primary{background:var(--brand-ube);color:#fff}
+.btn-primary:hover{background:var(--brand-ube-dark,#5a3278);transform:translateY(-1px)}
+.btn-ghost{color:var(--muted);border:1px solid var(--border)}
+.btn-ghost:hover{color:var(--text);background:var(--surface-offset)}
+.btn-active{background:var(--brand-ube-l);color:var(--brand-ube);border:1px solid rgba(123,79,166,.3)}
+.theme-btn{width:34px;height:34px;border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:color .15s,background .15s}
+.theme-btn:hover{color:var(--text);background:var(--surface-offset)}
+
+/* FILTER BAR */
+.filter-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:.625rem 1.5rem;display:flex;align-items:center;gap:.75rem;flex-wrap:wrap}
+.filter-search{flex:1;min-width:200px;max-width:320px;position:relative}
+.filter-search-icon{position:absolute;left:.625rem;top:50%;transform:translateY(-50%);color:var(--muted);pointer-events:none}
+.filter-input{width:100%;padding:.4rem .625rem .4rem 2rem;border-radius:var(--r-full);border:1.5px solid var(--border);background:var(--surface-2);font-size:var(--tb);transition:border-color .15s;outline:none}
+.filter-input:focus{border-color:var(--brand-ube)}
+.filter-select{padding:.4rem .75rem;border-radius:var(--r-full);border:1.5px solid var(--border);background:var(--surface-2);font-size:var(--tb);cursor:pointer;outline:none;transition:border-color .15s;color:var(--text)}
+.filter-select:focus{border-color:var(--brand-ube)}
+.filter-divider{width:1px;height:20px;background:var(--border);flex-shrink:0}
+.filter-count{font-size:var(--ts);color:var(--muted);white-space:nowrap}
+
+/* STATS BAR */
+.stats-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:.5rem 1.5rem;display:flex;gap:1.5rem;align-items:center;font-size:var(--ts);flex-wrap:wrap}
+.stat-item{display:flex;align-items:center;gap:.375rem;color:var(--muted)}
+.stat-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* COLUMN VIEW */
+.board-wrap{flex:1;overflow-x:auto;padding:1.5rem}
+.board{display:flex;gap:1rem;min-width:max-content;align-items:flex-start}
+.column{width:280px;background:var(--surface);border-radius:var(--r-xl);border:1px solid var(--border);display:flex;flex-direction:column;max-height:calc(100vh - 190px)}
+.col-header{padding:.875rem 1rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;flex-shrink:0}
+.col-title{font-size:var(--tb);font-weight:700;display:flex;align-items:center;gap:.5rem}
+.col-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.col-count{background:var(--surface-offset);color:var(--muted);font-size:var(--ts);font-weight:700;padding:1px 7px;border-radius:var(--r-full)}
+.col-add{width:26px;height:26px;border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:color .15s,background .15s}
+.col-add:hover{color:var(--text);background:var(--surface-offset)}
+.col-cards{padding:.75rem;display:flex;flex-direction:column;gap:.5rem;overflow-y:auto;flex:1}
+
+/* PHASE VIEW */
+.phase-wrap{flex:1;overflow-y:auto;padding:1.5rem}
+.phase-group{margin-bottom:1.5rem;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden}
+.phase-header{padding:.875rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;cursor:pointer;user-select:none}
+.phase-title{display:flex;align-items:center;gap:.75rem;font-size:var(--tb);font-weight:700}
+.phase-badge{padding:2px 10px;border-radius:var(--r-full);font-size:.7rem;font-weight:800;letter-spacing:.04em}
+.phase-cards{padding:.75rem;display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:.625rem}
+.phase-empty{padding:1rem;text-align:center;color:var(--faint);font-size:var(--ts);font-style:italic}
+
+/* CARD */
+.card{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-lg);padding:.75rem;cursor:grab;transition:box-shadow .15s,transform .15s,opacity .15s;user-select:none}
+.card:hover{box-shadow:var(--sh-md);transform:translateY(-1px)}
+.card.dragging{opacity:.5;box-shadow:var(--sh-md);transform:rotate(1.5deg)}
+.card.hidden{display:none}
+.card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:.5rem;margin-bottom:.5rem}
+.card-title{font-size:var(--tb);font-weight:600;line-height:1.4;flex:1}
+.card-menu{width:22px;height:22px;border-radius:var(--r-sm);display:flex;align-items:center;justify-content:center;color:var(--faint);opacity:0;transition:opacity .15s,color .15s,background .15s;flex-shrink:0}
+.card:hover .card-menu{opacity:1}
+.card-menu:hover{color:var(--muted);background:var(--surface-offset)}
+.card-desc{font-size:var(--ts);color:var(--muted);margin-bottom:.625rem;line-height:1.5}
+.card-footer{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:.375rem}
+.card-tags{display:flex;gap:.375rem;flex-wrap:wrap}
+.tag{display:inline-block;padding:1px 7px;border-radius:var(--r-full);font-size:.7rem;font-weight:700;letter-spacing:.03em}
+.tag-legal{background:var(--brand-ube-l);color:var(--brand-ube)}
+.tag-product{background:var(--brand-pandan-l);color:var(--brand-pandan)}
+.tag-marketing{background:var(--brand-gold-l);color:#8a5b00}
+.tag-finance{background:var(--success-l);color:var(--success)}
+.tag-operations{background:var(--primary-h);color:var(--primary)}
+.priority{font-size:.68rem;font-weight:800;padding:1px 6px;border-radius:var(--r-full);letter-spacing:.04em}
+.p-critical{background:#fee;color:#c0392b}
+.p-high{background:var(--brand-gold-l);color:#8a5b00}
+.p-medium{background:var(--primary-h);color:var(--primary)}
+.p-low{background:var(--surface-offset);color:var(--muted)}
+
+/* MODAL */
+.overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:none;align-items:center;justify-content:center;padding:1rem}
+.overlay.open{display:flex}
+.modal{background:var(--surface);border-radius:var(--r-xl);width:100%;max-width:480px;box-shadow:var(--sh-md);overflow:hidden;animation:slideUp .18s ease}
+@keyframes slideUp{from{transform:translateY(12px);opacity:0}to{transform:translateY(0);opacity:1}}
+.modal-header{padding:1rem 1.25rem;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.modal-header h3{font-size:var(--tlg);font-weight:700}
+.modal-close{width:30px;height:30px;border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:color .15s,background .15s}
+.modal-close:hover{color:var(--text);background:var(--surface-offset)}
+.modal-body{padding:1.25rem;display:flex;flex-direction:column;gap:1rem}
+.form-group{display:flex;flex-direction:column;gap:.375rem}
+.form-label{font-size:var(--tb);font-weight:600;color:var(--muted)}
+.form-input,.form-select,.form-textarea{padding:.5rem .75rem;border-radius:var(--r-md);border:1.5px solid var(--border);background:var(--surface-2);font-size:var(--tb);transition:border-color .15s;outline:none}
+.form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--brand-ube)}
+.form-textarea{min-height:80px;resize:vertical}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.modal-footer{padding:.75rem 1.25rem;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:.75rem}
+.modal-footer-right{display:flex;gap:.75rem}
+.delete-btn{color:var(--error);font-size:var(--ts);font-weight:600;padding:.375rem .75rem;border-radius:var(--r-full);transition:background .15s}
+.delete-btn:hover{background:var(--error-l)}
+
+/* DRAG OVER */
+.column.drag-over{outline:2px dashed var(--brand-ube);outline-offset:-2px}
+.col-cards.drag-over-list{background:var(--brand-ube-l);border-radius:var(--r-md)}
+
+/* NO RESULTS */
+.no-results{text-align:center;padding:3rem 1.5rem;color:var(--muted);font-size:var(--tb)}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <div class="header-brand">
+    <svg viewBox="0 0 30 30" fill="none">
+      <circle cx="15" cy="15" r="14" fill="#7B4FA6"/>
+      <path d="M8 22V8h6.5a5 5 0 0 1 0 10H12v4H8z" fill="white"/>
+      <circle cx="14.5" cy="13" r="2.8" fill="#E8A020"/>
+    </svg>
+    Pilipinas Fuel · Launch Board
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-ghost" id="phase-toggle-btn" onclick="togglePhaseView()">📊 Phase View</button>
+    <button class="btn btn-primary" onclick="openAddModal()">+ Add Task</button>
+    <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+    </button>
+  </div>
+</header>
+
+<!-- FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-search">
+    <svg class="filter-search-icon" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input type="text" class="filter-input" id="search-input" placeholder="Search tasks…" oninput="applyFilters()">
+  </div>
+  <select class="filter-select" id="cat-filter" onchange="applyFilters()">
+    <option value="">All Categories</option>
+    <option value="legal">⚖️ Legal</option>
+    <option value="product">🧪 Product</option>
+    <option value="marketing">📣 Marketing</option>
+    <option value="finance">💰 Finance</option>
+    <option value="operations">⚙️ Operations</option>
+  </select>
+  <select class="filter-select" id="pri-filter" onchange="applyFilters()">
+    <option value="">All Priorities</option>
+    <option value="critical">🔴 Critical</option>
+    <option value="high">🟠 High</option>
+    <option value="medium">🟡 Medium</option>
+    <option value="low">🟢 Low</option>
+  </select>
+  <select class="filter-select" id="phase-filter" onchange="applyFilters()">
+    <option value="">All Phases</option>
+    <option value="0">Phase 0 — Foundation</option>
+    <option value="1">Phase 1 — Product</option>
+    <option value="2">Phase 2 — Brand</option>
+    <option value="3">Phase 3 — Launch</option>
+    <option value="4">Phase 4 — Scale</option>
+  </select>
+  <div class="filter-divider"></div>
+  <span class="filter-count" id="filter-count"></span>
+  <button class="btn btn-ghost" id="clear-filters-btn" onclick="clearFilters()" style="display:none;font-size:.75rem">✕ Clear</button>
+</div>
+
+<div class="stats-bar" id="stats-bar"></div>
+
+<!-- COLUMN VIEW -->
+<div class="board-wrap" id="board-wrap">
+  <div class="board" id="board"></div>
+  <div class="no-results" id="no-results" style="display:none">No tasks match your filters. <button onclick="clearFilters()" style="color:var(--brand-ube);font-weight:700;cursor:pointer">Clear filters</button></div>
+</div>
+
+<!-- PHASE VIEW -->
+<div class="phase-wrap" id="phase-wrap" style="display:none">
+  <div id="phase-board"></div>
+  <div class="no-results" id="phase-no-results" style="display:none">No tasks match your filters.</div>
+</div>
+
+<!-- Add/Edit Modal -->
+<div class="overlay" id="overlay" onclick="closeModalOnBg(event)">
+  <div class="modal" id="modal">
+    <div class="modal-header">
+      <h3 id="modal-title">Add Task</h3>
+      <button class="modal-close" onclick="closeModal()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Task Title *</label>
+        <input type="text" class="form-input" id="f-title" placeholder="e.g. File for Virginia LLC">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Description</label>
+        <textarea class="form-textarea" id="f-desc" placeholder="Brief notes or next steps…"></textarea>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Category</label>
+          <select class="form-select" id="f-cat">
+            <option value="legal">⚖️ Legal</option>
+            <option value="product">🧪 Product</option>
+            <option value="marketing">📣 Marketing</option>
+            <option value="finance">💰 Finance</option>
+            <option value="operations">⚙️ Operations</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Priority</label>
+          <select class="form-select" id="f-pri">
+            <option value="critical">🔴 Critical</option>
+            <option value="high">🟠 High</option>
+            <option value="medium" selected>🟡 Medium</option>
+            <option value="low">🟢 Low</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Column</label>
+          <select class="form-select" id="f-col">
+            <option value="backlog">Backlog</option>
+            <option value="todo">To Do</option>
+            <option value="doing">In Progress</option>
+            <option value="review">Review</option>
+            <option value="done">Done</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Phase</label>
+          <select class="form-select" id="f-phase">
+            <option value="0">Phase 0 — Foundation</option>
+            <option value="1">Phase 1 — Product</option>
+            <option value="2">Phase 2 — Brand</option>
+            <option value="3">Phase 3 — Launch</option>
+            <option value="4">Phase 4 — Scale</option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Assignee</label>
+        <input type="text" class="form-input" id="f-assign" placeholder="Name or initials">
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="delete-btn" id="delete-btn" onclick="deleteCard()" style="display:none">🗑 Delete</button>
+      <div class="modal-footer-right">
+        <button class="btn btn-ghost" onclick="closeModal()">Cancel</button>
+        <button class="btn btn-primary" onclick="saveCard()">Save Task</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── Theme ──────────────────────────────────────────
+(function(){
+  const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;
+  let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';
+  r.setAttribute('data-theme',d);
+  t&&t.addEventListener('click',()=>{d=d==='dark'?'light':'dark';r.setAttribute('data-theme',d);});
+})();
+
+// ── Data ──────────────────────────────────────────
+const COLS = [
+  {id:'backlog',label:'Backlog',color:'#bab9b4'},
+  {id:'todo',label:'To Do',color:'#E8A020'},
+  {id:'doing',label:'In Progress',color:'#7B4FA6'},
+  {id:'review',label:'Review',color:'#2D7A4F'},
+  {id:'done',label:'Done',color:'#437a22'},
+];
+
+const PHASES = [
+  {id:0,label:'Phase 0 — Foundation',subtitle:'Weeks 1–4',color:'#7B4FA6',bg:'var(--brand-ube-l)'},
+  {id:1,label:'Phase 1 — Product & Legal',subtitle:'Weeks 5–12',color:'#2D7A4F',bg:'var(--brand-pandan-l)'},
+  {id:2,label:'Phase 2 — Brand & Digital',subtitle:'Weeks 9–16',color:'#E8A020',bg:'var(--brand-gold-l)'},
+  {id:3,label:'Phase 3 — Launch',subtitle:'Weeks 17–24',color:'#01696f',bg:'var(--primary-h)'},
+  {id:4,label:'Phase 4 — Scale',subtitle:'Month 7+',color:'#437a22',bg:'var(--success-l)'},
+];
+
+let cards = [
+  // PHASE 0
+  {id:1,title:'Choose & Reserve Brand Name',desc:'Check USPTO TESS + GoDaddy domain. Confirm "Pilipinas Fuel" availability.',col:'done',cat:'legal',pri:'critical',assignee:'Arvin',phase:0},
+  {id:2,title:'Register Virginia LLC (Multi-Member)',desc:'File Articles of Organization via Virginia SCC eFile — list Arvin + Christian as members. Cost: $100.',col:'done',cat:'legal',pri:'critical',assignee:'Arvin',phase:0},
+  {id:3,title:'Obtain EIN from IRS',desc:'Free, instant online at IRS.gov. Select "Partnership / Multi-Member LLC". Apply after LLC is approved.',col:'done',cat:'legal',pri:'critical',assignee:'Arvin',phase:0},
+  {id:28,title:'Draft LLC Operating Agreement',desc:'Hire VA business attorney ($500–1,500). Define: ownership split, roles (Arvin=CEO, Christian=COO), voting rights, buyout clause, IP ownership, vesting. Do before first expense.',col:'todo',cat:'legal',pri:'critical',assignee:'Arvin',phase:0},
+  {id:4,title:'Open Business Bank Account',desc:'Mercury Bank or Chase Business. Both Arvin & Christian as authorized signatories.',col:'todo',cat:'finance',pri:'critical',assignee:'Arvin',phase:0},
+  {id:5,title:'Hire CPA with CPG Experience',desc:'File Form 1065 (partnership return) + K-1s for each partner. QuickBooks Online setup. Budget $150–300/month.',col:'todo',cat:'finance',pri:'high',assignee:'Arvin',phase:0},
+  {id:6,title:'Get Product Liability Insurance',desc:'NEXT Insurance or Thimble. $500–1500/year. Required before selling.',col:'backlog',cat:'legal',pri:'high',assignee:'Arvin',phase:0},
+  // PHASE 1
+  {id:7,title:'Develop 2–3 Prototype Recipes',desc:'Ube, Pandan, Turon. Target macros: 17–20g protein, <5g sugar, 200–250 cal.',col:'doing',cat:'product',pri:'critical',assignee:'Christian',phase:1},
+  {id:8,title:'Source & Vet Co-Packer',desc:'Contact YouBar, Econo-Pak. Ask: MOQ, SQF cert, lead time, pricing per unit.',col:'doing',cat:'operations',pri:'critical',assignee:'Christian',phase:1},
+  {id:9,title:'File USPTO Trademark',desc:'Class 29/30 for food products. $350/class. Consider attorney for clearance.',col:'backlog',cat:'legal',pri:'high',assignee:'Arvin',phase:1},
+  {id:10,title:'Commission FDA Nutrition Label',desc:'Hire label specialist or use ESHA Genesis R&D. Include allergens, net weight.',col:'backlog',cat:'legal',pri:'critical',assignee:'Christian',phase:1},
+  {id:11,title:'Purchase UPC Barcodes',desc:'Register with GS1 US. ~$250 for startup package. Required for retail.',col:'backlog',cat:'operations',pri:'high',assignee:'Christian',phase:1},
+  {id:12,title:'Taste Test with Community',desc:'Host tasting at Filipino community event in DMV. Collect feedback. Target: 30+ testers.',col:'backlog',cat:'marketing',pri:'high',assignee:'Arvin',phase:1},
+  // PHASE 2
+  {id:13,title:'Design Brand Identity System',desc:'Logo, color palette, packaging design. Hire Filipino-American designer if possible.',col:'doing',cat:'marketing',pri:'critical',assignee:'Arvin',phase:2},
+  {id:14,title:'Build Shopify Website',desc:'DTC e-commerce store. Product pages, About, Blog. Install Klaviyo, Reviews apps.',col:'todo',cat:'marketing',pri:'high',assignee:'',phase:2},
+  {id:15,title:'Set Up Klaviyo Email Flows',desc:'Welcome series, abandon cart, post-purchase, win-back. Connect to Shopify.',col:'backlog',cat:'marketing',pri:'high',assignee:'',phase:2},
+  {id:16,title:'Create Instagram & TikTok',desc:'@PilipinasFuel on both. Brand bio, first 9 posts planned before launch.',col:'doing',cat:'marketing',pri:'medium',assignee:'Arvin',phase:2},
+  {id:17,title:'Build Pre-Launch Waitlist (500+ emails)',desc:'Waitlist form + giveaway campaign. Target 500 emails before launch.',col:'doing',cat:'marketing',pri:'high',assignee:'Arvin',phase:2},
+  {id:18,title:'Identify 20 Micro-Influencers',desc:'Filipino fitness creators, nurses, military. 5K–50K followers. DMV area first.',col:'backlog',cat:'marketing',pri:'high',assignee:'',phase:2},
+  // PHASE 3
+  {id:19,title:'First Production Run (500–1,000 units)',desc:'Work with co-packer. Minimum 2 flavors. QA every unit before shipping.',col:'backlog',cat:'operations',pri:'critical',assignee:'Christian',phase:3},
+  {id:20,title:'Launch DTC Shopify Store',desc:'Go-live. Announce to waitlist. Instagram/TikTok launch content. PR outreach.',col:'backlog',cat:'marketing',pri:'critical',assignee:'Arvin',phase:3},
+  {id:21,title:'Sell at Filipino Events (DMV)',desc:'Pistahan, Barrio Fiesta, church bazaars. Target: $1,000+ in-person sales first month.',col:'backlog',cat:'marketing',pri:'high',assignee:'Arvin',phase:3},
+  {id:22,title:'Pitch Local Retailers',desc:'H-Mart, Seafood City. Prepare sell sheet: pricing, margins, MOQ, sell-through data.',col:'backlog',cat:'operations',pri:'high',assignee:'Christian',phase:3},
+  {id:23,title:'Launch Amazon Listing',desc:'FBA or FBM. A+ Content, optimized listing, 5–7 product photos.',col:'backlog',cat:'marketing',pri:'medium',assignee:'Arvin',phase:3},
+  // PHASE 4
+  {id:24,title:'Hire Part-Time Social Media Manager',desc:'Filipino-American preferred. 10–15 hrs/week. Budget $800–1,200/month.',col:'backlog',cat:'operations',pri:'medium',assignee:'Christian',phase:4},
+  {id:25,title:'Expand SKU Line',desc:'Add 1–2 new flavors (buko pandan, halo-halo?). Bundles, variety packs.',col:'backlog',cat:'product',pri:'low',assignee:'Christian',phase:4},
+  {id:26,title:'Seek Broker / Distributor',desc:'UNFI, KeHE for natural grocery. Requires SRP, UPC, sell sheet, distributor pricing.',col:'backlog',cat:'operations',pri:'low',assignee:'Christian',phase:4},
+  {id:27,title:'Apply for USDA/SBDC Grants',desc:'USDA Value-Added Producer Grants, Virginia SBDC resources, SBA MicroLoan.',col:'backlog',cat:'finance',pri:'medium',assignee:'Arvin',phase:4},
+];
+
+let nextId = 29;
+let editingId = null;
+let dragCard = null;
+let phaseViewActive = false;
+
+// ── Filtering ────────────────────────────────────
+function getFilters() {
+  return {
+    q: document.getElementById('search-input').value.trim().toLowerCase(),
+    cat: document.getElementById('cat-filter').value,
+    pri: document.getElementById('pri-filter').value,
+    phase: document.getElementById('phase-filter').value,
+  };
+}
+
+function matchesFilters(c, f) {
+  if (f.q && !c.title.toLowerCase().includes(f.q) && !(c.desc||'').toLowerCase().includes(f.q)) return false;
+  if (f.cat && c.cat !== f.cat) return false;
+  if (f.pri && c.pri !== f.pri) return false;
+  if (f.phase !== '' && c.phase !== +f.phase) return false;
+  return true;
+}
+
+function applyFilters() {
+  const f = getFilters();
+  const hasFilter = f.q || f.cat || f.pri || f.phase !== '';
+  document.getElementById('clear-filters-btn').style.display = hasFilter ? '' : 'none';
+
+  const visible = cards.filter(c => matchesFilters(c, f));
+  document.getElementById('filter-count').textContent = hasFilter ? `${visible.length} of ${cards.length} tasks` : `${cards.length} tasks`;
+
+  if (phaseViewActive) renderPhaseView(f);
+  else renderColumnView(f);
+}
+
+function clearFilters() {
+  document.getElementById('search-input').value = '';
+  document.getElementById('cat-filter').value = '';
+  document.getElementById('pri-filter').value = '';
+  document.getElementById('phase-filter').value = '';
+  applyFilters();
+}
+
+// ── Phase Toggle ──────────────────────────────────
+function togglePhaseView() {
+  phaseViewActive = !phaseViewActive;
+  document.getElementById('board-wrap').style.display = phaseViewActive ? 'none' : '';
+  document.getElementById('phase-wrap').style.display = phaseViewActive ? '' : 'none';
+  const btn = document.getElementById('phase-toggle-btn');
+  btn.className = phaseViewActive ? 'btn btn-active' : 'btn btn-ghost';
+  btn.textContent = phaseViewActive ? '📋 Column View' : '📊 Phase View';
+  applyFilters();
+}
+
+// ── Column Render ─────────────────────────────────
+function renderColumnView(f) {
+  f = f || getFilters();
+  const board = document.getElementById('board');
+  board.innerHTML = '';
+  let totalVisible = 0;
+
+  COLS.forEach(col => {
+    const colCards = cards.filter(c => c.col === col.id && matchesFilters(c, f));
+    totalVisible += colCards.length;
+    const allColCards = cards.filter(c => c.col === col.id);
+    const div = document.createElement('div');
+    div.className = 'column';
+    div.dataset.col = col.id;
+    div.addEventListener('dragover', e => {e.preventDefault(); div.classList.add('drag-over');});
+    div.addEventListener('dragleave', () => div.classList.remove('drag-over'));
+    div.addEventListener('drop', e => {
+      e.preventDefault(); div.classList.remove('drag-over');
+      if (dragCard) { dragCard.col = col.id; renderColumnView(); }
+    });
+    div.innerHTML = `
+      <div class="col-header">
+        <div class="col-title">
+          <span class="col-dot" style="background:${col.color}"></span>
+          ${col.label}
+          <span class="col-count">${allColCards.length}</span>
+        </div>
+        <button class="col-add" onclick="openAddModal('${col.id}')" title="Add task">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+        </button>
+      </div>
+      <div class="col-cards" id="col-${col.id}">
+        ${colCards.length ? colCards.map(renderCard).join('') : '<div style="padding:.5rem;text-align:center;color:var(--faint);font-size:.75rem;font-style:italic">No matching tasks</div>'}
+      </div>`;
+    board.appendChild(div);
+  });
+
+  const hasFilter = f.q || f.cat || f.pri || f.phase !== '';
+  document.getElementById('no-results').style.display = (hasFilter && totalVisible === 0) ? '' : 'none';
+  renderStats();
+}
+
+// ── Phase Render ──────────────────────────────────
+function renderPhaseView(f) {
+  f = f || getFilters();
+  const pb = document.getElementById('phase-board');
+  pb.innerHTML = '';
+  let totalVisible = 0;
+
+  PHASES.forEach(ph => {
+    const phCards = cards.filter(c => c.phase === ph.id && matchesFilters(c, f));
+    totalVisible += phCards.length;
+    const g = document.createElement('div');
+    g.className = 'phase-group';
+    const donePct = cards.filter(c => c.phase === ph.id).length
+      ? Math.round(cards.filter(c => c.phase === ph.id && c.col === 'done').length / cards.filter(c => c.phase === ph.id).length * 100)
+      : 0;
+    g.innerHTML = `
+      <div class="phase-header" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='none'?'':'none'">
+        <div class="phase-title">
+          <span style="width:10px;height:10px;border-radius:50%;background:${ph.color};display:inline-block;flex-shrink:0"></span>
+          <span>${ph.label}</span>
+          <span style="font-size:.7rem;font-weight:500;color:var(--muted)">${ph.subtitle}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:.75rem">
+          <span style="font-size:.75rem;color:var(--muted)">${donePct}% complete</span>
+          <span class="phase-badge" style="background:${ph.bg};color:${ph.color}">${cards.filter(c=>c.phase===ph.id).length} tasks</span>
+        </div>
+      </div>
+      <div class="phase-cards">
+        ${phCards.length ? phCards.map(c => `
+          <div class="card" draggable="true" data-id="${c.id}"
+            ondragstart="dragCard=cards.find(x=>x.id===${c.id})"
+            ondragend="dragCard=null">
+            ${renderCardInner(c)}
+          </div>`).join('') : `<div class="phase-empty">No matching tasks for this phase</div>`}
+      </div>`;
+    pb.appendChild(g);
+  });
+
+  document.getElementById('phase-no-results').style.display = (totalVisible === 0) ? '' : 'none';
+}
+
+// ── Card HTML ─────────────────────────────────────
+function renderCard(c) {
+  return `<div class="card" draggable="true" data-id="${c.id}"
+    ondragstart="dragCard=cards.find(x=>x.id===${c.id})"
+    ondragend="dragCard=null">
+    ${renderCardInner(c)}
+  </div>`;
+}
+
+function renderCardInner(c) {
+  const tagClass = {legal:'tag-legal',product:'tag-product',marketing:'tag-marketing',finance:'tag-finance',operations:'tag-operations'}[c.cat]||'';
+  const priClass = {critical:'p-critical',high:'p-high',medium:'p-medium',low:'p-low'}[c.pri]||'p-low';
+  const priLabel = {critical:'CRITICAL',high:'HIGH',medium:'MEDIUM',low:'LOW'}[c.pri]||'';
+  const catLabel = {legal:'Legal',product:'Product',marketing:'Marketing',finance:'Finance',operations:'Operations'}[c.cat]||c.cat;
+  const colLabel = {backlog:'Backlog',todo:'To Do',doing:'In Progress',review:'Review',done:'Done'}[c.col]||c.col;
+  const colDotColor = {backlog:'#bab9b4',todo:'#E8A020',doing:'#7B4FA6',review:'#2D7A4F',done:'#437a22'}[c.col]||'#bab9b4';
+  return `
+    <div class="card-top">
+      <div class="card-title">${c.title}</div>
+      <button class="card-menu" onclick="editCard(${c.id})" title="Edit">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg>
+      </button>
+    </div>
+    ${c.desc ? `<div class="card-desc">${c.desc}</div>` : ''}
+    <div class="card-footer">
+      <div class="card-tags">
+        <span class="tag ${tagClass}">${catLabel}</span>
+        ${c.assignee ? `<span class="tag" style="background:var(--surface-offset);color:var(--muted)">👤 ${c.assignee}</span>` : ''}
+        ${phaseViewActive ? `<span class="tag" style="background:var(--surface-offset);color:var(--muted)"><span style="display:inline-block;width:6px;height:6px;border-radius:50%;background:${colDotColor};margin-right:3px;vertical-align:middle"></span>${colLabel}</span>` : ''}
+      </div>
+      <span class="priority ${priClass}">${priLabel}</span>
+    </div>`;
+}
+
+// ── Stats ─────────────────────────────────────────
+function renderStats() {
+  const total = cards.length;
+  const done = cards.filter(c => c.col === 'done').length;
+  const doing = cards.filter(c => c.col === 'doing').length;
+  const critical = cards.filter(c => c.pri === 'critical' && c.col !== 'done').length;
+  const pct = Math.round(done / total * 100);
+  document.getElementById('stats-bar').innerHTML = `
+    <span class="stat-item"><span class="stat-dot" style="background:#437a22"></span>${done}/${total} tasks complete (${pct}%)</span>
+    <span class="stat-item"><span class="stat-dot" style="background:#7B4FA6"></span>${doing} in progress</span>
+    <span class="stat-item" style="color:#c0392b"><span class="stat-dot" style="background:#c0392b"></span>${critical} critical remaining</span>`;
+}
+
+// ── Modal ─────────────────────────────────────────
+function openAddModal(colId = 'backlog') {
+  editingId = null;
+  document.getElementById('modal-title').textContent = 'Add Task';
+  document.getElementById('f-title').value = '';
+  document.getElementById('f-desc').value = '';
+  document.getElementById('f-cat').value = 'operations';
+  document.getElementById('f-pri').value = 'medium';
+  document.getElementById('f-col').value = colId;
+  document.getElementById('f-phase').value = '0';
+  document.getElementById('f-assign').value = '';
+  document.getElementById('delete-btn').style.display = 'none';
+  document.getElementById('overlay').classList.add('open');
+  setTimeout(() => document.getElementById('f-title').focus(), 50);
+}
+
+function editCard(id) {
+  const c = cards.find(x => x.id === id);
+  if (!c) return;
+  editingId = id;
+  document.getElementById('modal-title').textContent = 'Edit Task';
+  document.getElementById('f-title').value = c.title;
+  document.getElementById('f-desc').value = c.desc || '';
+  document.getElementById('f-cat').value = c.cat;
+  document.getElementById('f-pri').value = c.pri;
+  document.getElementById('f-col').value = c.col;
+  document.getElementById('f-phase').value = String(c.phase);
+  document.getElementById('f-assign').value = c.assignee || '';
+  document.getElementById('delete-btn').style.display = '';
+  document.getElementById('overlay').classList.add('open');
+  setTimeout(() => document.getElementById('f-title').focus(), 50);
+}
+
+function closeModal() { document.getElementById('overlay').classList.remove('open'); }
+function closeModalOnBg(e) { if (e.target === document.getElementById('overlay')) closeModal(); }
+
+function saveCard() {
+  const title = document.getElementById('f-title').value.trim();
+  if (!title) { document.getElementById('f-title').style.borderColor = '#c0392b'; return; }
+  document.getElementById('f-title').style.borderColor = '';
+  const data = {
+    title,
+    desc: document.getElementById('f-desc').value.trim(),
+    cat: document.getElementById('f-cat').value,
+    pri: document.getElementById('f-pri').value,
+    col: document.getElementById('f-col').value,
+    phase: +document.getElementById('f-phase').value,
+    assignee: document.getElementById('f-assign').value.trim(),
+  };
+  if (editingId !== null) {
+    const idx = cards.findIndex(x => x.id === editingId);
+    if (idx !== -1) cards[idx] = { ...cards[idx], ...data };
+  } else {
+    cards.push({ id: nextId++, ...data });
+  }
+  closeModal();
+  applyFilters();
+}
+
+function deleteCard() {
+  if (editingId === null) return;
+  cards = cards.filter(c => c.id !== editingId);
+  closeModal();
+  applyFilters();
+}
+
+// ── Init ──────────────────────────────────────────
+applyFilters();
+document.getElementById('filter-count').textContent = `${cards.length} tasks`;
+</script>
+</body>
+</html>

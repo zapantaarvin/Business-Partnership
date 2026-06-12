@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Pilipinas Fuel — Operations Hub</title>
+<link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@300..700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root,[data-theme="light"]{
+--bg:#f7f6f2;--surface:#f9f8f5;--surface-2:#fbfbf9;--surface-offset:#f0ede9;
+--border:#d4d1ca;--divider:#dcd9d5;
+--text:#28251d;--muted:#7a7974;--faint:#bab9b4;
+--primary:#01696f;--primary-h:#cedcd8;
+--ube:#7B4FA6;--ube-l:#e8d9f5;
+--pandan:#2D7A4F;--pandan-l:#d4ede1;
+--gold:#E8A020;--gold-l:#faeacc;
+--error:#a12c7b;--error-l:#f5ddf0;
+--success:#437a22;--success-l:#d4dfcc;
+--r-sm:.375rem;--r-md:.5rem;--r-lg:.75rem;--r-xl:1rem;--r-full:9999px;
+--sh-sm:0 1px 2px oklch(0.2 0.01 80/0.06);--sh-md:0 4px 12px oklch(0.2 0.01 80/0.08);
+--font:'Work Sans','Helvetica Neue',sans-serif;
+}
+[data-theme="dark"]{
+--bg:#171614;--surface:#1c1b19;--surface-2:#201f1d;--surface-offset:#1d1c1a;
+--border:#393836;--divider:#262523;
+--text:#cdccca;--muted:#797876;--faint:#5a5957;
+--primary:#4f98a3;--primary-h:#313b3b;
+--ube:#a47cc4;--ube-l:#3a2850;
+--pandan:#5aad7a;--pandan-l:#1e3d2a;
+--gold:#f0b847;--gold-l:#3d2f0e;
+--error:#d163a7;--error-l:#4c3d46;
+--success:#6daa45;--success-l:#3a4435;
+--sh-sm:0 1px 2px oklch(0 0 0/0.25);--sh-md:0 4px 12px oklch(0 0 0/0.35);
+}
+html{-webkit-font-smoothing:antialiased}
+body{font-family:var(--font);font-size:1rem;color:var(--text);background:var(--bg);min-height:100dvh}
+button{cursor:pointer;border:none;font:inherit;color:inherit;background:none}
+input,textarea,select{font:inherit;color:inherit}
+.app-header{background:var(--surface);border-bottom:1px solid var(--border);padding:.75rem 1.5rem;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50}
+.header-brand{display:flex;align-items:center;gap:.75rem;font-size:1.2rem;font-weight:700}
+.header-brand svg{width:28px;height:28px}
+.theme-btn{width:34px;height:34px;border-radius:var(--r-full);display:flex;align-items:center;justify-content:center;color:var(--muted);transition:color .15s,background .15s}
+.theme-btn:hover{color:var(--text);background:var(--surface-offset)}
+/* NAV TABS */
+.page-tabs{background:var(--surface);border-bottom:1px solid var(--border);display:flex;padding:0 1.5rem;overflow-x:auto}
+.ptab{padding:.75rem 1rem;font-size:.875rem;font-weight:600;color:var(--muted);border-bottom:2px solid transparent;transition:color .15s,border-color .15s;cursor:pointer;white-space:nowrap;margin-bottom:-1px}
+.ptab.active{color:var(--ube);border-bottom-color:var(--ube)}
+.ptab:hover:not(.active){color:var(--text)}
+.main{max-width:1200px;margin:0 auto;padding:1.5rem}
+.page{display:none}.page.active{display:block}
+/* TABLE */
+.section-title{font-size:.875rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:1px solid var(--divider);display:flex;align-items:center;justify-content:space-between}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);overflow:hidden;margin-bottom:1.5rem}
+table{width:100%;border-collapse:collapse;font-size:.875rem}
+th{text-align:left;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--muted);padding:.625rem .875rem;border-bottom:1px solid var(--border);background:var(--surface-2)}
+td{padding:.625rem .875rem;border-bottom:1px solid var(--divider);vertical-align:middle}
+tr:last-child td{border-bottom:none}
+tr:hover{background:var(--surface-offset)}
+.badge{display:inline-block;padding:2px 8px;border-radius:var(--r-full);font-size:.72rem;font-weight:700}
+.b-green{background:var(--success-l);color:var(--success)}
+.b-gold{background:var(--gold-l);color:#8a5b00}
+.b-red{background:var(--error-l);color:var(--error)}
+.b-ube{background:var(--ube-l);color:var(--ube)}
+.b-pandan{background:var(--pandan-l);color:var(--pandan)}
+.b-muted{background:var(--surface-offset);color:var(--muted)}
+.btn{padding:.375rem .75rem;border-radius:var(--r-full);font-size:.8rem;font-weight:600;cursor:pointer;transition:background .15s}
+.btn-sm-ube{background:var(--ube-l);color:var(--ube)}
+.btn-sm-ube:hover{background:var(--ube);color:#fff}
+.btn-sm-ghost{border:1px solid var(--border);color:var(--muted)}
+.btn-sm-ghost:hover{color:var(--text);background:var(--surface-offset)}
+/* CHECKLIST */
+.checklist{display:flex;flex-direction:column;gap:0}
+.check-item{display:flex;align-items:flex-start;gap:.875rem;padding:.875rem;border-bottom:1px solid var(--divider);cursor:pointer;transition:background .15s}
+.check-item:last-child{border-bottom:none}
+.check-item:hover{background:var(--surface-offset)}
+.check-item input[type=checkbox]{width:18px;height:18px;accent-color:var(--ube);flex-shrink:0;margin-top:2px;cursor:pointer}
+.check-text{flex:1}
+.check-title{font-size:.875rem;font-weight:600;margin-bottom:2px}
+.check-desc{font-size:.78rem;color:var(--muted);line-height:1.5}
+.check-item.checked .check-title{text-decoration:line-through;color:var(--muted)}
+.check-section{background:var(--surface-2);padding:.5rem .875rem;font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border)}
+/* TIMELINE */
+.timeline{display:flex;flex-direction:column;gap:0;padding:1rem}
+.tl-item{display:flex;gap:1rem;padding:.75rem 0;position:relative}
+.tl-item:not(:last-child)::after{content:'';position:absolute;left:16px;top:40px;bottom:-8px;width:1px;background:var(--divider)}
+.tl-dot{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:.8rem;flex-shrink:0;z-index:1}
+.tl-done{background:var(--success-l);color:var(--success)}
+.tl-active{background:var(--ube-l);color:var(--ube);box-shadow:0 0 0 4px var(--ube-l)}
+.tl-pending{background:var(--surface-offset);color:var(--muted)}
+.tl-content{flex:1;padding-top:4px}
+.tl-title{font-size:.875rem;font-weight:700}
+.tl-meta{font-size:.75rem;color:var(--muted);margin-top:2px}
+.tl-phase{font-size:.75rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;padding:.375rem .75rem;background:var(--surface-2);border-radius:var(--r-lg);margin:.5rem 0;color:var(--muted)}
+/* TEAM */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:1rem;padding:1rem}
+.member-card{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-xl);padding:1.25rem;display:flex;gap:1rem;align-items:flex-start}
+.member-avatar{width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:1.2rem;flex-shrink:0}
+.member-info h4{font-size:.875rem;font-weight:700}
+.member-info p{font-size:.78rem;color:var(--muted);margin:.25rem 0}
+.member-badge{display:inline-block;padding:1px 7px;border-radius:var(--r-full);font-size:.68rem;font-weight:700;margin-top:.375rem}
+@media(max-width:640px){.page-tabs{gap:0}.ptab{padding:.625rem .75rem;font-size:.8rem}}
+</style>
+</head>
+<body>
+<header class="app-header">
+<div class="header-brand">
+<svg viewBox="0 0 28 28" fill="none">
+<circle cx="14" cy="14" r="13" fill="#7B4FA6"/>
+<path d="M7 20V8h6a4.5 4.5 0 0 1 0 9H11v3H7z" fill="white"/>
+<circle cx="13" cy="12.5" r="2.5" fill="#E8A020"/>
+</svg>
+Pilipinas Fuel · Operations Hub
+</div>
+<button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
+<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+</button>
+</header>
+
+<div class="page-tabs">
+<div class="ptab active" onclick="showPage('vendors',this)">🏭 Vendors</div>
+<div class="ptab" onclick="showPage('timeline',this)">📅 Timeline</div>
+<div class="ptab" onclick="showPage('checklist',this)">✅ Regulatory</div>
+<div class="ptab" onclick="showPage('team',this)">👥 Team</div>
+</div>
+
+<main class="main">
+
+<!-- VENDORS -->
+<div class="page active" id="page-vendors">
+<div class="section-title"><span>Co-Packers &amp; Suppliers</span></div>
+<div class="card">
+<table>
+<thead><tr><th>Company</th><th>Type</th><th>Location</th><th>MOQ</th><th>Certifications</th><th>Status</th><th>Contact</th></tr></thead>
+<tbody>
+<tr><td><strong>YouBar</strong></td><td><span class="badge b-ube">Co-Packer</span></td><td>Los Angeles, CA</td><td>~200 bars</td><td><span class="badge b-green">SQF</span></td><td><span class="badge b-gold">Researching</span></td><td><button class="btn btn-sm-ube">Contact</button></td></tr>
+<tr><td><strong>Econo-Pak</strong></td><td><span class="badge b-ube">Co-Packer</span></td><td>Multiple, CA</td><td>500–1K units</td><td><span class="badge b-green">BRC</span></td><td><span class="badge b-gold">Researching</span></td><td><button class="btn btn-sm-ube">Contact</button></td></tr>
+<tr><td><strong>Whatever's Healthy</strong></td><td><span class="badge b-ube">Co-Packer</span></td><td>National</td><td>Flexible</td><td><span class="badge b-muted">TBD</span></td><td><span class="badge b-gold">Researching</span></td><td><button class="btn btn-sm-ube">Contact</button></td></tr>
+<tr><td><strong>RFI Ingredients</strong></td><td><span class="badge b-pandan">Ingredients</span></td><td>Totowa, NJ</td><td>25 kg</td><td><span class="badge b-green">GRAS</span></td><td><span class="badge b-muted">Planned</span></td><td><button class="btn btn-sm-ghost">Research</button></td></tr>
+<tr><td><strong>GS1 US</strong></td><td><span class="badge b-pandan">Barcodes</span></td><td>Lawrenceville, NJ</td><td>1 prefix</td><td>—</td><td><span class="badge b-muted">Planned</span></td><td><button class="btn btn-sm-ghost">Visit Site</button></td></tr>
+<tr><td><strong>ESHA Genesis R&amp;D</strong></td><td><span class="badge b-gold">Nutrition Label</span></td><td>Portland, OR</td><td>1 label</td><td><span class="badge b-green">FDA</span></td><td><span class="badge b-muted">Planned</span></td><td><button class="btn btn-sm-ghost">Research</button></td></tr>
+<tr><td><strong>Klaviyo</strong></td><td><span class="badge b-gold">Email Marketing</span></td><td>Boston, MA</td><td>Free tier</td><td>—</td><td><span class="badge b-muted">Planned</span></td><td><button class="btn btn-sm-ghost">Sign Up</button></td></tr>
+<tr><td><strong>QuickBooks Online</strong></td><td><span class="badge b-gold">Accounting</span></td><td>Mountain View, CA</td><td>$45/mo</td><td>—</td><td><span class="badge b-muted">Planned</span></td><td><button class="btn btn-sm-ghost">Sign Up</button></td></tr>
+<tr><td><strong>Shopify</strong></td><td><span class="badge b-gold">E-Commerce</span></td><td>Ottawa, CA</td><td>$39/mo</td><td>—</td><td><span class="badge b-muted">Planned</span></td><td><button class="btn btn-sm-ghost">Sign Up</button></td></tr>
+<tr><td><strong>NEXT Insurance</strong></td><td><span class="badge b-pandan">Insurance</span></td><td>Palo Alto, CA</td><td>~$600/yr</td><td>—</td><td><span class="badge b-muted">Planned</span></td><td><button class="btn btn-sm-ghost">Get Quote</button></td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<!-- TIMELINE -->
+<div class="page" id="page-timeline">
+<div class="section-title"><span>Launch Timeline</span></div>
+<div class="card">
+<div class="timeline" id="timeline"></div>
+</div>
+</div>
+
+<!-- CHECKLIST -->
+<div class="page" id="page-checklist">
+<div class="section-title">
+<span>Regulatory Compliance Checklist</span>
+<span id="check-progress" style="font-size:.875rem;font-weight:700;color:var(--ube)"></span>
+</div>
+<div class="card">
+<div class="checklist" id="checklist"></div>
+</div>
+</div>
+
+<!-- TEAM -->
+<div class="page" id="page-team">
+<div class="section-title"><span>Team Directory</span></div>
+<div class="card">
+<div class="team-grid" id="team-grid"></div>
+</div>
+</div>
+
+</main>
+
+<script>
+// Theme
+(function(){const t=document.querySelector('[data-theme-toggle]'),r=document.documentElement;let d=matchMedia('(prefers-color-scheme:dark)').matches?'dark':'light';r.setAttribute('data-theme',d);t&&t.addEventListener('click',()=>{d=d==='dark'?'light':'dark';r.setAttribute('data-theme',d);});})();
+
+function showPage(id, el){
+document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('active'));
+document.getElementById('page-'+id).classList.add('active');
+el.classList.add('active');
+}
+
+// Timeline data
+const TIMELINE = [
+{phase:'Phase 0 — Foundation',items:[
+{title:'Choose & reserve brand name + domain',meta:'Week 1 · Arvin',status:'done'},
+{title:'Register Virginia LLC (Multi-Member: Arvin + Christian)',meta:'Week 1–2 · Arvin',status:'done'},
+{title:'Draft LLC Operating Agreement',meta:'Week 2 · Arvin + Christian',status:'active'},
+{title:'Apply for EIN (Multi-Member LLC)',meta:'Week 2 · Arvin',status:'done'},
+{title:'Open business bank account (both signatories)',meta:'Week 2–3 · Arvin + Christian',status:'active'},
+{title:'Hire CPA with CPG experience (Form 1065 + K-1s)',meta:'Week 3–4 · Arvin',status:'active'},
+{title:'Get product liability insurance',meta:'Week 4 · Arvin',status:'pending'},
+]},
+{phase:'Phase 1 — Product & Legal',items:[
+{title:'Develop 2–3 prototype recipes (ube, pandan, turon)',meta:'Weeks 5–8 · Christian',status:'active'},
+{title:'Source & vet co-packer (MOQ, SQF cert, pricing)',meta:'Weeks 5–10 · Christian',status:'active'},
+{title:'File USPTO trademark (Class 29/30)',meta:'Week 6 · Arvin',status:'pending'},
+{title:'Commission FDA-compliant nutrition label',meta:'Week 8–10 · Christian',status:'pending'},
+{title:'Purchase UPC barcodes (GS1 US)',meta:'Week 8 · Christian',status:'pending'},
+{title:'Community taste test (30+ testers)',meta:'Week 10–12 · Arvin + Christian',status:'pending'},
+]},
+{phase:'Phase 2 — Brand & Digital',items:[
+{title:'Finalize brand identity (logo, packaging, colors)',meta:'Weeks 9–12 · Arvin',status:'active'},
+{title:'Build Shopify DTC website',meta:'Weeks 12–14 · Arvin',status:'pending'},
+{title:'Set up Klaviyo email flows',meta:'Week 14 · Arvin',status:'pending'},
+{title:'Launch Instagram + TikTok accounts',meta:'Week 10 · Arvin',status:'active'},
+{title:'Build pre-launch waitlist (target: 500+ emails)',meta:'Ongoing · Arvin',status:'active'},
+{title:'Identify & pitch 20 micro-influencers',meta:'Weeks 10–16 · Arvin',status:'pending'},
+]},
+{phase:'Phase 3 — Launch',items:[
+{title:'First production run (500–1,000 units)',meta:'Week 17–18 · Christian',status:'pending'},
+{title:'Launch DTC Shopify store',meta:'Week 18 · Arvin',status:'pending'},
+{title:'Sell at Filipino community events (DMV)',meta:'Week 18+ · Arvin + Christian',status:'pending'},
+{title:'Pitch local retailers (H-Mart, Seafood City)',meta:'Week 20+ · Christian',status:'pending'},
+{title:'Launch Amazon listing (FBA or FBM)',meta:'Week 20+ · Arvin',status:'pending'},
+]},
+{phase:'Phase 4 — Scale',items:[
+{title:'Hire part-time social media manager',meta:'Month 7 · Christian',status:'pending'},
+{title:'Expand SKU line (new flavors, bundles)',meta:'Month 8 · Christian',status:'pending'},
+{title:'Engage food broker / distributor',meta:'Month 9 · Christian',status:'pending'},
+{title:'Apply for USDA/SBDC/SBA grants',meta:'Month 10 · Arvin',status:'pending'},
+]},
+];
+
+function renderTimeline(){
+const el=document.getElementById('timeline');
+el.innerHTML='';
+TIMELINE.forEach(phase=>{
+const ph=document.createElement('div');
+ph.className='tl-phase';ph.textContent=phase.phase;el.appendChild(ph);
+phase.items.forEach(item=>{
+const d=document.createElement('div');d.className='tl-item';
+const dotClass=item.status==='done'?'tl-done':item.status==='active'?'tl-active':'tl-pending';
+const dotIcon=item.status==='done'?'✓':item.status==='active'?'▶':'○';
+d.innerHTML=`<div class="tl-dot ${dotClass}">${dotIcon}</div><div class="tl-content"><div class="tl-title">${item.title}</div><div class="tl-meta">${item.meta}</div></div>`;
+el.appendChild(d);
+});
+});
+}
+
+// Checklist
+const CHECKS = [
+{section:'Business Formation',items:[
+{id:'llc',title:'LLC Registered (Virginia SCC) — Multi-Member',desc:'Filed with Arvin Zapanta + Christian Dayo as members. Cost: $100.',checked:true},
+{id:'opagreement',title:'Operating Agreement Drafted & Signed',desc:'Defines ownership split, roles, voting rights, buyout clause, IP ownership, vesting schedule.',checked:false},
+{id:'ein',title:'EIN Obtained (IRS) — Multi-Member',desc:'Employer Identification Number. Selected "Partnership / Multi-Member LLC".',checked:true},
+{id:'bank',title:'Business Bank Account Opened (Both Signatories)',desc:'Arvin + Christian both authorized. Keep business finances completely separate.',checked:false},
+{id:'ins',title:'Product Liability Insurance Active',desc:'NEXT Insurance or Thimble. Min $1M coverage.',checked:false},
+]},
+{section:'Product & FDA Compliance',items:[
+{id:'copacker',title:'Co-Packer SQF or BRC Certified',desc:'Third-party food safety certification required for retailers.',checked:false},
+{id:'nutrition',title:'FDA-Compliant Nutrition Facts Panel',desc:'Hire nutrition label specialist or use ESHA Genesis R&D.',checked:false},
+{id:'allergen',title:'Allergen Labeling (Big 9) Complete',desc:'Milk, eggs, fish, shellfish, tree nuts, peanuts, wheat, soybeans, sesame.',checked:false},
+{id:'netweight',title:'Net Weight Statement Accurate',desc:'Must appear on principal display panel (e.g., "1.76 oz (50g)").',checked:false},
+{id:'facility',title:'FDA Food Facility Registration',desc:'If using your own facility. Co-packer typically handles this.',checked:false},
+]},
+{section:'Brand & IP Protection',items:[
+{id:'trademark',title:'USPTO Trademark Filed',desc:'Class 29 and/or Class 30. $350/class. LLC owns the trademark — not any individual.',checked:false},
+{id:'upc',title:'UPC Barcodes Purchased (GS1 US)',desc:'Required for retail. ~$250 for startup package.',checked:false},
+{id:'domain',title:'Domain Name Registered',desc:'pilipinasfuel.com or similar.',checked:false},
+]},
+{section:'Sales & Tax',items:[
+{id:'salestax',title:'Virginia Sales Tax Registration',desc:'Register with VA Tax for sales tax collection.',checked:false},
+{id:'reseller',title:'Reseller Certificate (if buying wholesale)',desc:'Allows purchasing ingredients without paying sales tax.',checked:false},
+{id:'shelflife',title:'Shelf-life / Expiration Dating System',desc:'Establish best-by date methodology with co-packer.',checked:false},
+]},
+];
+
+let checkState = {};
+function renderChecklist(){
+const el=document.getElementById('checklist');
+el.innerHTML='';
+let total=0,done=0;
+CHECKS.forEach(section=>{
+const sh=document.createElement('div');sh.className='check-section';sh.textContent=section.section;el.appendChild(sh);
+section.items.forEach(item=>{
+total++;
+if(checkState[item.id]===undefined) checkState[item.id]=item.checked;
+if(checkState[item.id]) done++;
+const div=document.createElement('div');
+div.className='check-item'+(checkState[item.id]?' checked':'');
+div.innerHTML=`<input type="checkbox" ${checkState[item.id]?'checked':''} onchange="toggleCheck('${item.id}')"><div class="check-text"><div class="check-title">${item.title}</div><div class="check-desc">${item.desc}</div></div>`;
+el.appendChild(div);
+});
+});
+document.getElementById('check-progress').textContent=`${done} / ${total} complete`;
+}
+function toggleCheck(id){
+checkState[id]=!checkState[id];
+renderChecklist();
+}
+
+// Team
+const TEAM = [
+{name:'Arvin Zapanta',role:'Founder & CEO',skills:'Engineering, Strategy, Brand Vision',emoji:'👨‍💼',color:'#7B4FA6',light:'#e8d9f5',badge:null},
+{name:'Christian Dayo',role:'Co-Founder & COO',skills:'Product Development, Operations, Co-packer Relations',emoji:'⚙️',color:'#2D7A4F',light:'#d4ede1',badge:'Co-Founder'},
+{name:'Daniel Villano',role:'Potential Member (TBD)',skills:'Role & equity TBD — equity split under discussion',emoji:'🤝',color:'#E8A020',light:'#faeacc',badge:'Potential'},
+{name:'[Marketing Lead / CMO]',role:'Marketing & Brand Lead',skills:'Social media, content, influencer management',emoji:'📣',color:'#01696f',light:'#cedcd8',badge:null},
+{name:'[CPA / Bookkeeper]',role:'Finance & Accounting',skills:'QuickBooks, CPG accounting, Form 1065, K-1s',emoji:'💰',color:'#437a22',light:'#d4dfcc',badge:null},
+{name:'[Food Scientist / Advisor]',role:'Product Development Advisor',skills:'Recipe formulation, nutrition label, ingredient sourcing',emoji:'🧪',color:'#a12c7b',light:'#f5ddf0',badge:null},
+];
+
+function renderTeam(){
+const el=document.getElementById('team-grid');
+el.innerHTML='';
+TEAM.forEach(m=>{
+const d=document.createElement('div');
+d.className='member-card';
+const badgeHtml=m.badge?`<span class="member-badge" style="background:${m.light};color:${m.color}">${m.badge}</span>`:'';
+d.innerHTML=`<div class="member-avatar" style="background:${m.light};color:${m.color}">${m.emoji}</div>
+<div class="member-info">
+<h4>${m.name} ${badgeHtml}</h4>
+<p style="color:${m.color};font-weight:700;font-size:.8rem">${m.role}</p>
+<p>${m.skills}</p>
+</div>`;
+el.appendChild(d);
+});
+}
+
+renderTimeline();
+renderChecklist();
+renderTeam();
+</script>
+</body>
+</html>
