@@ -2430,20 +2430,8 @@ kbd {
         background:radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(0,0,0,.75) 100%);
       }
 
-      /* Large scene icon — Ken Burns */
-      .scene-icon-wrap {
-        position:absolute;
-        font-size:clamp(6rem,14vw,12rem);
-        line-height:1; user-select:none; pointer-events:none;
-        filter:drop-shadow(0 0 40px rgba(255,255,255,.08));
-        animation:ken-burns 6s ease-in-out infinite;
-      }
-      @keyframes ken-burns { 0%,100%{transform:scale(1) rotate(-1deg)} 50%{transform:scale(1.06) rotate(0deg)} }
-      .sb1 .scene-icon-wrap { bottom:12%; right:8%; opacity:.6; }
-      .sb2 .scene-icon-wrap { bottom:14%; left:6%;  opacity:.55; }
-      .sb3 .scene-icon-wrap { bottom:12%; right:6%; opacity:.6; }
-      .sb4 .scene-icon-wrap { top:14%;    right:8%; opacity:.55; }
-      .sb5 .scene-icon-wrap { bottom:14%; right:6%; opacity:.5; }
+      /* ken-burns used by scene illustrations */
+      @keyframes ken-burns { 0%,100%{transform:scale(1) rotate(-.5deg)} 50%{transform:scale(1.04) rotate(.5deg)} }
 
       /* Floating decorative particles per scene */
       .scene-floaters {
@@ -2465,7 +2453,7 @@ kbd {
         position:absolute; z-index:5;
         left:clamp(1.5rem,6vw,5rem);
         bottom:clamp(3rem,12%,5rem);
-        max-width:600px;
+        max-width:min(48%, 520px);
       }
       .scene-eyebrow-cine {
         font-size:.65rem; letter-spacing:.18em; text-transform:uppercase;
@@ -3330,10 +3318,92 @@ kbd {
               <div class="scene5-tagline">"Whatever you do, work at it with all your heart, as working for the Lord."<br>— Colossians 3:23</div>
               <div class="scene5-cta">ffnbars.com · Coming Soon</div>
             </div>
+            <!-- ILLUSTRATION: Premium Product Trio -->
+            <div class="scene-illus" style="z-index:2">
+              <svg viewBox="0 0 280 440" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                <defs>
+                  <linearGradient id="s5ube" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#9050e0"/><stop offset="100%" stop-color="#5020a0"/></linearGradient>
+                  <linearGradient id="s5pan" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#30a060"/><stop offset="100%" stop-color="#1a6030"/></linearGradient>
+                  <linearGradient id="s5tur" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#e09030"/><stop offset="100%" stop-color="#a05010"/></linearGradient>
+                  <radialGradient id="s5g1" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#8040d0" stop-opacity="0.22"/><stop offset="100%" stop-color="#8040d0" stop-opacity="0"/></radialGradient>
+                  <radialGradient id="s5g2" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#30a060" stop-opacity="0.18"/><stop offset="100%" stop-color="#30a060" stop-opacity="0"/></radialGradient>
+                  <radialGradient id="s5g3" cx="50%" cy="50%" r="50%"><stop offset="0%" stop-color="#e09030" stop-opacity="0.18"/><stop offset="100%" stop-color="#e09030" stop-opacity="0"/></radialGradient>
+                </defs>
+                <!-- Color glows per bar -->
+                <ellipse cx="90" cy="155" rx="80" ry="80" fill="url(#s5g1)"/>
+                <ellipse cx="195" cy="215" rx="80" ry="80" fill="url(#s5g2)"/>
+                <ellipse cx="80" cy="318" rx="80" ry="80" fill="url(#s5g3)"/>
+                <!-- Gold dust -->
+                <circle cx="38" cy="78" r="1.5" fill="#f0c040" opacity="0.3"/>
+                <circle cx="222" cy="58" r="1" fill="#f0c040" opacity="0.25"/>
+                <circle cx="262" cy="180" r="2" fill="#f0c040" opacity="0.2"/>
+                <circle cx="28" cy="252" r="1.5" fill="#f0c040" opacity="0.3"/>
+                <circle cx="252" cy="352" r="1" fill="#f0c040" opacity="0.25"/>
+                <circle cx="142" cy="38" r="1" fill="#f0c040" opacity="0.2"/>
+                <!-- ═ BAR 1: UBE COCONUT (top-left tilted) ═ -->
+                <g transform="rotate(-22, 90, 148)">
+                  <rect x="44" y="128" width="96" height="12" rx="6" fill="#3010a0" opacity="0.3" transform="translate(5,8)"/>
+                  <rect x="44" y="112" width="96" height="56" rx="8" fill="url(#s5ube)"/>
+                  <rect x="44" y="112" width="96" height="14" rx="8" fill="white" opacity="0.11"/>
+                  <rect x="48" y="114" width="88" height="5" rx="3" fill="white" opacity="0.13"/>
+                  <rect x="44" y="144" width="96" height="14" fill="#5010a8" opacity="0.45"/>
+                  <rect x="44" y="112" width="13" height="56" rx="8" fill="#5010a8" opacity="0.3"/>
+                  <rect x="127" y="112" width="13" height="56" rx="8" fill="#5010a8" opacity="0.3"/>
+                  <line x1="88" y1="112" x2="88" y2="168" stroke="white" stroke-width="1" opacity="0.1"/>
+                  <line x1="108" y1="112" x2="108" y2="168" stroke="white" stroke-width="1" opacity="0.1"/>
+                  <text x="56" y="131" font-family="Georgia,serif" font-size="10" fill="white" font-weight="bold" letter-spacing=".08em">FFN</text>
+                  <text x="54" y="142" font-family="Arial" font-size="5.5" fill="#d0a0f8" letter-spacing=".04em">UBE COCONUT</text>
+                  <text x="66" y="157" font-family="Arial" font-size="7" fill="white" font-weight="bold">20g</text>
+                  <text x="76" y="164" font-family="Arial" font-size="4.5" fill="#d0a0f8">PROTEIN</text>
+                </g>
+                <!-- ═ BAR 2: PANDAN (center-right slight angle) ═ -->
+                <g transform="rotate(15, 190, 208)">
+                  <rect x="148" y="186" width="88" height="12" rx="5" fill="#104020" opacity="0.3" transform="translate(5,8)"/>
+                  <rect x="148" y="152" width="88" height="52" rx="7" fill="url(#s5pan)"/>
+                  <rect x="148" y="152" width="88" height="13" rx="7" fill="white" opacity="0.1"/>
+                  <rect x="152" y="154" width="80" height="5" rx="2" fill="white" opacity="0.12"/>
+                  <rect x="148" y="182" width="88" height="12" fill="#1a7038" opacity="0.45"/>
+                  <rect x="148" y="152" width="12" height="52" rx="7" fill="#1a7038" opacity="0.3"/>
+                  <rect x="224" y="152" width="12" height="52" rx="7" fill="#1a7038" opacity="0.3"/>
+                  <line x1="192" y1="152" x2="192" y2="204" stroke="white" stroke-width="1" opacity="0.1"/>
+                  <text x="160" y="171" font-family="Georgia,serif" font-size="10" fill="white" font-weight="bold" letter-spacing=".08em">FFN</text>
+                  <text x="157" y="181" font-family="Arial" font-size="5" fill="#a0e0b0" letter-spacing=".04em">PANDAN COCONUT</text>
+                  <text x="168" y="196" font-family="Arial" font-size="7" fill="white" font-weight="bold">18g</text>
+                  <text x="178" y="202" font-family="Arial" font-size="4.5" fill="#a0e0b0">PROTEIN</text>
+                </g>
+                <!-- ═ BAR 3: TURON CINNAMON (bottom center, slight angle) ═ -->
+                <g transform="rotate(8, 126, 318)">
+                  <rect x="52" y="308" width="110" height="12" rx="5" fill="#402000" opacity="0.35" transform="translate(5,10)"/>
+                  <rect x="52" y="262" width="110" height="60" rx="8" fill="url(#s5tur)"/>
+                  <rect x="52" y="262" width="110" height="16" rx="8" fill="white" opacity="0.12"/>
+                  <rect x="56" y="264" width="102" height="6" rx="3" fill="white" opacity="0.17"/>
+                  <rect x="52" y="294" width="110" height="16" fill="#a06010" opacity="0.38"/>
+                  <rect x="52" y="262" width="14" height="60" rx="8" fill="#a05810" opacity="0.3"/>
+                  <rect x="148" y="262" width="14" height="60" rx="8" fill="#a05810" opacity="0.3"/>
+                  <line x1="100" y1="262" x2="100" y2="322" stroke="white" stroke-width="1.2" opacity="0.11"/>
+                  <line x1="126" y1="262" x2="126" y2="322" stroke="white" stroke-width="1.2" opacity="0.11"/>
+                  <text x="66" y="283" font-family="Georgia,serif" font-size="11" fill="white" font-weight="bold" letter-spacing=".08em">FFN</text>
+                  <text x="63" y="295" font-family="Arial" font-size="5.5" fill="#ffe0a0" letter-spacing=".04em">TURON CINNAMON</text>
+                  <text x="76" y="311" font-family="Arial" font-size="7" fill="white" font-weight="bold">18g</text>
+                  <text x="87" y="318" font-family="Arial" font-size="5" fill="#ffe0a0">PROTEIN</text>
+                </g>
+                <!-- Quality badge -->
+                <circle cx="140" cy="406" r="26" fill="none" stroke="#c8831a" stroke-width="1" opacity="0.4"/>
+                <circle cx="140" cy="406" r="21" fill="none" stroke="#c8831a" stroke-width=".5" opacity="0.22"/>
+                <text x="117" y="402" font-family="Arial" font-size="4" fill="#f0c040" opacity="0.6" letter-spacing=".08em">ALL NATURAL</text>
+                <text x="120" y="409" font-family="Arial" font-size="4" fill="#f0c040" opacity="0.6" letter-spacing=".06em">NON-GMO</text>
+                <text x="124" y="416" font-family="Arial" font-size="4" fill="#f0c040" opacity="0.5" letter-spacing=".06em">FDA FILED</text>
+                <!-- Floor reflection -->
+                <line x1="0" y1="432" x2="280" y2="432" stroke="white" stroke-width="0.5" opacity="0.05"/>
+              </svg>
+            </div>
             <div class="cine-scene-label">Scene 05 · The Mission</div>
           </div>
 
         </div><!-- /cine-scenes -->
+
+        <!-- ── CAPTION BAR (narration subtitle) ── -->
+        <div class="cine-caption-bar" id="cineCaptionBar"></div>
 
         <!-- ── CONTROLS ── -->
         <div class="cinema-controls">
@@ -3345,26 +3415,93 @@ kbd {
           </div>
           <div class="cine-scene-dots" id="cineSceneDots"></div>
           <span class="cine-timer" id="cineTimer">1 / 5</span>
+          <button class="cine-mute-btn" id="cineMuteBtn" aria-label="Toggle narration" title="Toggle audio narration">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" id="cineMuteIcon"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+          </button>
         </div>
 
       </section>
 
       <script>
       (function(){
-        const SCENE_DURATION = 5500; // ms per scene
-        const scenes   = Array.from(document.querySelectorAll('.cine-scene'));
-        const fill     = document.getElementById('cineTimelineFill');
-        const dotsWrap = document.getElementById('cineSceneDots');
-        const timerEl  = document.getElementById('cineTimer');
-        const playBtn  = document.getElementById('cinePlayBtn');
-        const playIcon = document.getElementById('cinePlayIcon');
+        const SCENE_DURATION = 8500; // ms per scene (longer for narration)
+
+        // ── NARRATION SCRIPTS ──────────────────────────────────────────────
+        const NARRATIONS = [
+          // Scene 1 – The Night Shift
+          "This is Maria. A Filipino nurse working the night shift. It's two in the morning. Her shift doesn't end for three more hours. For years, her only option was a vending machine filled with food that didn't represent her. So we built something that does. Filipino Functional Nutrition — real fuel for the people who keep us well.",
+          // Scene 2 – Game Day
+          "This is Carlo. Filipino American. Powerlifter. He wakes up at four forty-five every morning because greatness doesn't wait. He's been searching for a protein bar that honors his heritage — one that tastes like home. Now he has three to choose from. Real flavors. Real gains. Filipino pride in every bite.",
+          // Scene 3 – The Kitchen
+          "We are a team of Filipino men who love God, love people, and love their culture. Before every batch, we pray. Before every sale, we ask: did we do this right? Every ingredient is chosen with care. Every bar we make reflects who we are. Not just a business. A calling.",
+          // Scene 4 – The Community
+          "Four million Filipino Americans. One hundred and sixty-three billion dollars in buying power. And before F-F-N — zero protein bars that felt like home. Every bar you buy funds a scholarship, employs a Filipino, and gives something back to the community that gave us everything. You celebrate us by choosing us.",
+          // Scene 5 – The Mission
+          "Filipino Functional Nutrition. Real flavors. Real nutrition. Real impact. We are more than a protein bar. We are a movement — built by Filipino men, for Filipino people, grounded in faith, driven by purpose. Ube Coconut. Pandan. Turon Cinnamon. This is just the beginning. Welcome to F-F-N."
+        ];
+
+        const scenes      = Array.from(document.querySelectorAll('.cine-scene'));
+        const fill        = document.getElementById('cineTimelineFill');
+        const dotsWrap    = document.getElementById('cineSceneDots');
+        const timerEl     = document.getElementById('cineTimer');
+        const playBtn     = document.getElementById('cinePlayBtn');
+        const playIcon    = document.getElementById('cinePlayIcon');
+        const muteBtn     = document.getElementById('cineMuteBtn');
+        const muteIcon    = document.getElementById('cineMuteIcon');
+        const captionBar  = document.getElementById('cineCaptionBar');
+
         let current  = 0;
         let playing  = false;
+        let muted    = false;
         let raf      = null;
         let startTS  = null;
         let elapsed  = 0;
+        let synthUtter = null;
 
-        // Build dots
+        // ── WEB SPEECH API ────────────────────────────────────────────────
+        const synth = window.speechSynthesis || null;
+
+        function getBestVoice() {
+          if (!synth) return null;
+          const voices = synth.getVoices();
+          // Prefer natural-sounding voices
+          const preferred = ['Samantha', 'Google US English', 'Alex', 'Karen', 'Moira', 'en-US'];
+          for (const name of preferred) {
+            const v = voices.find(v => v.name === name || v.lang === name);
+            if (v) return v;
+          }
+          return voices.find(v => v.lang.startsWith('en')) || voices[0] || null;
+        }
+
+        function stopNarration() {
+          if (synth) { synth.cancel(); }
+          if (captionBar) { captionBar.classList.remove('visible'); captionBar.textContent = ''; }
+        }
+
+        function speakScene(idx) {
+          if (!synth || muted) return;
+          stopNarration();
+          const text = NARRATIONS[idx];
+          if (!text) return;
+          const utter = new SpeechSynthesisUtterance(text);
+          utter.rate  = 0.88;
+          utter.pitch = 0.95;
+          utter.volume = 0.9;
+          const voice = getBestVoice();
+          if (voice) utter.voice = voice;
+          // Show caption text
+          if (captionBar) {
+            captionBar.textContent = text;
+            captionBar.classList.add('visible');
+          }
+          utter.onend = () => {
+            if (captionBar) { captionBar.classList.remove('visible'); }
+          };
+          synth.speak(utter);
+          synthUtter = utter;
+        }
+
+        // ── DOTS ──────────────────────────────────────────────────────────
         scenes.forEach((_, i) => {
           const d = document.createElement('button');
           d.className = 'csd' + (i === 0 ? ' active' : '');
@@ -3372,23 +3509,19 @@ kbd {
           dotsWrap.appendChild(d);
         });
 
-        // Star field for scene 5
+        // ── STAR FIELD (scene 5) ──────────────────────────────────────────
         const starField = document.getElementById('starField');
         if (starField) {
           for (let i = 0; i < 40; i++) {
             const s = document.createElement('div');
             s.className = 'star-dot';
             const sz = 1.5 + Math.random() * 2.5;
-            s.style.cssText = `
-              width:${sz}px;height:${sz}px;
-              top:${Math.random()*90}%;left:${Math.random()*100}%;
-              animation-delay:${Math.random()*3}s;
-              animation-duration:${2+Math.random()*2}s;
-            `;
+            s.style.cssText = `width:${sz}px;height:${sz}px;top:${Math.random()*90}%;left:${Math.random()*100}%;animation-delay:${Math.random()*3}s;animation-duration:${2+Math.random()*2}s;`;
             starField.appendChild(s);
           }
         }
 
+        // ── PLAYBACK ──────────────────────────────────────────────────────
         function updateDots(idx) {
           document.querySelectorAll('.csd').forEach((d, i) => d.classList.toggle('active', i === idx));
           timerEl.textContent = `${idx + 1} / ${scenes.length}`;
@@ -3399,11 +3532,11 @@ kbd {
           current = (idx + scenes.length) % scenes.length;
           scenes[current].classList.add('active');
           updateDots(current);
-          // Reset fill
           fill.style.transition = 'none';
           fill.style.width = '0%';
           elapsed = 0;
           startTS = null;
+          speakScene(current);
         }
 
         function jumpTo(idx) {
@@ -3417,9 +3550,7 @@ kbd {
           const pct = Math.min((elapsed / SCENE_DURATION) * 100, 100);
           fill.style.transition = 'none';
           fill.style.width = pct + '%';
-          if (elapsed >= SCENE_DURATION) {
-            goScene(current + 1);
-          }
+          if (elapsed >= SCENE_DURATION) { goScene(current + 1); }
           if (playing) raf = requestAnimationFrame(tick);
         }
 
@@ -3427,16 +3558,36 @@ kbd {
           playing = true;
           playIcon.innerHTML = '<rect x="1" y="0" width="3" height="10"/><rect x="6" y="0" width="3" height="10"/>';
           raf = requestAnimationFrame(tick);
+          speakScene(current);
         }
+
         function pause() {
           playing = false;
           playIcon.innerHTML = '<path d="M0 0l10 5L0 10z"/>';
           cancelAnimationFrame(raf);
+          stopNarration();
         }
 
         playBtn.addEventListener('click', () => playing ? pause() : play());
 
-        // Timeline click to scrub
+        // ── MUTE BUTTON ───────────────────────────────────────────────────
+        const ICON_SOUND = '<path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/>';
+        const ICON_MUTED = '<path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/>';
+
+        if (muteBtn) {
+          muteBtn.addEventListener('click', () => {
+            muted = !muted;
+            muteBtn.classList.toggle('muted', muted);
+            muteIcon.innerHTML = muted ? ICON_MUTED : ICON_SOUND;
+            if (muted) {
+              stopNarration();
+            } else if (playing) {
+              speakScene(current);
+            }
+          });
+        }
+
+        // ── TIMELINE SCRUB ────────────────────────────────────────────────
         document.querySelector('.cine-timeline').addEventListener('click', e => {
           const r   = e.currentTarget.getBoundingClientRect();
           const pct = (e.clientX - r.left) / r.width;
@@ -3446,18 +3597,23 @@ kbd {
           if (playing) { cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); }
         });
 
-        // Auto-play when this slide becomes active (slide 10 = index 10)
+        // ── AUTO-PLAY when slide becomes active ───────────────────────────
         const observer = new MutationObserver(() => {
           const cinemaSlide = document.querySelector('.cinema-slide');
           if (cinemaSlide && cinemaSlide.classList.contains('slide-active') && !playing) {
-            goScene(0);
-            play();
+            // Give voices time to load
+            setTimeout(() => { goScene(0); play(); }, 300);
           }
         });
         const cinemaSlide = document.querySelector('.cinema-slide');
         if (cinemaSlide) observer.observe(cinemaSlide, { attributes:true, attributeFilter:['class'] });
 
-        // Init — show first scene, no autoplay until user visits
+        // Pre-load voices on some browsers (Chrome requires a call first)
+        if (synth && synth.onvoiceschanged !== undefined) {
+          synth.onvoiceschanged = () => { synth.getVoices(); };
+        }
+
+        // Init
         updateDots(0);
       })();
       </script>
