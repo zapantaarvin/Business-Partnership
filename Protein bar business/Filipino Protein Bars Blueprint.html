@@ -3424,20 +3424,25 @@ kbd {
 
       <script>
       (function(){
-        const SCENE_DURATION = 8500; // ms per scene (longer for narration)
+        const SCENE_DURATION = 11000; // ms per scene — longer for paced narration
 
-        // ── NARRATION SCRIPTS ──────────────────────────────────────────────
+        // ── NARRATION SCRIPTS  (Morgan Freeman–style: warm, wise, dry humor) ──
+        // Punctuation drives pacing: periods = pause, comma = breath, ... = dramatic beat
         const NARRATIONS = [
           // Scene 1 – The Night Shift
-          "This is Maria. A Filipino nurse working the night shift. It's two in the morning. Her shift doesn't end for three more hours. For years, her only option was a vending machine filled with food that didn't represent her. So we built something that does. Filipino Functional Nutrition — real fuel for the people who keep us well.",
+          "Two in the morning. A hospital hallway, somewhere in America. And there... is Maria. Filipino nurse. ICU. She has kept people alive tonight, that frankly, probably shouldn't have made it. She is extraordinary. What does the hospital give her on break? A vending machine. Cheese crackers. From 2019. We thought... we could do better than that. So we did.",
+
           // Scene 2 – Game Day
-          "This is Carlo. Filipino American. Powerlifter. He wakes up at four forty-five every morning because greatness doesn't wait. He's been searching for a protein bar that honors his heritage — one that tastes like home. Now he has three to choose from. Real flavors. Real gains. Filipino pride in every bite.",
+          "Four forty-five. In the morning. Most people, are dreaming. Carlo, is not most people. He is Filipino American. He lifts things... very heavy things... and then puts them back down. For fun. He wanted a protein bar, that tasted like home. He searched. He did not find one. So... we made one. You're welcome, Carlo.",
+
           // Scene 3 – The Kitchen
-          "We are a team of Filipino men who love God, love people, and love their culture. Before every batch, we pray. Before every sale, we ask: did we do this right? Every ingredient is chosen with care. Every bar we make reflects who we are. Not just a business. A calling.",
+          "Some companies are born in garages. Silicon Valley. Venture capital. Fancy whiteboards, and cold brew coffee. We started ours... with a prayer. Two Filipino men. A mixing bowl. And the deep, unshakeable belief, that America deserved better protein bars. Was it a long shot? Absolutely. Did we pray about that too? ...Yes.",
+
           // Scene 4 – The Community
-          "Four million Filipino Americans. One hundred and sixty-three billion dollars in buying power. And before F-F-N — zero protein bars that felt like home. Every bar you buy funds a scholarship, employs a Filipino, and gives something back to the community that gave us everything. You celebrate us by choosing us.",
+          "Four million Filipino Americans. One hundred and sixty three billion dollars, in buying power. And until very recently... not a single protein bar that tasted like home. That is remarkable. Not in a good way. So we fixed it. One bar at a time. Every purchase funds a scholarship. Every bite, is a small act of pride. And pride, tastes like ube.",
+
           // Scene 5 – The Mission
-          "Filipino Functional Nutrition. Real flavors. Real nutrition. Real impact. We are more than a protein bar. We are a movement — built by Filipino men, for Filipino people, grounded in faith, driven by purpose. Ube Coconut. Pandan. Turon Cinnamon. This is just the beginning. Welcome to F-F-N."
+          "Filipino Functional Nutrition. Three flavors. One purpose. Real food, for real people, rooted in real culture. Ube Coconut. Pandan. Turon Cinnamon. Now, we are not going to tell you these bars will change your life. But they might. They changed ours. Welcome to F-F-N. We are, just getting started."
         ];
 
         const scenes      = Array.from(document.querySelectorAll('.cine-scene'));
@@ -3464,12 +3469,25 @@ kbd {
         function getBestVoice() {
           if (!synth) return null;
           const voices = synth.getVoices();
-          // Prefer natural-sounding voices
-          const preferred = ['Samantha', 'Google US English', 'Alex', 'Karen', 'Moira', 'en-US'];
+          // Deep, natural male voices — priority order for Morgan Freeman warmth
+          // macOS: Nicky/Evan/Nathan/Alex  |  Chrome: Google UK English Male  |  Edge: Guy
+          const preferred = [
+            'Nicky', 'Evan', 'Nathan', 'Aaron',        // macOS natural neural voices
+            'Alex',                                      // macOS classic deep
+            'Google UK English Male',                    // Chrome — deeper British male
+            'Microsoft Guy Online (Natural) - English (United States)', // Edge neural
+            'Microsoft Ryan Online (Natural) - English (United Kingdom)',
+            'en-GB', 'en-AU',                            // prefer British/AU accent (deeper)
+            'Google US English',                         // Chrome fallback
+            'Samantha', 'Daniel', 'Thomas'               // last resorts
+          ];
           for (const name of preferred) {
             const v = voices.find(v => v.name === name || v.lang === name);
             if (v) return v;
           }
+          // Fallback: any English male voice
+          const male = voices.find(v => v.lang.startsWith('en') && /male|man|guy|boy/i.test(v.name));
+          if (male) return male;
           return voices.find(v => v.lang.startsWith('en')) || voices[0] || null;
         }
 
@@ -3484,16 +3502,26 @@ kbd {
           const text = NARRATIONS[idx];
           if (!text) return;
           const utter = new SpeechSynthesisUtterance(text);
-          utter.rate  = 0.88;
-          utter.pitch = 0.95;
-          utter.volume = 0.9;
+          // Slow + low = gravitas. Short sentences handle their own pacing.
+          utter.rate   = 0.80;
+          utter.pitch  = 0.82;
+          utter.volume = 0.95;
           const voice = getBestVoice();
           if (voice) utter.voice = voice;
-          // Show caption text
+
+          // Split text into sentences for rolling subtitle display
+          const sentences = text.match(/[^.!?…]+[.!?…]+/g) || [text];
+          let sentIdx = 0;
           if (captionBar) {
-            captionBar.textContent = text;
+            captionBar.textContent = sentences[0].trim();
             captionBar.classList.add('visible');
           }
+          // Roll to next sentence on each word boundary (approximate)
+          utter.onboundary = (e) => {
+            if (e.name !== 'sentence') return;
+            sentIdx = Math.min(sentIdx + 1, sentences.length - 1);
+            if (captionBar) captionBar.textContent = sentences[sentIdx].trim();
+          };
           utter.onend = () => {
             if (captionBar) { captionBar.classList.remove('visible'); }
           };
