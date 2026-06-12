@@ -1,0 +1,3340 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FFN — Filipino Functional Nutrition | Business Blueprint</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ─── DESIGN TOKENS ─── */
+:root {
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', 'Helvetica Neue', sans-serif;
+
+  --text-xs:   clamp(0.75rem, 0.7rem + 0.25vw, 0.875rem);
+  --text-sm:   clamp(0.875rem, 0.8rem + 0.35vw, 1rem);
+  --text-base: clamp(1rem, 0.95rem + 0.25vw, 1.125rem);
+  --text-lg:   clamp(1.125rem, 1rem + 0.75vw, 1.5rem);
+  --text-xl:   clamp(1.5rem, 1.2rem + 1.25vw, 2.25rem);
+  --text-2xl:  clamp(2rem, 1.2rem + 2.5vw, 3.5rem);
+  --text-3xl:  clamp(2.5rem, 1rem + 4vw, 5rem);
+
+  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 0.75rem;
+  --space-4: 1rem; --space-5: 1.25rem; --space-6: 1.5rem;
+  --space-8: 2rem; --space-10: 2.5rem; --space-12: 3rem;
+  --space-16: 4rem; --space-20: 5rem;
+
+  --radius-sm: 0.375rem; --radius-md: 0.5rem;
+  --radius-lg: 0.75rem; --radius-xl: 1rem; --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+
+  --transition: 180ms cubic-bezier(0.16, 1, 0.3, 1);
+  --transition-slow: 420ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* ─── BRAND PALETTE (Filipino Sun + Deep Navy + Gold) ─── */
+:root, [data-theme="light"] {
+  --color-bg: #faf8f3;
+  --color-surface: #f5f2eb;
+  --color-surface-2: #ede9df;
+  --color-surface-offset: #e4dfd3;
+  --color-border: oklch(from #2a1a0e l c h / 0.12);
+  --color-divider: oklch(from #2a1a0e l c h / 0.08);
+  --color-text: #1a100a;
+  --color-text-muted: #6b5a4e;
+  --color-text-faint: #b09e95;
+  --color-text-inverse: #faf8f3;
+  /* Brand colors */
+  --color-primary: #c8831a;   /* Filipino Sun Gold */
+  --color-primary-hover: #a8680f;
+  --color-primary-active: #884e08;
+  --color-primary-highlight: #f5e6cc;
+  --color-deep: #0d2340;      /* Deep Navy */
+  --color-deep-muted: #1a3a5c;
+  --color-accent: #d4351c;    /* Philippine Flag Red */
+  --color-accent-muted: #f5c4be;
+  --color-gold: #e8a317;
+  --color-success: #2d6e3e;
+  --color-success-bg: #d4edda;
+  --color-info: #1a5276;
+  --color-info-bg: #d6eaf8;
+  --shadow-sm: 0 1px 3px oklch(0.15 0.05 40 / 0.08);
+  --shadow-md: 0 4px 16px oklch(0.15 0.05 40 / 0.12);
+  --shadow-lg: 0 12px 40px oklch(0.15 0.05 40 / 0.18);
+}
+
+[data-theme="dark"] {
+  --color-bg: #0e0d0b;
+  --color-surface: #161410;
+  --color-surface-2: #1e1b16;
+  --color-surface-offset: #25211a;
+  --color-border: oklch(from #f5e6c8 l c h / 0.1);
+  --color-divider: oklch(from #f5e6c8 l c h / 0.06);
+  --color-text: #f0e8d8;
+  --color-text-muted: #a09078;
+  --color-text-faint: #60503e;
+  --color-text-inverse: #0e0d0b;
+  --color-primary: #e8a030;
+  --color-primary-hover: #f0b848;
+  --color-primary-active: #f5cc6a;
+  --color-primary-highlight: #3a2810;
+  --color-deep: #4a8fd4;
+  --color-deep-muted: #2a6aa8;
+  --color-accent: #e85a44;
+  --color-accent-muted: #4a1a14;
+  --color-gold: #f0c040;
+  --color-success: #4aaa65;
+  --color-success-bg: #0d2a14;
+  --color-info: #4a9fd4;
+  --color-info-bg: #0a1e2e;
+  --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.3);
+  --shadow-md: 0 4px 16px oklch(0 0 0 / 0.4);
+  --shadow-lg: 0 12px 40px oklch(0 0 0 / 0.5);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    --color-bg: #0e0d0b; --color-surface: #161410; --color-surface-2: #1e1b16;
+    --color-surface-offset: #25211a; --color-text: #f0e8d8; --color-text-muted: #a09078;
+    --color-text-faint: #60503e; --color-text-inverse: #0e0d0b;
+    --color-primary: #e8a030; --color-primary-hover: #f0b848; --color-primary-highlight: #3a2810;
+    --color-deep: #4a8fd4; --color-deep-muted: #2a6aa8;
+    --color-accent: #e85a44; --color-accent-muted: #4a1a14;
+    --color-gold: #f0c040; --color-success: #4aaa65; --color-success-bg: #0d2a14;
+    --color-info: #4a9fd4; --color-info-bg: #0a1e2e;
+    --color-border: oklch(from #f5e6c8 l c h / 0.1); --color-divider: oklch(from #f5e6c8 l c h / 0.06);
+    --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.3); --shadow-md: 0 4px 16px oklch(0 0 0 / 0.4);
+    --shadow-lg: 0 12px 40px oklch(0 0 0 / 0.5);
+  }
+}
+
+/* ─── BASE ─── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+body {
+  font-family: var(--font-body);
+  font-size: var(--text-base);
+  color: var(--color-text);
+  background: var(--color-bg);
+  min-height: 100dvh;
+  overflow: hidden;
+}
+img { display: block; max-width: 100%; }
+button { cursor: pointer; border: none; background: none; font: inherit; color: inherit; }
+a, button { transition: color var(--transition), background var(--transition), opacity var(--transition); }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* ─── LAYOUT SHELL ─── */
+.app {
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  height: 100dvh;
+  overflow: hidden;
+}
+
+/* ─── TOP NAV ─── */
+.topnav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--space-3) var(--space-6);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  gap: var(--space-4);
+  position: relative;
+  z-index: 100;
+  flex-shrink: 0;
+}
+.logo-mark {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+.logo-svg { width: 32px; height: 32px; }
+.logo-text {
+  font-family: var(--font-display);
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+}
+.logo-sub {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-weight: 400;
+  display: block;
+}
+.nav-tabs {
+  display: flex;
+  gap: var(--space-1);
+  overflow-x: auto;
+  scrollbar-width: none;
+  flex: 1;
+  justify-content: center;
+}
+.nav-tabs::-webkit-scrollbar { display: none; }
+.nav-tab {
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs);
+  font-weight: 500;
+  white-space: nowrap;
+  color: var(--color-text-muted);
+  transition: all var(--transition);
+  border: 1px solid transparent;
+  flex-shrink: 0;
+}
+.nav-tab:hover { color: var(--color-text); background: var(--color-surface-2); }
+.nav-tab.active {
+  color: var(--color-text-inverse);
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.nav-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  flex-shrink: 0;
+}
+.nav-btn {
+  width: 32px; height: 32px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  transition: all var(--transition);
+}
+.nav-btn:hover { background: var(--color-primary); color: var(--color-text-inverse); border-color: var(--color-primary); }
+.nav-btn:disabled { opacity: 0.3; pointer-events: none; }
+.theme-btn {
+  width: 32px; height: 32px;
+  border-radius: var(--radius-full);
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  display: flex; align-items: center; justify-content: center;
+  color: var(--color-text-muted);
+  transition: all var(--transition);
+}
+.theme-btn:hover { color: var(--color-primary); }
+
+/* ─── CAROUSEL VIEWPORT ─── */
+.carousel-viewport {
+  overflow: hidden;
+  position: relative;
+}
+.carousel-track {
+  display: flex;
+  height: 100%;
+  transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+.slide {
+  min-width: 100%;
+  height: 100%;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-border) transparent;
+  padding: var(--space-8) var(--space-6);
+}
+.slide::-webkit-scrollbar { width: 4px; }
+.slide::-webkit-scrollbar-track { background: transparent; }
+.slide::-webkit-scrollbar-thumb { background: var(--color-border); border-radius: var(--radius-full); }
+
+/* ─── PROGRESS DOTS ─── */
+.progress-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  flex-shrink: 0;
+}
+.dot {
+  width: 6px; height: 6px;
+  border-radius: var(--radius-full);
+  background: var(--color-border);
+  transition: all var(--transition);
+  cursor: pointer;
+}
+.dot.active {
+  width: 24px;
+  background: var(--color-primary);
+}
+.slide-counter {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-variant-numeric: tabular-nums;
+  min-width: 3ch;
+}
+
+/* ─── SHARED SECTION ELEMENTS ─── */
+.section-eyebrow {
+  font-size: var(--text-xs);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-primary);
+  margin-bottom: var(--space-2);
+}
+.section-title {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  line-height: 1.1;
+  margin-bottom: var(--space-4);
+  letter-spacing: -0.02em;
+}
+.section-lead {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  max-width: 65ch;
+  margin-bottom: var(--space-8);
+}
+.card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  box-shadow: var(--shadow-sm);
+  transition: box-shadow var(--transition);
+}
+.card:hover { box-shadow: var(--shadow-md); }
+.card-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-2);
+  line-height: 1.2;
+}
+.card-body { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.7; }
+.tag {
+  display: inline-flex; align-items: center; gap: var(--space-1);
+  padding: 2px var(--space-2);
+  border-radius: var(--radius-full);
+  font-size: var(--text-xs); font-weight: 600;
+  background: var(--color-primary-highlight);
+  color: var(--color-primary);
+}
+.tag.navy { background: var(--color-info-bg); color: var(--color-info); }
+.tag.red { background: var(--color-accent-muted); color: var(--color-accent); }
+.tag.green { background: var(--color-success-bg); color: var(--color-success); }
+.grid-2 { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px,100%), 1fr)); gap: var(--space-4); }
+.grid-3 { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(240px,100%), 1fr)); gap: var(--space-4); }
+.grid-4 { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(200px,100%), 1fr)); gap: var(--space-3); }
+.divider { height: 1px; background: var(--color-divider); margin: var(--space-8) 0; }
+.content-wrap { max-width: 1200px; margin: 0 auto; }
+
+/* ─── HERO / HOME SLIDE ─── */
+.hero-slide {
+  background: radial-gradient(ellipse at 20% 50%, oklch(from var(--color-primary) l c h / 0.08) 0%, transparent 60%),
+              radial-gradient(ellipse at 80% 20%, oklch(from var(--color-deep) l c h / 0.06) 0%, transparent 50%),
+              var(--color-bg);
+  display: flex; align-items: flex-start;
+}
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-12);
+  align-items: start;
+  width: 100%;
+}
+@media (max-width: 768px) {
+  .hero-grid { grid-template-columns: 1fr; gap: var(--space-6); }
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: var(--space-2) var(--space-3);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  font-size: var(--text-xs); font-weight: 600;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: var(--space-4);
+}
+.hero-title {
+  font-family: var(--font-display);
+  font-size: var(--text-3xl);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: var(--space-4);
+}
+.hero-title em {
+  font-style: italic;
+  color: var(--color-primary);
+}
+.hero-sub {
+  font-size: var(--text-base);
+  color: var(--color-text-muted);
+  line-height: 1.75;
+  max-width: 50ch;
+  margin-bottom: var(--space-8);
+}
+.verse-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  border-left: 3px solid var(--color-gold);
+  margin-bottom: var(--space-6);
+}
+.verse-text {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--text-base);
+  line-height: 1.7;
+  color: var(--color-text);
+  margin-bottom: var(--space-2);
+}
+.verse-ref {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+}
+.hero-stats {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+.stat-box {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  text-align: center;
+}
+.stat-num {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  color: var(--color-primary);
+  display: block;
+  line-height: 1;
+  margin-bottom: var(--space-1);
+}
+.stat-label {
+  font-size: var(--text-xs);
+  color: var(--color-text-muted);
+  line-height: 1.3;
+}
+.product-pills {
+  display: flex; flex-wrap: wrap; gap: var(--space-2); margin-bottom: var(--space-6);
+}
+.pill {
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  font-size: var(--text-xs); font-weight: 600;
+  transition: all var(--transition);
+}
+.pill:hover { background: var(--color-primary); color: var(--color-text-inverse); border-color: var(--color-primary); }
+.hero-right-stack { display: flex; flex-direction: column; gap: var(--space-4); }
+.mission-big {
+  background: var(--color-deep);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  color: #fff;
+}
+[data-theme="light"] .mission-big { color: #fff; }
+.mission-big h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-3);
+  color: var(--color-gold);
+}
+.mission-big p { font-size: var(--text-sm); line-height: 1.7; opacity: 0.9; }
+.nav-hint {
+  display: flex; align-items: center; gap: var(--space-2);
+  font-size: var(--text-xs); color: var(--color-text-faint);
+  margin-top: var(--space-4);
+}
+
+/* ─── PHASE TIMELINE ─── */
+.phase-timeline { position: relative; }
+.phase-timeline::before {
+  content: '';
+  position: absolute;
+  left: 20px; top: 0; bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--color-primary), var(--color-deep), var(--color-accent));
+  border-radius: var(--radius-full);
+}
+.phase-item {
+  display: grid;
+  grid-template-columns: 44px 1fr;
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+  position: relative;
+}
+.phase-dot {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-full);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: var(--text-sm);
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+  border: 2px solid var(--color-bg);
+}
+.phase-dot.p1 { background: var(--color-primary); color: var(--color-text-inverse); }
+.phase-dot.p2 { background: var(--color-deep); color: #fff; }
+.phase-dot.p3 { background: var(--color-accent); color: #fff; }
+.phase-dot.p4 { background: var(--color-success); color: #fff; }
+.phase-content { padding-top: var(--space-2); }
+.phase-header {
+  display: flex; align-items: flex-start; gap: var(--space-3);
+  margin-bottom: var(--space-3); flex-wrap: wrap;
+}
+.phase-title {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  line-height: 1.2;
+}
+.phase-duration {
+  font-size: var(--text-xs); font-weight: 600;
+  padding: 2px var(--space-3);
+  border-radius: var(--radius-full);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  color: var(--color-text-muted);
+  white-space: nowrap;
+  margin-top: 2px;
+}
+.checklist {
+  display: flex; flex-direction: column; gap: var(--space-2);
+  padding: 0; list-style: none;
+}
+.checklist li {
+  display: flex; align-items: flex-start; gap: var(--space-2);
+  font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.5;
+}
+.check-icon {
+  width: 16px; height: 16px; flex-shrink: 0; margin-top: 2px;
+  color: var(--color-success);
+}
+.check-icon.pending { color: var(--color-primary); }
+.phase-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-3); margin-top: var(--space-3); }
+@media (max-width: 600px) { .phase-grid { grid-template-columns: 1fr; } }
+.mini-card {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+}
+.mini-card-label {
+  font-size: var(--text-xs); font-weight: 600;
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--color-primary);
+  margin-bottom: var(--space-1);
+}
+.mini-card-text {
+  font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.5;
+}
+
+/* ─── VALUES SLIDE ─── */
+.values-hero {
+  background: var(--color-deep);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-8);
+  margin-bottom: var(--space-6);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+.values-hero::before {
+  content: '✝';
+  position: absolute; right: var(--space-6); top: var(--space-4);
+  font-size: 6rem; opacity: 0.06;
+  font-family: var(--font-display);
+}
+.values-hero h2 {
+  font-family: var(--font-display);
+  font-size: var(--text-2xl);
+  margin-bottom: var(--space-3);
+  color: var(--color-gold);
+  line-height: 1.1;
+}
+.values-hero p { font-size: var(--text-base); line-height: 1.75; opacity: 0.9; max-width: 60ch; }
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(280px,100%),1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+.value-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  transition: box-shadow var(--transition), transform var(--transition);
+}
+.value-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.value-icon {
+  font-size: 1.75rem;
+  margin-bottom: var(--space-3);
+  line-height: 1;
+}
+.value-name {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-2);
+  color: var(--color-primary);
+}
+.value-desc { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.7; }
+.pillars-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(180px,100%),1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+.pillar {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+  text-align: center;
+}
+.pillar-num {
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  color: var(--color-primary);
+  display: block;
+  font-weight: 700;
+}
+.pillar-label {
+  font-size: var(--text-xs); font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+
+/* ─── PRODUCTION SLIDE ─── */
+.production-flow {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+}
+.flow-step {
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  gap: var(--space-4);
+  align-items: start;
+}
+.flow-num {
+  width: 40px; height: 40px;
+  border-radius: var(--radius-full);
+  background: var(--color-primary-highlight);
+  border: 2px solid var(--color-primary);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: 700;
+  font-size: var(--text-sm);
+  color: var(--color-primary);
+  flex-shrink: 0;
+}
+.flow-body { padding-top: var(--space-2); }
+.flow-title {
+  font-weight: 600;
+  font-size: var(--text-base);
+  margin-bottom: var(--space-1);
+}
+.flow-text { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.6; }
+.flow-connector {
+  width: 2px; height: var(--space-3); background: var(--color-border);
+  margin-left: 20px;
+}
+.kitchen-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-4);
+  margin: var(--space-6) 0;
+}
+@media (max-width: 600px) { .kitchen-grid { grid-template-columns: 1fr; } }
+.kitchen-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+}
+.kitchen-card h4 {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  margin-bottom: var(--space-3);
+  display: flex; align-items: center; gap: var(--space-2);
+}
+
+/* ─── SOCIAL MEDIA SLIDE ─── */
+.platform-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(260px,100%),1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+.platform-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  transition: all var(--transition);
+}
+.platform-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.platform-icon {
+  width: 44px; height: 44px;
+  border-radius: var(--radius-lg);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.25rem;
+  margin-bottom: var(--space-3);
+}
+.platform-icon.tiktok { background: #000; color: #fff; }
+.platform-icon.ig { background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color: #fff; }
+.platform-icon.yt { background: #ff0000; color: #fff; }
+.platform-icon.fb { background: #1877f2; color: #fff; }
+.platform-name { font-weight: 600; font-size: var(--text-base); margin-bottom: var(--space-2); }
+.platform-goal { font-size: var(--text-xs); color: var(--color-primary); font-weight: 600; margin-bottom: var(--space-2); }
+.platform-desc { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.6; }
+.content-types {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(220px,100%),1fr));
+  gap: var(--space-3);
+  margin-bottom: var(--space-6);
+}
+.content-type {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-4);
+}
+.content-type h4 {
+  font-weight: 600; font-size: var(--text-sm);
+  margin-bottom: var(--space-2); color: var(--color-primary);
+}
+.content-type ul {
+  padding-left: var(--space-4); list-style: disc;
+  font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.8;
+}
+
+/* ─── PRODUCTS SLIDE ─── */
+.product-launch-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(300px,100%),1fr));
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+.product-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-2xl);
+  padding: var(--space-6);
+  position: relative;
+  transition: all var(--transition);
+}
+.product-card:hover { box-shadow: var(--shadow-md); }
+.product-phase-badge {
+  position: absolute; top: var(--space-4); right: var(--space-4);
+  font-size: var(--text-xs); font-weight: 700;
+  padding: 2px var(--space-3); border-radius: var(--radius-full);
+}
+.badge-now { background: var(--color-success-bg); color: var(--color-success); }
+.badge-later { background: var(--color-info-bg); color: var(--color-info); }
+.badge-seasonal { background: var(--color-primary-highlight); color: var(--color-primary); }
+.product-emoji { font-size: 2.5rem; margin-bottom: var(--space-3); }
+.product-name {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-2);
+  line-height: 1.2;
+}
+.product-tagline { font-size: var(--text-xs); color: var(--color-primary); font-weight: 600; margin-bottom: var(--space-3); }
+.product-details { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.7; }
+.flavor-tags { display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3); }
+
+/* ─── MARKET RESEARCH SLIDE ─── */
+.research-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-sm);
+  margin-bottom: var(--space-6);
+}
+.research-table th {
+  text-align: left;
+  padding: var(--space-3) var(--space-4);
+  background: var(--color-surface);
+  border-bottom: 2px solid var(--color-primary);
+  font-weight: 600; font-size: var(--text-xs);
+  text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+}
+.research-table td {
+  padding: var(--space-3) var(--space-4);
+  border-bottom: 1px solid var(--color-divider);
+  color: var(--color-text-muted);
+  vertical-align: top;
+}
+.research-table tr:hover td { background: var(--color-surface); }
+.competitor-winner {
+  display: inline-flex; align-items: center; gap: var(--space-1);
+  font-size: var(--text-xs); font-weight: 700;
+  color: var(--color-success);
+}
+
+/* ─── COMMUNITY SLIDE ─── */
+.give-back-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(260px,100%),1fr));
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+.give-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  transition: all var(--transition);
+}
+.give-card:hover { box-shadow: var(--shadow-md); transform: translateY(-2px); }
+.give-icon { font-size: 2rem; margin-bottom: var(--space-3); }
+.give-title { font-family: var(--font-display); font-size: var(--text-lg); margin-bottom: var(--space-2); }
+.give-desc { font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.7; }
+
+/* ─── TOOLS SLIDE ─── */
+.tools-category { margin-bottom: var(--space-8); }
+.tools-cat-title {
+  font-size: var(--text-xs); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  color: var(--color-primary);
+  margin-bottom: var(--space-3);
+  padding-bottom: var(--space-2);
+  border-bottom: 1px solid var(--color-border);
+}
+.tools-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(220px,100%),1fr));
+  gap: var(--space-3);
+}
+.tool-item {
+  display: flex; align-items: flex-start; gap: var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+}
+.tool-logo {
+  width: 32px; height: 32px;
+  border-radius: var(--radius-md);
+  background: var(--color-surface-2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; flex-shrink: 0;
+}
+.tool-name { font-weight: 600; font-size: var(--text-sm); margin-bottom: 2px; }
+.tool-use { font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.4; }
+.tool-cost {
+  font-size: var(--text-xs); font-weight: 700;
+  color: var(--color-success);
+  margin-top: 2px;
+}
+
+/* ─── ROADMAP SLIDE ─── */
+.roadmap-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-4);
+  margin-bottom: var(--space-6);
+}
+@media (max-width: 900px) { .roadmap-row { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 500px) { .roadmap-row { grid-template-columns: 1fr; } }
+.roadmap-col {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-xl);
+  padding: var(--space-5);
+  position: relative;
+  overflow: hidden;
+}
+.roadmap-col::before {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0;
+  height: 3px;
+}
+.roadmap-col.r1::before { background: var(--color-primary); }
+.roadmap-col.r2::before { background: var(--color-deep); }
+.roadmap-col.r3::before { background: var(--color-accent); }
+.roadmap-col.r4::before { background: var(--color-success); }
+.roadmap-phase {
+  font-size: var(--text-xs); font-weight: 700;
+  text-transform: uppercase; letter-spacing: 0.1em;
+  margin-bottom: var(--space-1);
+}
+.r1 .roadmap-phase { color: var(--color-primary); }
+.r2 .roadmap-phase { color: var(--color-deep); }
+.r3 .roadmap-phase { color: var(--color-accent); }
+.r4 .roadmap-phase { color: var(--color-success); }
+.roadmap-duration {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  margin-bottom: var(--space-3);
+  line-height: 1.2;
+}
+.roadmap-items {
+  list-style: none; padding: 0;
+  display: flex; flex-direction: column; gap: var(--space-2);
+}
+.roadmap-items li {
+  display: flex; align-items: flex-start; gap: var(--space-2);
+  font-size: var(--text-xs); color: var(--color-text-muted); line-height: 1.5;
+}
+.roadmap-items li::before {
+  content: '→';
+  color: var(--color-primary); font-weight: 700; flex-shrink: 0;
+  margin-top: 1px;
+}
+.kpi-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(160px,100%),1fr));
+  gap: var(--space-3);
+}
+.kpi-box {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  padding: var(--space-3) var(--space-4);
+  text-align: center;
+}
+.kpi-label { font-size: var(--text-xs); color: var(--color-text-muted); margin-bottom: var(--space-1); }
+.kpi-value {
+  font-family: var(--font-display);
+  font-size: var(--text-lg);
+  color: var(--color-primary);
+  font-weight: 700;
+}
+
+/* ─── LEGAL / PARTNERSHIPS ─── */
+.legal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-5);
+  margin-bottom: var(--space-6);
+}
+@media (max-width: 700px) { .legal-grid { grid-template-columns: 1fr; } }
+.legal-section h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-base);
+  margin-bottom: var(--space-3);
+  color: var(--color-primary);
+  display: flex; align-items: center; gap: var(--space-2);
+}
+.step-list {
+  list-style: none; padding: 0;
+  display: flex; flex-direction: column; gap: var(--space-2);
+}
+.step-list li {
+  display: flex; align-items: flex-start; gap: var(--space-3);
+  font-size: var(--text-sm); color: var(--color-text-muted); line-height: 1.5;
+  padding: var(--space-3);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+}
+.step-num {
+  width: 22px; height: 22px; flex-shrink: 0;
+  border-radius: var(--radius-full);
+  background: var(--color-primary);
+  color: var(--color-text-inverse);
+  font-size: var(--text-xs); font-weight: 700;
+  display: flex; align-items: center; justify-content: center;
+  margin-top: 1px;
+}
+
+/* ─── KEYBOARD HINT BADGE ─── */
+.kbd-hint {
+  display: inline-flex; align-items: center; gap: 4px;
+  font-size: 11px; color: var(--color-text-faint);
+}
+kbd {
+  padding: 2px 5px;
+  border: 1px solid var(--color-border);
+  border-radius: 3px;
+  background: var(--color-surface);
+  font-size: 10px;
+  font-family: var(--font-body);
+}
+
+/* ─── SWIPE HINT ─── */
+.swipe-indicator {
+  position: fixed;
+  bottom: 60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: oklch(from var(--color-text) l c h / 0.85);
+  color: var(--color-bg);
+  font-size: var(--text-xs);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 200;
+  white-space: nowrap;
+}
+.swipe-indicator.show { opacity: 1; }
+
+/* ═══════════════════════════════════════════
+   CINEMATIC INTRO SPLASH
+═══════════════════════════════════════════ */
+#intro-overlay {
+  position: fixed; inset: 0; z-index: 9999;
+  background: #060504;
+  display: flex; align-items: center; justify-content: center;
+  flex-direction: column; gap: 1.25rem;
+  pointer-events: none;
+}
+#intro-overlay.out { animation: intro-exit 0.9s cubic-bezier(0.16,1,0.3,1) forwards; }
+@keyframes intro-exit { to { opacity: 0; transform: scale(1.03); } }
+.intro-icon-wrap {
+  position: relative; width: 110px; height: 110px;
+  display: flex; align-items: center; justify-content: center;
+  animation: intro-pop 1.1s 0.2s both cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes intro-pop {
+  from { opacity: 0; transform: scale(0.3) rotate(-20deg); }
+  to   { opacity: 1; transform: scale(1)   rotate(0deg); }
+}
+.intro-rays-ring {
+  position: absolute; inset: 0; width: 100%; height: 100%;
+  animation: spin-rays 10s linear infinite;
+}
+@keyframes spin-rays { to { transform: rotate(360deg); } }
+.intro-headline {
+  font-family: var(--font-display);
+  font-size: clamp(2rem,5vw,3.5rem);
+  color: #f0c040; letter-spacing: -0.03em; text-align: center; line-height: 1;
+  animation: intro-up 1s 0.75s both cubic-bezier(0.16,1,0.3,1);
+}
+.intro-tagline {
+  font-size: 0.7rem; color: #6a5a4a; letter-spacing: 0.18em;
+  text-transform: uppercase; text-align: center;
+  animation: intro-up 1s 1.05s both cubic-bezier(0.16,1,0.3,1);
+}
+@keyframes intro-up {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.intro-bar-wrap {
+  width: 180px; height: 2px;
+  background: rgba(255,255,255,0.06); border-radius: 99px; overflow: hidden;
+  animation: intro-up 0.5s 1.3s both;
+}
+.intro-bar-fill {
+  height: 100%; width: 0%;
+  background: linear-gradient(90deg, #c8831a, #f0c040, #c8831a);
+  border-radius: 99px;
+  animation: bar-load 1.5s 1.35s cubic-bezier(0.16,1,0.3,1) forwards;
+}
+@keyframes bar-load { to { width: 100%; } }
+
+/* ═══════════════════════════════════════════
+   HERO AURORA BACKGROUND
+═══════════════════════════════════════════ */
+.hero-aurora {
+  position: absolute; inset: 0; overflow: hidden;
+  pointer-events: none; z-index: 0;
+}
+.aurora-orb {
+  position: absolute; border-radius: 50%;
+  filter: blur(90px); mix-blend-mode: screen;
+}
+.ao1 {
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(200,131,26,0.22), transparent 70%);
+  top: -25%; left: -15%;
+  animation: orb1 16s ease-in-out infinite;
+}
+.ao2 {
+  width: 450px; height: 450px;
+  background: radial-gradient(circle, rgba(74,143,212,0.18), transparent 70%);
+  top: 20%; right: -8%;
+  animation: orb2 20s ease-in-out infinite;
+}
+.ao3 {
+  width: 350px; height: 350px;
+  background: radial-gradient(circle, rgba(212,53,28,0.14), transparent 70%);
+  bottom: -15%; left: 35%;
+  animation: orb3 24s ease-in-out infinite;
+}
+@keyframes orb1 {
+  0%,100%{ transform:translate(0,0) scale(1); }
+  33%    { transform:translate(70px,-50px) scale(1.18); }
+  66%    { transform:translate(-40px,60px) scale(0.88); }
+}
+@keyframes orb2 {
+  0%,100%{ transform:translate(0,0) scale(1); }
+  40%    { transform:translate(-60px,70px) scale(1.22); }
+  70%    { transform:translate(50px,-40px) scale(0.82); }
+}
+@keyframes orb3 {
+  0%,100%{ transform:translate(0,0) scale(1); }
+  50%    { transform:translate(-90px,-70px) scale(1.35); }
+}
+#particle-canvas {
+  position: absolute; inset: 0;
+  pointer-events: none; z-index: 0;
+}
+.hero-slide { position: relative; }
+.hero-slide > .content-wrap { position: relative; z-index: 1; }
+
+/* ═══════════════════════════════════════════
+   SLIDE ENTRANCE — staggered fade-up
+═══════════════════════════════════════════ */
+.ec { /* entrance child */
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.55s cubic-bezier(0.16,1,0.3,1),
+              transform 0.55s cubic-bezier(0.16,1,0.3,1);
+}
+.ec.in { opacity: 1; transform: translateY(0); }
+
+/* ═══════════════════════════════════════════
+   FLOATING PILLS
+═══════════════════════════════════════════ */
+@keyframes pill-bob {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-6px); }
+}
+.pill { animation: pill-bob 3.2s ease-in-out infinite; }
+.pill:nth-child(1){ animation-delay:0s; }
+.pill:nth-child(2){ animation-delay:.28s; }
+.pill:nth-child(3){ animation-delay:.56s; }
+.pill:nth-child(4){ animation-delay:.84s; }
+.pill:nth-child(5){ animation-delay:1.12s; }
+.pill:nth-child(6){ animation-delay:1.4s; }
+
+/* ═══════════════════════════════════════════
+   SHIMMER VERSE CARD
+═══════════════════════════════════════════ */
+.verse-card { position: relative; overflow: hidden; }
+.verse-card::after {
+  content:'';
+  position:absolute; inset:0;
+  background: linear-gradient(100deg,
+    transparent 25%,rgba(240,192,64,0.07) 50%,transparent 75%);
+  background-size: 200% 100%;
+  animation: v-shimmer 3.5s ease-in-out infinite;
+  pointer-events: none;
+}
+@keyframes v-shimmer {
+  0%  { background-position: -100% 0; }
+  100%{ background-position: 200% 0; }
+}
+
+/* ═══════════════════════════════════════════
+   MISSION BIG — animated gradient border
+═══════════════════════════════════════════ */
+.mission-big { position: relative; overflow: hidden; }
+.mission-big::before {
+  content:'';
+  position:absolute; inset:-2px;
+  background: linear-gradient(135deg,
+    #c8831a 0%, #f0c040 33%, #0d2340 66%, #c8831a 100%);
+  background-size: 300% 300%;
+  animation: grad-spin 7s ease infinite;
+  border-radius: inherit; z-index: 0; opacity: 0.35;
+}
+.mission-big > * { position: relative; z-index: 1; }
+@keyframes grad-spin {
+  0%,100% { background-position:0% 50%; }
+  50%     { background-position:100% 50%; }
+}
+
+/* ═══════════════════════════════════════════
+   VALUES HERO — animated shimmer
+═══════════════════════════════════════════ */
+.values-hero { position: relative; overflow: hidden; }
+.values-hero::after {
+  content:'';
+  position:absolute; inset:0;
+  background: linear-gradient(135deg,
+    rgba(200,131,26,0.1) 0%, transparent 50%, rgba(212,53,28,0.07) 100%);
+  background-size: 200% 200%;
+  animation: grad-spin 10s ease infinite;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════
+   PRODUCT CARD — conic spin glow
+═══════════════════════════════════════════ */
+.product-card { position: relative; overflow: hidden; }
+.product-card::after {
+  content:'';
+  position:absolute; top:-50%; left:-50%;
+  width:200%; height:200%;
+  background: conic-gradient(
+    transparent 0deg,rgba(200,131,26,0.04) 60deg,transparent 120deg
+  );
+  animation: prod-spin 9s linear infinite;
+  pointer-events: none;
+}
+@keyframes prod-spin { to { transform: rotate(360deg); } }
+.product-card:hover {
+  box-shadow: 0 0 40px rgba(200,131,26,0.18), var(--shadow-md);
+}
+
+/* ═══════════════════════════════════════════
+   3D TILT — applied via JS
+═══════════════════════════════════════════ */
+.tiltable {
+  transform-style: preserve-3d;
+  will-change: transform;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+.tiltable:hover { box-shadow: var(--shadow-lg); }
+
+/* ═══════════════════════════════════════════
+   STAT BOX HOVER
+═══════════════════════════════════════════ */
+.stat-box {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  cursor: default;
+}
+.stat-box:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 10px 32px rgba(200,131,26,0.22);
+}
+@keyframes num-pop {
+  0%  { transform: scale(1); }
+  50% { transform: scale(1.12); color: var(--color-gold); }
+  100%{ transform: scale(1); }
+}
+.stat-num.popped { animation: num-pop 0.45s ease; }
+
+/* ═══════════════════════════════════════════
+   ROADMAP COLS — stagger in
+═══════════════════════════════════════════ */
+.roadmap-col {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 0.6s cubic-bezier(0.16,1,0.3,1),
+              transform 0.6s cubic-bezier(0.16,1,0.3,1);
+}
+.roadmap-col.in { opacity: 1; transform: translateY(0); }
+
+/* ═══════════════════════════════════════════
+   KPI BOX
+═══════════════════════════════════════════ */
+.kpi-box {
+  transition: transform 0.3s ease, box-shadow 0.3s ease; cursor: default;
+}
+.kpi-box:hover {
+  transform: translateY(-4px) scale(1.04);
+  box-shadow: 0 10px 28px rgba(200,131,26,0.18);
+}
+@keyframes kpi-flash {
+  0%  { color: var(--color-primary); }
+  50% { color: var(--color-gold); filter: brightness(1.4); }
+  100%{ color: var(--color-primary); }
+}
+.kpi-value.flash { animation: kpi-flash 0.5s ease; }
+
+/* ═══════════════════════════════════════════
+   FLOW STEPS — slide in from left
+═══════════════════════════════════════════ */
+.flow-step { opacity: 0; transform: translateX(-22px);
+  transition: opacity 0.5s cubic-bezier(0.16,1,0.3,1),
+              transform 0.5s cubic-bezier(0.16,1,0.3,1);
+}
+.flow-step.in { opacity: 1; transform: translateX(0); }
+
+/* ═══════════════════════════════════════════
+   TOOL ITEM SLIDE
+═══════════════════════════════════════════ */
+.tool-item {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.tool-item:hover {
+  transform: translateX(5px);
+  box-shadow: -3px 0 0 var(--color-primary), var(--shadow-sm);
+}
+
+/* ═══════════════════════════════════════════
+   PLATFORM CARD GLOW
+═══════════════════════════════════════════ */
+.platform-card:hover {
+  box-shadow: 0 0 36px rgba(200,131,26,0.18), var(--shadow-md);
+}
+
+/* ═══════════════════════════════════════════
+   LOGO GLOW PULSE
+═══════════════════════════════════════════ */
+.logo-svg { animation: logo-pulse 4s ease-in-out infinite; }
+@keyframes logo-pulse {
+  0%,100% { filter: drop-shadow(0 0 0px transparent); }
+  50%     { filter: drop-shadow(0 0 8px rgba(200,131,26,0.55)); }
+}
+
+/* ═══════════════════════════════════════════
+   HERO EYEBROW BREATH
+═══════════════════════════════════════════ */
+.hero-eyebrow { animation: eyebrow-breath 3.5s ease-in-out infinite; }
+@keyframes eyebrow-breath {
+  0%,100% { box-shadow: 0 0 0 0 rgba(200,131,26,0); }
+  50%     { box-shadow: 0 0 0 5px rgba(200,131,26,0.09); }
+}
+
+/* ═══════════════════════════════════════════
+   NAV TAB ACTIVE PULSE
+═══════════════════════════════════════════ */
+.nav-tab.active { animation: tab-glow 2.5s ease-in-out infinite; }
+@keyframes tab-glow {
+  0%,100% { box-shadow: 0 0 6px rgba(200,131,26,0.3); }
+  50%     { box-shadow: 0 0 18px rgba(200,131,26,0.65); }
+}
+
+/* ═══════════════════════════════════════════
+   SECTION EYEBROW LINE DRAW
+═══════════════════════════════════════════ */
+.section-eyebrow { position: relative; display: inline-block; }
+.section-eyebrow::after {
+  content:''; position:absolute; bottom:-3px; left:0;
+  width:0%; height:1px;
+  background: var(--color-primary);
+  transition: width 0.7s cubic-bezier(0.16,1,0.3,1) 0.3s;
+}
+.slide-active .section-eyebrow::after { width:100%; }
+
+/* ═══════════════════════════════════════════
+   GIVE CARD + VALUE CARD HOVER
+═══════════════════════════════════════════ */
+.give-card:hover, .value-card:hover {
+  box-shadow: 0 0 32px rgba(200,131,26,0.15), var(--shadow-md);
+}
+
+/* ═══════════════════════════════════════════
+   PHASE DOT PULSE
+═══════════════════════════════════════════ */
+.phase-dot { animation: phase-pulse 2.5s ease-in-out infinite; }
+@keyframes phase-pulse {
+  0%,100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(200,131,26,0); }
+  50%     { transform: scale(1.08); box-shadow: 0 0 0 6px rgba(200,131,26,0.12); }
+}
+
+/* ═══════════════════════════════════════════
+   RESEARCH TABLE ROW ANIMATE
+═══════════════════════════════════════════ */
+.research-table tbody tr {
+  opacity: 0; transform: translateX(-12px);
+  transition: opacity 0.4s ease, transform 0.4s ease;
+}
+.research-table tbody tr.in {
+  opacity: 1; transform: translateX(0);
+}
+.research-table tbody tr:last-child.in {
+  background: linear-gradient(90deg,
+    rgba(200,131,26,0.04) 0%, transparent 80%);
+}
+
+/* ═══════════════════════════════════════════
+   MILESTONE SPARKLE
+═══════════════════════════════════════════ */
+@keyframes sparkle {
+  0%  { opacity:1; transform:scale(0) rotate(0deg); }
+  60% { opacity:1; transform:scale(1) rotate(180deg); }
+  100%{ opacity:0; transform:scale(0.5) rotate(360deg); }
+}
+.sparkle-particle {
+  position:absolute; width:6px; height:6px;
+  border-radius:50%;
+  background: var(--color-gold);
+  pointer-events:none; z-index:10;
+  animation: sparkle 0.7s ease forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════════════════
+     CINEMATIC INTRO OVERLAY
+══════════════════════════════════════════════ -->
+<div id="intro-overlay" role="presentation" aria-hidden="true">
+  <div class="intro-icon-wrap">
+    <svg class="intro-rays-ring" viewBox="0 0 110 110" fill="none">
+      <g stroke="#c8831a" stroke-width="1.5" stroke-linecap="round" opacity="0.6">
+        <line x1="55" y1="4"  x2="55" y2="18"/>
+        <line x1="55" y1="92" x2="55" y2="106"/>
+        <line x1="4"  y1="55" x2="18" y2="55"/>
+        <line x1="92" y1="55" x2="106" y2="55"/>
+        <line x1="18.5" y1="18.5" x2="27.5" y2="27.5"/>
+        <line x1="82.5" y1="82.5" x2="91.5" y2="91.5"/>
+        <line x1="91.5" y1="18.5" x2="82.5" y2="27.5"/>
+        <line x1="27.5" y1="82.5" x2="18.5" y2="91.5"/>
+      </g>
+    </svg>
+    <svg class="intro-core-svg" width="60" height="60" viewBox="0 0 40 40" fill="none">
+      <circle cx="20" cy="20" r="18" fill="#c8831a" opacity="0.15"/>
+      <circle cx="20" cy="20" r="8"  fill="#e8a030"/>
+      <circle cx="20" cy="20" r="4"  fill="#f0c040"/>
+    </svg>
+  </div>
+  <div class="intro-headline">FFN</div>
+  <div class="intro-tagline">Filipino Functional Nutrition · Business Blueprint</div>
+  <div class="intro-bar-wrap"><div class="intro-bar-fill"></div></div>
+</div>
+
+<div class="app">
+
+  <!-- TOP NAV -->
+  <nav class="topnav" role="navigation" aria-label="Slide navigation">
+    <div class="logo-mark">
+      <svg class="logo-svg" viewBox="0 0 40 40" fill="none" aria-label="FFN Logo">
+        <circle cx="20" cy="20" r="18" fill="var(--color-primary)" opacity="0.15"/>
+        <circle cx="20" cy="20" r="6" fill="var(--color-primary)"/>
+        <g stroke="var(--color-primary)" stroke-width="2" stroke-linecap="round">
+          <line x1="20" y1="2" x2="20" y2="8"/>
+          <line x1="20" y1="32" x2="20" y2="38"/>
+          <line x1="2" y1="20" x2="8" y2="20"/>
+          <line x1="32" y1="20" x2="38" y2="20"/>
+          <line x1="5.86" y1="5.86" x2="9.9" y2="9.9"/>
+          <line x1="30.1" y1="30.1" x2="34.14" y2="34.14"/>
+          <line x1="34.14" y1="5.86" x2="30.1" y2="9.9"/>
+          <line x1="9.9" y1="30.1" x2="5.86" y2="34.14"/>
+        </g>
+      </svg>
+      <div>
+        <span class="logo-text">FFN</span>
+        <span class="logo-sub">Filipino Functional Nutrition</span>
+      </div>
+    </div>
+
+    <div class="nav-tabs" role="tablist" id="navTabs"></div>
+
+    <div class="nav-controls">
+      <button class="nav-btn" id="prevBtn" aria-label="Previous slide" title="Previous">&#8592;</button>
+      <button class="nav-btn" id="nextBtn" aria-label="Next slide" title="Next">&#8594;</button>
+      <button class="theme-btn" data-theme-toggle aria-label="Toggle theme">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+      </button>
+    </div>
+  </nav>
+
+  <!-- CAROUSEL -->
+  <div class="carousel-viewport" id="viewport">
+    <div class="carousel-track" id="track">
+
+      <!-- ══════════════════════════════════════════════
+           SLIDE 1: HOME
+      ══════════════════════════════════════════════ -->
+      <section class="slide hero-slide" data-title="Home">
+        <canvas id="particle-canvas"></canvas>
+        <div class="hero-aurora">
+          <div class="aurora-orb ao1"></div>
+          <div class="aurora-orb ao2"></div>
+          <div class="aurora-orb ao3"></div>
+        </div>
+        <div class="content-wrap" style="width:100%">
+          <div class="hero-grid">
+            <div>
+              <div class="hero-eyebrow">
+                <svg width="12" height="12" viewBox="0 0 40 40" fill="var(--color-primary)"><circle cx="20" cy="20" r="6"/><g stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="20" y1="2" x2="20" y2="10"/><line x1="20" y1="30" x2="20" y2="38"/><line x1="2" y1="20" x2="10" y2="20"/><line x1="30" y1="20" x2="38" y2="20"/></g></svg>
+                Filipino Functional Nutrition
+              </div>
+              <h1 class="hero-title">Real Flavors.<br><em>Real Nutrition.</em><br>Real Impact.</h1>
+              <p class="hero-sub">A faith-driven Filipino brand bringing authentic cultural nutrition to the US market — starting with protein bars and growing into a movement.</p>
+
+              <div class="verse-card">
+                <p class="verse-text">"Whatever you do, work at it with all your heart, as working for the Lord, not for human masters."</p>
+                <span class="verse-ref">— Colossians 3:23</span>
+              </div>
+
+              <div class="product-pills">
+                <span class="pill">🟣 Ube Coconut Bar</span>
+                <span class="pill">🟢 Pandan Protein Bar</span>
+                <span class="pill">🥮 Turon Cinnamon Bar</span>
+                <span class="pill">🥤 Protein Shake</span>
+                <span class="pill">🎄 Salted Bibingka Bar</span>
+                <span class="pill">💪 Protein Powder</span>
+              </div>
+
+              <div class="nav-hint">
+                <span class="kbd-hint"><kbd>←</kbd><kbd>→</kbd> navigate</span>
+                &nbsp;·&nbsp;
+                <span style="color:var(--color-text-faint);font-size:var(--text-xs)">or use top tabs · swipe on mobile</span>
+              </div>
+            </div>
+
+            <div class="hero-right-stack">
+              <div class="hero-stats">
+                <div class="stat-box">
+                  <span class="stat-num">$163B+</span>
+                  <span class="stat-label">Filipino-American buying power</span>
+                </div>
+                <div class="stat-box">
+                  <span class="stat-num">8.3%</span>
+                  <span class="stat-label">Functional food market CAGR (Compound Annual Growth Rate — how fast the market grows each year, on average)</span>
+                </div>
+                <div class="stat-box">
+                  <span class="stat-num">#0</span>
+                  <span class="stat-label">Filipino-flavored functional bars in US market</span>
+                </div>
+                <div class="stat-box">
+                  <span class="stat-num">$1M+</span>
+                  <span class="stat-label">Revenue target within 12–24 months</span>
+                </div>
+              </div>
+
+              <div class="mission-big">
+                <h3>Our Mission</h3>
+                <p>We are a team of Godly men who love Christ, committed to doing business the right way — with integrity, generosity, and a heart for Filipino communities. Every bar we make is an act of stewardship and service.</p>
+              </div>
+
+              <div class="card">
+                <div class="section-eyebrow" style="margin-bottom:var(--space-2)">This Blueprint Covers</div>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-2);font-size:var(--text-xs);color:var(--color-text-muted)">
+                  <span>✦ Purpose &amp; Values</span>
+                  <span>✦ Market Research</span>
+                  <span>✦ Production Process</span>
+                  <span>✦ Social Media Strategy</span>
+                  <span>✦ Product Roadmap</span>
+                  <span>✦ Community &amp; Giving</span>
+                  <span>✦ Legal &amp; Partnerships</span>
+                  <span>✦ AI Tools &amp; Workflow</span>
+                  <span>✦ Growth Roadmap</span>
+                  <span>✦ 30-Day Action Plan</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════
+           SLIDE 2: PURPOSE & VALUES
+      ══════════════════════════════════════════════ -->
+      <section class="slide" data-title="Purpose">
+        <div class="content-wrap">
+          <div class="section-eyebrow">Our Foundation</div>
+          <h2 class="section-title">Purpose, Values &amp; Identity</h2>
+
+          <div class="values-hero">
+            <h2>Faith-Driven. Filipino-Rooted. Community-First.</h2>
+            <p>We are not just a nutrition brand — we are a mission. A team of men who love Jesus Christ and believe that business done right can transform lives, honor God, and uplift the Filipino people. We operate with biblical principles: integrity in every ingredient, generosity in every profit, and excellence in every product.</p>
+          </div>
+
+          <div class="values-grid">
+            <div class="value-card">
+              <div class="value-icon">✝️</div>
+              <div class="value-name">Faith First</div>
+              <div class="value-desc">We seek God's guidance in every business decision. Our values, ethics, and treatment of people are grounded in the Word of God. We pray together, lead with humility, and give Him the glory.</div>
+            </div>
+            <div class="value-card">
+              <div class="value-icon">🇵🇭</div>
+              <div class="value-name">Filipino Pride</div>
+              <div class="value-desc">We are proud ambassadors of Filipino culture. Every flavor we develop honors the flavors, families, and traditions of the Philippines — introducing our heritage to the world through nutrition.</div>
+            </div>
+            <div class="value-card">
+              <div class="value-icon">🤝</div>
+              <div class="value-name">Integrity Always</div>
+              <div class="value-desc">We do everything the right way — clean ingredients, honest labeling, fair partnerships, and transparent pricing. No shortcuts, no compromises on quality or character.</div>
+            </div>
+            <div class="value-card">
+              <div class="value-icon">🌱</div>
+              <div class="value-name">Generosity &amp; Giving Back</div>
+              <div class="value-desc">A portion of every sale goes back to the Filipino community — funding scholarships, supporting Filipino small businesses, donating to Filipino-American nonprofits, and creating employment opportunities.</div>
+            </div>
+            <div class="value-card">
+              <div class="value-icon">💪</div>
+              <div class="value-name">Excellence in Craft</div>
+              <div class="value-desc">We make products we are proud to share with our families. Every batch is tested, refined, and community-evaluated before it reaches shelves. Good enough is never good enough.</div>
+            </div>
+            <div class="value-card">
+              <div class="value-icon">🌍</div>
+              <div class="value-name">Global Filipino Vision</div>
+              <div class="value-desc">We start local and dream global. Our goal is to see Filipino flavors in gyms, stores, and hands across the US and eventually worldwide — making Filipinos proud everywhere they go.</div>
+            </div>
+          </div>
+
+          <div class="section-eyebrow">Brand Pillars</div>
+          <div class="pillars-row">
+            <div class="pillar"><span class="pillar-num">1</span><span class="pillar-label">Nourished by Culture</span></div>
+            <div class="pillar"><span class="pillar-num">2</span><span class="pillar-label">Fueled by Purpose</span></div>
+            <div class="pillar"><span class="pillar-num">3</span><span class="pillar-label">Made with Integrity</span></div>
+            <div class="pillar"><span class="pillar-num">4</span><span class="pillar-label">Built for Community</span></div>
+            <div class="pillar"><span class="pillar-num">5</span><span class="pillar-label">Grounded in Faith</span></div>
+          </div>
+
+          <div class="card">
+            <div class="card-title">Brand Statement</div>
+            <div class="card-body">"Filipino Functional Nutrition exists to nourish bodies, celebrate culture, and build a better future for Filipino communities — one bar at a time. We make no apology for who we are: followers of Christ who believe that food, flavor, and faith can change the world."</div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════
+           SLIDE 3: PRODUCTION PROCESS
+      ══════════════════════════════════════════════ -->
+      <section class="slide" data-title="Production">
+        <div class="content-wrap">
+          <div class="section-eyebrow">How We Make It</div>
+          <h2 class="section-title">Production Process &amp; Kitchen Operations</h2>
+          <p class="section-lead">From rented food-grade kitchen to community evaluation to lab testing — here is every step of building a product the right way.</p>
+
+          <div class="kitchen-grid">
+            <div class="kitchen-card">
+              <h4>🏭 Step 1: Rent Food-Grade Kitchen</h4>
+              <ul class="checklist">
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Search for licensed shared-use kitchens (e.g., CloudKitchens, Kitchen United, local commissary kitchens)</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Verify kitchen has FDA (Food and Drug Administration) food facility registration</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Sign rental agreement (hourly or monthly, avg $15–$30/hr)</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Obtain your own food handler's certification (ServSafe)</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Secure food business liability insurance before first use</li>
+              </ul>
+            </div>
+            <div class="kitchen-card">
+              <h4>🧪 Step 2: Sample Batching</h4>
+              <ul class="checklist">
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Create recipe formulations (3 core flavors: Ube, Pandan, Turon)</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Document exact ingredient ratios and sourcing</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Produce small batches (25–50 units per trial run)</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Track costs per unit for each batch</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Photograph and video every batch for content creation</li>
+              </ul>
+            </div>
+            <div class="kitchen-card">
+              <h4>👥 Step 3: Community Evaluation</h4>
+              <ul class="checklist">
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Host 2–3 tasting events at Filipino community events or churches</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Use structured feedback form (taste, texture, sweetness, price willingness)</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Target 50+ evaluators across Filipino and non-Filipino testers</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Iterate recipe based on feedback (3 rounds minimum)</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Film reactions — authentic community content is powerful marketing</li>
+              </ul>
+            </div>
+            <div class="kitchen-card">
+              <h4>🔬 Step 4: Lab Testing</h4>
+              <ul class="checklist">
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Use certified lab: Eurofins, SGS, or Covance for nutritional analysis</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Verify protein, carb, fat, and micronutrient content</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Test for allergens (nuts, gluten, dairy)</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Shelf-life stability testing (accelerated aging studies)</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Retain lab reports — required for FDA labeling compliance</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="section-eyebrow" style="margin-top:var(--space-6)">Packaging Development</div>
+          <div class="grid-3" style="margin-top:var(--space-3)">
+            <div class="mini-card">
+              <div class="mini-card-label">Design</div>
+              <div class="mini-card-text">Use Canva AI or hire a Filipino designer on Upwork. Include brand colors (deep navy, gold, red), Filipino sun symbol, Tagalog tagline, clean nutrition facts panel.</div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-label">Printing Partners</div>
+              <div class="mini-card-text">Noissue (eco-friendly, min 250 units), Sticker Mule (labels, min 50), Pakible (custom wrappers). Budget $0.10–$0.35/unit for labels at scale.</div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-label">FDA (Food and Drug Administration) Requirements</div>
+              <div class="mini-card-text">Nutrition Facts label (FDA format), ingredient list, net weight, allergen statement, manufacturer address, and UPC (Universal Product Code / barcode) from GS1 US ($250 one-time fee).</div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-label">Prototype Testing</div>
+              <div class="mini-card-text">Print 10–20 sample wrappers before full run. Check readability, color accuracy, seal integrity, and moisture barrier performance.</div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-label">Eco Mission</div>
+              <div class="mini-card-text">Compostable or recyclable wrappers align with your faith-based stewardship values. Highlight on packaging: "Eco-conscious. Community-funded."</div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-label">Scale Up</div>
+              <div class="mini-card-text">At 1,000+ units/month, transition to co-packer (PartnerSlate, YouBar, EMPWR) with full turnkey production including packaging and fulfillment.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════
+           SLIDE 4: SOCIAL MEDIA & MARKETING
+      ══════════════════════════════════════════════ -->
+      <section class="slide" data-title="Marketing">
+        <div class="content-wrap">
+          <div class="section-eyebrow">Brand Building</div>
+          <h2 class="section-title">Social Media &amp; Community Marketing</h2>
+          <p class="section-lead">Our marketing is our community. We build connection first, and sales follow. Every video, post, and comment is a relationship — not a transaction.</p>
+
+          <div class="platform-grid">
+            <div class="platform-card">
+              <div class="platform-icon tiktok">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.33 6.33 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.22 8.22 0 004.84 1.56V6.81a4.85 4.85 0 01-1.07-.12z"/></svg>
+              </div>
+              <div class="platform-name">TikTok</div>
+              <div class="platform-goal">Primary Growth Engine</div>
+              <div class="platform-desc">Post 5x/week. "Day in the life" kitchen content, recipe creation, community taste tests, faith-based motivation. Use Filipino trending sounds. Target: 10K followers in 90 days.</div>
+            </div>
+            <div class="platform-card">
+              <div class="platform-icon ig">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+              </div>
+              <div class="platform-name">Instagram</div>
+              <div class="platform-goal">Brand Aesthetic Hub</div>
+              <div class="platform-desc">3–4 Reels/week + daily Stories. Behind-the-scenes kitchen, community events, product drops, Filipino cultural moments. Clean visual identity. Target: 5K followers Month 3.</div>
+            </div>
+            <div class="platform-card">
+              <div class="platform-icon yt">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M23.498 6.186a3.016 3.016 0 00-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 00.502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 002.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 002.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+              </div>
+              <div class="platform-name">YouTube</div>
+              <div class="platform-goal">Long-Form Trust Builder</div>
+              <div class="platform-desc">1 video/week (8–15 min). Full recipe development vlogs, team devotionals, "Why We Started" brand story, facility tours. Builds deep loyalty and SEO (Search Engine Optimization — helps people find you on Google). Long-term asset.</div>
+            </div>
+            <div class="platform-card">
+              <div class="platform-icon fb">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="white"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              </div>
+              <div class="platform-name">Facebook Groups</div>
+              <div class="platform-goal">Filipino Community Direct</div>
+              <div class="platform-desc">Join and add value to Filipino-American Facebook groups (Filipino Nurses USA, Filipino Healthcare Workers, Pilipino Community groups). Organic engagement, not spam. Share stories.</div>
+            </div>
+          </div>
+
+          <div class="section-eyebrow">Video Content Strategy</div>
+          <div class="content-types" style="margin-top:var(--space-3)">
+            <div class="content-type">
+              <h4>🎥 Kitchen Series</h4>
+              <ul>
+                <li>"Making Ube bars from scratch"</li>
+                <li>Ingredient sourcing day</li>
+                <li>First batch taste test</li>
+                <li>Kitchen setup tour</li>
+                <li>Packaging day timelapse</li>
+              </ul>
+            </div>
+            <div class="content-type">
+              <h4>🙏 Faith &amp; Business</h4>
+              <ul>
+                <li>"Why we pray before every batch"</li>
+                <li>Team devotional clips (30 sec)</li>
+                <li>Business testimony stories</li>
+                <li>"God in our business" series</li>
+                <li>Scripture for entrepreneurs</li>
+              </ul>
+            </div>
+            <div class="content-type">
+              <h4>🇵🇭 Culture Content</h4>
+              <ul>
+                <li>What is Ube? (Education)</li>
+                <li>Filipino ingredients explained</li>
+                <li>Heritage recipe comparisons</li>
+                <li>Filipino history + nutrition</li>
+                <li>Community tasting reactions</li>
+              </ul>
+            </div>
+            <div class="content-type">
+              <h4>💪 Fitness &amp; Nutrition</h4>
+              <ul>
+                <li>Pre/post workout bar reviews</li>
+                <li>Filipino athlete spotlights</li>
+                <li>Gym day + FFN bar content</li>
+                <li>Nutrition science breakdowns</li>
+                <li>Collab with Filipino trainers</li>
+              </ul>
+            </div>
+            <div class="content-type">
+              <h4>📦 Behind the Brand</h4>
+              <ul>
+                <li>Packaging design process</li>
+                <li>"Day 1 of our business" vlog</li>
+                <li>First sale celebration</li>
+                <li>Team intro videos</li>
+                <li>Milestones &amp; celebrations</li>
+              </ul>
+            </div>
+            <div class="content-type">
+              <h4>🤲 Community Impact</h4>
+              <ul>
+                <li>Giving back events coverage</li>
+                <li>Scholarship announcement</li>
+                <li>Filipino business spotlights</li>
+                <li>"Buy a bar, feed a family" campaign</li>
+                <li>Community event pop-ups</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="card" style="margin-top:var(--space-4)">
+            <div class="card-title">Community-Connected Customer Strategy</div>
+            <div class="card-body">
+              <strong>Filipino Healthcare Workers</strong> (nurses, doctors, CNAs) are your #1 early adopter — they are health-conscious, proud of heritage, and work in facilities with vending machines. Target Filipino Nurse Facebook groups, nursing school Filipino organizations, and hospital Filipino employee resource groups. <strong>Give free samples generously</strong> — one viral nurse post can reach thousands.
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════
+           SLIDE 5: PRODUCT LINE ROADMAP
+      ══════════════════════════════════════════════ -->
+      <section class="slide" data-title="Products">
+        <div class="content-wrap">
+          <div class="section-eyebrow">What We Make</div>
+          <h2 class="section-title">Product Line &amp; Expansion Roadmap</h2>
+          <p class="section-lead">We start focused — 3 flavors, one product type. Then we expand deliberately, letting the community guide what comes next.</p>
+
+          <div class="product-launch-grid">
+            <div class="product-card">
+              <span class="product-phase-badge badge-now">Launch Now</span>
+              <div class="product-emoji">🟣</div>
+              <div class="product-name">Ube Coconut Protein Bar</div>
+              <div class="product-tagline">20g Protein · Filipino Heritage Flavor</div>
+              <div class="product-details">Our flagship. Ube (purple yam) + coconut cream + dates base. Clean ingredients: whey or plant protein, coconut milk, ube powder, dark chocolate coating. Target 200–220 calories, &lt;8g sugar.</div>
+              <div class="flavor-tags">
+                <span class="tag">20g Protein</span>
+                <span class="tag navy">Gluten-Free Option</span>
+                <span class="tag green">Clean Label</span>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <span class="product-phase-badge badge-now">Launch Now</span>
+              <div class="product-emoji">🟤</div>
+              <div class="product-name">Turon Cinnamon Protein Bar</div>
+              <div class="product-tagline">Inspired by Saba Banana Spring Roll</div>
+              <div class="product-details">Banana + cinnamon + caramel notes. The most approachable flavor for non-Filipino customers. Excellent crossover appeal for Asian-American and mainstream fitness markets.</div>
+              <div class="flavor-tags">
+                <span class="tag">18g Protein</span>
+                <span class="tag navy">Crowd Pleaser</span>
+                <span class="tag green">No Artificial Flavor</span>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <span class="product-phase-badge badge-now">Launch Now</span>
+              <div class="product-emoji">🟢</div>
+              <div class="product-name">Pandan Protein Bar</div>
+              <div class="product-tagline">The "Asian Vanilla" — Unique &amp; Exotic</div>
+              <div class="product-details">Pandan leaf extract + white chocolate + macadamia nuts. Pandan is wildly popular in Southeast Asia and completely unexplored in US functional nutrition — a true white space opportunity.</div>
+              <div class="flavor-tags">
+                <span class="tag">18g Protein</span>
+                <span class="tag red">Bold &amp; Novel</span>
+                <span class="tag green">Antioxidant-Rich</span>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <span class="product-phase-badge badge-later">Phase 2 · Month 9+</span>
+              <div class="product-emoji">🥤</div>
+              <div class="product-name">FFN Protein Shakes — RTD (Ready-to-Drink)</div>
+              <div class="product-tagline">Ready-to-Drink · Ube + Pandan Flavors</div>
+              <div class="product-details">Co-manufactured ready-to-drink shakes. 25g protein, 330ml, shelf-stable. Targeted at vending machines, gyms, and hospitals. Partner with Pacific Coast Brands or Nutraceutix for production.</div>
+              <div class="flavor-tags">
+                <span class="tag">25g Protein</span>
+                <span class="tag navy">Vending-Ready</span>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <span class="product-phase-badge badge-later">Phase 2 · Month 12+</span>
+              <div class="product-emoji">💪</div>
+              <div class="product-name">FFN Protein Powder</div>
+              <div class="product-tagline">Ube Coconut Whey / Plant Protein</div>
+              <div class="product-details">1lb and 2lb bags. Ube Coconut and Pandan Matcha flavors. Partner with a white-label manufacturer (Nutraceutix, Innovative Food Processors) for bulk blending and packaging at scale.</div>
+              <div class="flavor-tags">
+                <span class="tag">25g/serving</span>
+                <span class="tag navy">Whey + Vegan</span>
+              </div>
+            </div>
+
+            <div class="product-card">
+              <span class="product-phase-badge badge-seasonal">Seasonal · Q4 Year 1</span>
+              <div class="product-emoji">🎄</div>
+              <div class="product-name">Salted Bibingka Protein Bar</div>
+              <div class="product-tagline">Holiday Limited Edition · Christmas Season</div>
+              <div class="product-details">Bibingka (Filipino rice cake) flavor with salted egg, coconut, and rice flour notes. Released Oct–Dec. Creates massive organic buzz during Filipino Christmas season — the longest Christmas celebration in the world.</div>
+              <div class="flavor-tags">
+                <span class="tag">Limited Edition</span>
+                <span class="tag red">Christmas Drop</span>
+                <span class="tag green">Cultural Moment</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-eyebrow">Future Seasonal Flavors to Explore</div>
+          <div style="display:flex;flex-wrap:wrap;gap:var(--space-2);margin-top:var(--space-3)">
+            <span class="pill">🌸 Halo-Halo Summer Bar</span>
+            <span class="pill">🍌 Banana Cue Energy Bite</span>
+            <span class="pill">☕ Barako Coffee Crunch Bar</span>
+            <span class="pill">🥥 Buko Pandan Shake</span>
+            <span class="pill">🌶️ Calamansi + Ginger Recovery Bar</span>
+            <span class="pill">🫐 Ube Blueberry Antioxidant Bar</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════
+           SLIDE 6: MARKET RESEARCH
+      ══════════════════════════════════════════════ -->
+      <section class="slide" data-title="Market Research">
+        <div class="content-wrap">
+          <div class="section-eyebrow">Know Your Market</div>
+          <h2 class="section-title">Market Research &amp; Competitive Landscape</h2>
+          <p class="section-lead">The US functional food market is a $280B+ opportunity. The Filipino-flavor white space in protein nutrition is nearly untouched — that is your competitive advantage.</p>
+
+          <div class="grid-2" style="margin-bottom:var(--space-6)">
+            <div class="card">
+              <div class="card-title">🎯 Target Segments</div>
+              <div class="card-body">
+                <ol style="padding-left:var(--space-5);line-height:2;font-size:var(--text-sm)">
+                  <li><strong>Filipino healthcare workers</strong> — 200K+ nurses in US, high income, health-conscious</li>
+                  <li><strong>Filipino fitness enthusiasts</strong> — gym-goers who want cultural connection in nutrition</li>
+                  <li><strong>Filipino-Americans broadly</strong> — 4.2M population, $163B buying power</li>
+                  <li><strong>Asian-American fitness community</strong> — mainstream crossover consumers</li>
+                  <li><strong>Non-Filipino health enthusiasts</strong> — seeking novel, clean functional snacks</li>
+                </ol>
+              </div>
+            </div>
+            <div class="card">
+              <div class="card-title">📊 Key Market Data</div>
+              <div class="card-body">
+                <div style="display:flex;flex-direction:column;gap:var(--space-2);font-size:var(--text-sm)">
+                  <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--color-divider);padding-bottom:var(--space-2)"><span style="color:var(--color-text-muted)">Protein bar market size (2025)</span><strong>$1.57B</strong></div>
+                  <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--color-divider);padding-bottom:var(--space-2)"><span style="color:var(--color-text-muted)">Functional food CAGR</span><strong>8.3%</strong></div>
+                  <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--color-divider);padding-bottom:var(--space-2)"><span style="color:var(--color-text-muted)">Filipino-Americans</span><strong>4.2M</strong></div>
+                  <div style="display:flex;justify-content:space-between;border-bottom:1px solid var(--color-divider);padding-bottom:var(--space-2)"><span style="color:var(--color-text-muted)">Filipino buying power</span><strong>$163B+</strong></div>
+                  <div style="display:flex;justify-content:space-between;padding-bottom:var(--space-2)"><span style="color:var(--color-text-muted)">Filipino-flavor functional bars</span><strong style="color:var(--color-primary)">0 major brands</strong></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-eyebrow">Competitor Analysis</div>
+          <div style="overflow-x:auto;margin-top:var(--space-3)">
+            <table class="research-table">
+              <thead>
+                <tr>
+                  <th>Brand</th>
+                  <th>Flavors</th>
+                  <th>Protein</th>
+                  <th>Price</th>
+                  <th>Filipino Identity</th>
+                  <th>Faith/Community</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Quest Bar</strong></td><td>Cookie Dough, S'mores</td><td>20g</td><td>$2.50</td><td style="color:var(--color-accent)">None</td><td style="color:var(--color-accent)">None</td></tr>
+                <tr><td><strong>Barebells</strong></td><td>Caramel/Chocolate</td><td>20g</td><td>$3.00</td><td style="color:var(--color-accent)">None</td><td style="color:var(--color-accent)">None</td></tr>
+                <tr><td><strong>RX Bar</strong></td><td>Chocolate Sea Salt</td><td>12g</td><td>$2.99</td><td style="color:var(--color-accent)">None</td><td style="color:var(--color-accent)">None</td></tr>
+                <tr><td><strong>KIND Bar</strong></td><td>Nut + Fruit</td><td>6–10g</td><td>$1.99</td><td style="color:var(--color-accent)">None</td><td style="color:var(--color-accent)">None</td></tr>
+                <tr><td><strong style="color:var(--color-primary)">FFN</strong></td><td style="color:var(--color-primary)">Ube, Pandan, Turon, Bibingka</td><td style="color:var(--color-primary)">18–20g</td><td>$3.50–4.00</td><td><span class="competitor-winner">✓ Only brand</span></td><td><span class="competitor-winner">✓ Core identity</span></td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="section-eyebrow" style="margin-top:var(--space-6)">How to Do Market Research (Tools)</div>
+          <div class="grid-3" style="margin-top:var(--space-3)">
+            <div class="mini-card"><div class="mini-card-label">Surveys</div><div class="mini-card-text">Google Forms (free), Typeform, or SurveyMonkey. Send to Filipino community groups, church networks, and gym friends.</div></div>
+            <div class="mini-card"><div class="mini-card-label">Social Listening</div><div class="mini-card-text">Use Meta Audience Insights, TikTok Creative Center, and Google Trends to find what Filipino food content performs best.</div></div>
+            <div class="mini-card"><div class="mini-card-label">Competitor Intel</div><div class="mini-card-text">Buy and review every competitor bar. Check their Amazon reviews for complaints. That is your product brief.</div></div>
+            <div class="mini-card"><div class="mini-card-label">Community Interviews</div><div class="mini-card-text">Talk to 20+ Filipino nurses, gym members, and parents. Record with permission. Ask: "What snack do you wish existed?"</div></div>
+            <div class="mini-card"><div class="mini-card-label">Amazon Research</div><div class="mini-card-text">Use Jungle Scout or Helium 10 to analyze protein bar BSR (Best Seller Rank — Amazon's measure of how well a product is selling), keywords, and review sentiment before launch.</div></div>
+            <div class="mini-card"><div class="mini-card-label">Pop-Up Testing</div><div class="mini-card-text">Set up at Fil-Am festivals, church bazaars, and Filipino grocery stores. Collect emails and real-time feedback.</div></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════
+           SLIDE 7: COMMUNITY & GIVING BACK
+      ══════════════════════════════════════════════ -->
+      <section class="slide" data-title="Community">
+        <div class="content-wrap">
+          <div class="section-eyebrow">More Than a Business</div>
+          <h2 class="section-title">Community Impact &amp; Giving Back</h2>
+          <p class="section-lead">We give back because we are commanded to. Every Filipino we employ, every scholarship we fund, every family we feed is our business model — not just our marketing.</p>
+
+          <div class="values-hero" style="margin-bottom:var(--space-6)">
+            <h2>"He who is generous will be blessed, for he gives some of his food to the poor." — Proverbs 22:9</h2>
+            <p>We commit to setting aside a percentage of every sale for community reinvestment. As the business grows, our giving grows. This is not optional — it is core to why FFN exists.</p>
+          </div>
+
+          <div class="give-back-grid">
+            <div class="give-card">
+              <div class="give-icon">🎓</div>
+              <div class="give-title">Filipino Scholarship Fund</div>
+              <div class="give-desc">Partner with local Filipino-American associations to fund merit-based scholarships for Filipino students in nursing, nutrition science, or business programs. "Buy a bar, fund a dream."</div>
+            </div>
+            <div class="give-card">
+              <div class="give-icon">💼</div>
+              <div class="give-title">Filipino Employment First</div>
+              <div class="give-desc">Hire Filipino-Americans first for all roles — production, marketing, sales, and operations. Create paid internships for Filipino college students seeking food business experience.</div>
+            </div>
+            <div class="give-card">
+              <div class="give-icon">🏪</div>
+              <div class="give-title">Filipino Small Business Support</div>
+              <div class="give-desc">Source ingredients from Filipino-owned farms and distributors when possible. Feature Filipino small businesses on social media. Cross-promote with Filipino restaurants and grocery stores.</div>
+            </div>
+            <div class="give-card">
+              <div class="give-icon">🙏</div>
+              <div class="give-title">Church &amp; Ministry Partnership</div>
+              <div class="give-desc">Donate product to Filipino church events, youth groups, and ministry outreaches. Sponsor Filipino Christian conferences and provide nutrition for mission teams.</div>
+            </div>
+            <div class="give-card">
+              <div class="give-icon">🌾</div>
+              <div class="give-title">Philippines Hunger Initiative</div>
+              <div class="give-desc">Long-term: partner with Philippine NGOs to fund nutrition programs in food-insecure communities. "Every bar sold in the US, a meal provided in the Philippines."</div>
+            </div>
+            <div class="give-card">
+              <div class="give-icon">🏥</div>
+              <div class="give-title">Healthcare Worker Appreciation</div>
+              <div class="give-desc">Provide free product to Filipino healthcare workers during Nurses Week (May), Filipino Heritage Month (October), and Christmas. Loyalty program for healthcare worker purchases.</div>
+            </div>
+          </div>
+
+          <div class="section-eyebrow">Community Building Strategy</div>
+          <div class="grid-2" style="margin-top:var(--space-3)">
+            <div class="card">
+              <div class="card-title">Online Community</div>
+              <div class="card-body">Build a private Facebook Group "FFN Fam" and Discord for product testers, early supporters, and Filipino health enthusiasts. Host monthly virtual events, prayer circles, and product preview drops. Goal: 1,000 members before first public sale.</div>
+            </div>
+            <div class="card">
+              <div class="card-title">In-Person Events</div>
+              <div class="card-body">Attend Filipino festivals (Fiesta, Barrio Fiesta, Filipino Heritage Month events), Filipino church fairs, and Asian health expos. Set up a professional booth with samples, branding, and email signup. Budget: $200–500/event.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════
+           SLIDE 8: LEGAL & PARTNERSHIPS
+      ══════════════════════════════════════════════ -->
+      <section class="slide" data-title="Legal">
+        <div class="content-wrap">
+          <div class="section-eyebrow">Protection &amp; Structure</div>
+          <h2 class="section-title">Legal Setup &amp; Partnership Strategy</h2>
+          <p class="section-lead">Doing business the right way means protecting your team, your brand, and your mission with the proper legal structure from day one.</p>
+
+          <div class="legal-grid">
+            <div class="legal-section">
+              <h3>🏛️ Business Formation</h3>
+              <ol class="step-list">
+                <li><span class="step-num">1</span>Form an LLC (Limited Liability Company) in your state (avg $50–$500 filing fee). Protects personal assets — if sued, only business assets are at risk, not your personal savings.</li>
+                <li><span class="step-num">2</span>Draft an Operating Agreement defining team roles, profit splits, and decision-making process. Do this before money is involved.</li>
+                <li><span class="step-num">3</span>Obtain EIN (Employer Identification Number) — free from IRS.gov. Required for bank accounts and taxes.</li>
+                <li><span class="step-num">4</span>Open a dedicated business bank account. Never mix personal and business funds.</li>
+                <li><span class="step-num">5</span>Get business liability insurance ($500–$1,500/yr) and product liability insurance for food businesses.</li>
+              </ol>
+            </div>
+            <div class="legal-section">
+              <h3>📋 Food Business Compliance</h3>
+              <ol class="step-list">
+                <li><span class="step-num">1</span>Register as an FDA Food Facility (free at FDA.gov). Required before selling packaged food products.</li>
+                <li><span class="step-num">2</span>Follow FDA labeling rules: Nutrition Facts panel, ingredient list, allergen statement, net weight, manufacturer address.</li>
+                <li><span class="step-num">3</span>Obtain GS1 UPC (Universal Product Code / barcode) registration ($250/yr for up to 10 products). Required for retail shelves and Amazon listings.</li>
+                <li><span class="step-num">4</span>Register your brand trademark at USPTO.gov ($250/class). USPTO stands for U.S. Patent and Trademark Office — this legally protects your brand name and logo so no one else can copy it.</li>
+                <li><span class="step-num">5</span>Check state cottage food laws vs. commercial kitchen requirements for your production volume.</li>
+              </ol>
+            </div>
+          </div>
+
+          <div class="section-eyebrow" style="margin-top:var(--space-4)">Partnership Strategy</div>
+          <div class="grid-3" style="margin-top:var(--space-3);margin-bottom:var(--space-6)">
+            <div class="mini-card">
+              <div class="mini-card-label">Co-Manufacturers</div>
+              <div class="mini-card-text">PartnerSlate (marketplace), YouBar (custom bars, $10K MOQ — Minimum Order Quantity, the least amount they'll make per run), EMPWR (health bars), Nutraceutix (powders/shakes). Start with PartnerSlate to find your fit.</div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-label">Retail Partners</div>
+              <div class="mini-card-text">Start with Filipino grocery stores (Seafood City, Island Pacific), then Asian grocery (H Mart, 99 Ranch), then specialty health (Sprouts, Natural Grocers), then national (Whole Foods).</div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-label">Fitness Partners</div>
+              <div class="mini-card-text">Partner with Filipino-owned gyms, Asian-American CrossFit boxes, and Filipino college sports organizations. Offer exclusivity deals in exchange for vending machine placement.</div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-label">Influencer Partners</div>
+              <div class="mini-card-text">Target Filipino fitness micro-influencers (10K–100K followers). Offer product + commission. Look for Filipino nurses, personal trainers, and lifestyle creators on TikTok/Instagram.</div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-label">Hospital/Vending</div>
+              <div class="mini-card-text">Contact facility management at hospitals with large Filipino nursing staff. Pitch vending machine placement with revenue share. Start with 1 machine to prove concept.</div>
+            </div>
+            <div class="mini-card">
+              <div class="mini-card-label">Amazon &amp; Shopify</div>
+              <div class="mini-card-text">Launch Shopify store at Day 1 (free trial). Launch Amazon FBA (Fulfilled By Amazon — you send inventory to Amazon's warehouse and they ship orders for you) at Month 3. Subscription bundle boxes through Shopify subscriptions. Bundle 3-pack and 12-pack SKUs.</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════
+           SLIDE 9: AI TOOLS & WORKFLOW
+      ══════════════════════════════════════════════ -->
+      <section class="slide" data-title="AI Tools">
+        <div class="content-wrap">
+          <div class="section-eyebrow">Work Smart</div>
+          <h2 class="section-title">Your AI Stack — Already Built</h2>
+          <p class="section-lead">You already own the most powerful tools available. Claude Code + ChatGPT + Perplexity + your custom Kanban board eliminate the need for Notion, Asana, Zapier, and most research subscriptions — saving $50–80/month before you even launch.</p>
+
+          <!-- CORE 4 STACK -->
+          <div class="tools-category">
+            <div class="tools-cat-title">Your Core 4 — Use These Every Day</div>
+            <div class="tools-list">
+
+              <div class="tool-item" style="border-left:3px solid var(--color-primary)">
+                <div class="tool-logo" style="background:var(--color-primary-highlight);color:var(--color-primary);font-size:1.1rem">CC</div>
+                <div>
+                  <div class="tool-name">Claude Code (CLI)</div>
+                  <div class="tool-use">Your business engine. Build your Shopify store, write automation scripts, draft SOPs, generate FDA label copy, create email flows, debug your Kanban board — all from the terminal. Ask it to write code, write copy, or plan anything.</div>
+                  <div class="tool-cost">Already active ✓</div>
+                </div>
+              </div>
+
+              <div class="tool-item" style="border-left:3px solid var(--color-deep)">
+                <div class="tool-logo" style="background:var(--color-info-bg);color:var(--color-info)">🤖</div>
+                <div>
+                  <div class="tool-name">ChatGPT</div>
+                  <div class="tool-use">Content creation workhorse. TikTok captions, Instagram hooks, email subject lines, product descriptions, customer reply templates, content calendars, and idea generation. Great for rapid brainstorming and variation — generate 10 caption options in 10 seconds.</div>
+                  <div class="tool-cost">Already active ✓</div>
+                </div>
+              </div>
+
+              <div class="tool-item" style="border-left:3px solid var(--color-accent)">
+                <div class="tool-logo" style="background:var(--color-accent-muted);color:var(--color-accent)">🔍</div>
+                <div>
+                  <div class="tool-name">Perplexity</div>
+                  <div class="tool-use">Real-time research with sources. Use it to track competitor pricing, find FDA regulation updates, research ingredient suppliers, check current market data, and monitor Filipino food trends. Better than Google for research because it cites everything. Replaces costly market research subscriptions.</div>
+                  <div class="tool-cost">Already active ✓</div>
+                </div>
+              </div>
+
+              <div class="tool-item" style="border-left:3px solid var(--color-success)">
+                <div class="tool-logo" style="background:var(--color-success-bg);color:var(--color-success)">📋</div>
+                <div>
+                  <div class="tool-name">Your Custom Kanban Board</div>
+                  <div class="tool-use">Built by you with Claude Code. Track every business task — from recipe batches to social posts to FDA filings — across your custom columns. Add tasks directly, assign team members, move cards as work progresses. Already connected to Supabase for live team updates. This is your command center.</div>
+                  <div class="tool-cost">Built &amp; owned ✓ — $0/mo</div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+          <!-- WHAT THEY REPLACE -->
+          <div class="tools-category">
+            <div class="tools-cat-title">What Your Stack Already Replaces</div>
+            <div class="grid-3" style="margin-top:var(--space-3)">
+              <div class="mini-card">
+                <div class="mini-card-label" style="color:var(--color-success)">✓ Replaced by Kanban Board</div>
+                <div class="mini-card-text"><strong>Asana / Trello / Notion tasks</strong> — your board handles production schedules, launch checklists, marketing tasks, and team assignments. Add columns like "Recipe Testing," "FDA Filing," "Content Queue."</div>
+              </div>
+              <div class="mini-card">
+                <div class="mini-card-label" style="color:var(--color-success)">✓ Replaced by Claude Code</div>
+                <div class="mini-card-text"><strong>Notion AI ($10/mo) + Zapier ($20/mo)</strong> — Claude Code writes your SOPs, drafts your wiki docs, and builds custom automation scripts. Ask it to write a script that emails you when a Shopify order comes in. No monthly fee.</div>
+              </div>
+              <div class="mini-card">
+                <div class="mini-card-label" style="color:var(--color-success)">✓ Replaced by Perplexity</div>
+                <div class="mini-card-text"><strong>Jungle Scout / Helium 10 ($50–80/mo)</strong> — use Perplexity to research Amazon keyword trends, competitor bar reviews, ingredient suppliers, and nutritional market data. Free tier covers most startup research needs.</div>
+              </div>
+              <div class="mini-card">
+                <div class="mini-card-label" style="color:var(--color-success)">✓ Replaced by ChatGPT</div>
+                <div class="mini-card-text"><strong>Copywriter / content agency</strong> — generate a full month of TikTok captions, IG hooks, and email copy in one session. Use custom GPTs or saved prompts for consistent FFN brand voice every time.</div>
+              </div>
+              <div class="mini-card">
+                <div class="mini-card-label" style="color:var(--color-success)">✓ Replaced by Meta Native Tools</div>
+                <div class="mini-card-text"><strong>Later / Buffer ($18/mo)</strong> — Meta Business Suite (free) schedules posts across Instagram and Facebook natively. TikTok's built-in scheduler handles TikTok. No third-party scheduler needed at MVP (Minimum Viable Product — the simplest version of your business that actually works) stage.</div>
+              </div>
+              <div class="mini-card">
+                <div class="mini-card-label" style="color:var(--color-primary)">→ Still Needed</div>
+                <div class="mini-card-text"><strong>Canva ($13/mo)</strong> for packaging mockups and social graphics. <strong>CapCut (free)</strong> for video editing. <strong>Shopify ($39/mo)</strong> for your store. <strong>Wave (free)</strong> for bookkeeping. That's it for MVP (Minimum Viable Product — the lean starter version).</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- HOW TO USE EACH TOOL FOR FFN -->
+          <div class="tools-category">
+            <div class="tools-cat-title">Practical Prompts — Use These This Week</div>
+            <div class="grid-2" style="margin-top:var(--space-3)">
+              <div class="card">
+                <div class="card-title" style="font-size:var(--text-sm);color:var(--color-primary)">Claude Code → Business Ops</div>
+                <div class="card-body" style="font-size:var(--text-xs);line-height:1.9">
+                  <strong>"Write a Shopify order confirmation email that mentions our Filipino mission and includes a discount code for next order."</strong><br>
+                  <strong>"Create an SOP (Standard Operating Procedure — a step-by-step written process your team follows every time) for our weekly batch production process — ingredients, steps, safety checks, packaging."</strong><br>
+                  <strong>"Build a cost-per-unit calculator for our Ube bar recipe."</strong><br>
+                  <strong>"Write the full FDA Nutrition Facts label copy for a 50g protein bar with these macros: [paste]."</strong>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-title" style="font-size:var(--text-sm);color:var(--color-info)">ChatGPT → Content &amp; Marketing</div>
+                <div class="card-body" style="font-size:var(--text-xs);line-height:1.9">
+                  <strong>"Write 10 TikTok hooks for a Filipino protein bar brand with a faith-based mission."</strong><br>
+                  <strong>"Create a 30-day content calendar for FFN's Instagram — mix of kitchen, culture, fitness, and faith content."</strong><br>
+                  <strong>"Write 5 email subject lines for our launch announcement to Filipino healthcare workers."</strong><br>
+                  <strong>"Generate 3 product description variants for our Ube Coconut Protein Bar for Shopify."</strong>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-title" style="font-size:var(--text-sm);color:var(--color-accent)">Perplexity → Research</div>
+                <div class="card-body" style="font-size:var(--text-xs);line-height:1.9">
+                  <strong>"What are the current FDA labeling requirements for protein bars sold in the US in 2025?"</strong><br>
+                  <strong>"Who are the top Filipino-American micro-influencers in fitness and nutrition on TikTok?"</strong><br>
+                  <strong>"What are the most common complaints in Amazon reviews for Quest and RXBar protein bars?"</strong><br>
+                  <strong>"Find US-based ube and pandan extract suppliers with MOQ (Minimum Order Quantity) under 10kg."</strong>
+                </div>
+              </div>
+              <div class="card">
+                <div class="card-title" style="font-size:var(--text-sm);color:var(--color-success)">Kanban Board → Daily Operations</div>
+                <div class="card-body" style="font-size:var(--text-xs);line-height:1.9">
+                  Create boards per business area: <strong>Production</strong> (recipe → lab → packaging), <strong>Marketing</strong> (content → scheduled → posted), <strong>Legal &amp; Compliance</strong> (LLC formation → FDA registration → trademark), <strong>Sales &amp; Retail</strong> (pitch → sampled → placed).<br>
+                  Use the <strong>Blocked column</strong> when you're waiting on a vendor, lab result, or approval — keeps nothing falling through the cracks.
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- POWER WORKFLOW -->
+          <div class="tools-category">
+            <div class="tools-cat-title">Power Workflow — How All 4 Work Together</div>
+            <div class="production-flow" style="margin-top:var(--space-3)">
+              <div class="flow-step">
+                <div class="flow-num">1</div>
+                <div class="flow-body">
+                  <div class="flow-title">Research with Perplexity</div>
+                  <div class="flow-text">Find a competitor's weakness in Amazon reviews, spot a trending Filipino food term on TikTok, or pull the latest FDA guidance on protein claims. Paste the findings into Claude Code or ChatGPT as context.</div>
+                </div>
+              </div>
+              <div class="flow-connector"></div>
+              <div class="flow-step">
+                <div class="flow-num">2</div>
+                <div class="flow-body">
+                  <div class="flow-title">Build or Write with Claude Code</div>
+                  <div class="flow-text">Turn that research into a product positioning doc, a Shopify landing page, an email sequence, a batch production SOP, or a new feature in your Kanban board. Claude Code handles both code and copy.</div>
+                </div>
+              </div>
+              <div class="flow-connector"></div>
+              <div class="flow-step">
+                <div class="flow-num">3</div>
+                <div class="flow-body">
+                  <div class="flow-title">Scale Content with ChatGPT</div>
+                  <div class="flow-text">Take the positioning doc and generate 30 social captions, 5 email subject lines, and 3 ad copy variants. ChatGPT is fastest at high-volume content variation. Use it to fill the whole month's content calendar in one session.</div>
+                </div>
+              </div>
+              <div class="flow-connector"></div>
+              <div class="flow-step">
+                <div class="flow-num">4</div>
+                <div class="flow-body">
+                  <div class="flow-title">Track Everything in Your Kanban Board</div>
+                  <div class="flow-text">Every task generated from steps 1–3 becomes a card. Move it through Backlog → To Do → In Progress → Review → Done. Team members see live updates. Nothing is forgotten, nothing is duplicated, and progress is visible at a glance.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- OPERATING RHYTHM -->
+          <div class="tools-category">
+            <div class="tools-cat-title">Team Operating Rhythm</div>
+            <div class="grid-3" style="margin-top:var(--space-3)">
+              <div class="mini-card"><div class="mini-card-label">Daily (10 min)</div><div class="mini-card-text">Check Kanban board for blocked/overdue cards. Post one piece of content. Respond to DMs. Use ChatGPT to write today's caption in 2 minutes flat.</div></div>
+              <div class="mini-card"><div class="mini-card-label">Weekly (1 hr)</div><div class="mini-card-text">Monday team meeting: open Kanban, review In Progress cards, assign this week's tasks. Review KPIs (Key Performance Indicators — your key business numbers like sales, followers, and orders). Use Perplexity to check one competitor or market trend. Prayer + devotional together.</div></div>
+              <div class="mini-card"><div class="mini-card-label">Monthly (2 hrs)</div><div class="mini-card-text">Run Perplexity research session on market + competitors. Use Claude Code to update your SOPs or Shopify store. Use ChatGPT to generate next month's full content calendar. Review Wave financials.</div></div>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════
+           SLIDE 10: GROWTH ROADMAP
+      ══════════════════════════════════════════════ -->
+      <section class="slide" data-title="Roadmap">
+        <div class="content-wrap">
+          <div class="section-eyebrow">The Journey</div>
+          <h2 class="section-title">Growth Roadmap — 0 to 36 Months</h2>
+          <p class="section-lead">Every phase builds on the last. We move deliberately, validate before scaling, and keep God at the center of every decision.</p>
+
+          <div class="roadmap-row">
+            <div class="roadmap-col r1">
+              <div class="roadmap-phase">Phase 1</div>
+              <div class="roadmap-duration">0–3 Months<br>Validate &amp; Build</div>
+              <ul class="roadmap-items">
+                <li>Form LLC (Limited Liability Company), open business bank account</li>
+                <li>Register with FDA as food facility</li>
+                <li>Secure food-grade kitchen rental</li>
+                <li>Finalize 3 core flavor formulations</li>
+                <li>Produce 3 sample batches (25–50 units)</li>
+                <li>Host 2 community taste-test events</li>
+                <li>Submit samples to certified lab (Eurofins)</li>
+                <li>Design packaging (Canva AI + designer)</li>
+                <li>Build Shopify store + social accounts</li>
+                <li>Launch TikTok/Instagram content (pre-sell)</li>
+                <li>Grow to 500 email subscribers</li>
+                <li>Begin weekly team devotionals</li>
+              </ul>
+            </div>
+            <div class="roadmap-col r2">
+              <div class="roadmap-phase">Phase 2</div>
+              <div class="roadmap-duration">4–9 Months<br>Launch &amp; Grow</div>
+              <ul class="roadmap-items">
+                <li>Official product launch event</li>
+                <li>First 500 bars sold online</li>
+                <li>Place 1–2 vending machines (hospital/gym)</li>
+                <li>Land product in 3 local Filipino stores</li>
+                <li>Reach 5K TikTok + 3K Instagram followers</li>
+                <li>Launch referral + affiliate program</li>
+                <li>Hire part-time social media help</li>
+                <li>Iterate recipe from customer feedback</li>
+                <li>Release Salted Bibingka seasonal (Q4)</li>
+                <li>Launch 3-pack and 12-pack bundles</li>
+                <li>Hit $10K monthly revenue</li>
+                <li>Give first community donation</li>
+              </ul>
+            </div>
+            <div class="roadmap-col r3">
+              <div class="roadmap-phase">Phase 3</div>
+              <div class="roadmap-duration">10–18 Months<br>Scale &amp; Expand</div>
+              <ul class="roadmap-items">
+                <li>Transition to co-manufacturer (PartnerSlate)</li>
+                <li>Launch Amazon FBA (Fulfilled By Amazon) store</li>
+                <li>Expand to 10+ retail locations</li>
+                <li>Launch FFN Protein Shake RTD (Ready-to-Drink)</li>
+                <li>Pitch Sprouts, Natural Grocers, H Mart</li>
+                <li>Hire full-time team member</li>
+                <li>Grow to 50K social followers combined</li>
+                <li>Reach $50K monthly revenue</li>
+                <li>Launch FFN Scholarship program</li>
+                <li>First media feature (Filipino media)</li>
+                <li>Explore Whole Foods local program</li>
+                <li>Annual community impact report</li>
+              </ul>
+            </div>
+            <div class="roadmap-col r4">
+              <div class="roadmap-phase">Phase 4</div>
+              <div class="roadmap-duration">18–36 Months<br>Dominate &amp; Give</div>
+              <ul class="roadmap-items">
+                <li>Launch FFN Protein Powder line</li>
+                <li>National retail distribution</li>
+                <li>Expand to additional Filipino flavors</li>
+                <li>Reach $1M+ annual revenue</li>
+                <li>International expansion (Canada, Australia)</li>
+                <li>Brand licensing / co-branded products</li>
+                <li>Hire full operations team</li>
+                <li>Launch FFN Foundation formally</li>
+                <li>Fund 10+ Filipino scholarships/year</li>
+                <li>Philippines community nutrition program</li>
+                <li>Strategic acquisition or Series A</li>
+                <li>Feature in mainstream US media</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="section-eyebrow">Key Metrics (KPIs — Key Performance Indicators, the numbers that show if your business is healthy) to Track</div>
+          <div class="kpi-row" style="margin-top:var(--space-3);margin-bottom:var(--space-6)">
+            <div class="kpi-box"><div class="kpi-label">Month 3 Goal</div><div class="kpi-value">$3K Rev</div></div>
+            <div class="kpi-box"><div class="kpi-label">Month 9 Goal</div><div class="kpi-value">$10K/mo</div></div>
+            <div class="kpi-box"><div class="kpi-label">Month 18 Goal</div><div class="kpi-value">$50K/mo</div></div>
+            <div class="kpi-box"><div class="kpi-label">36-Month Goal</div><div class="kpi-value">$1M+/yr</div></div>
+            <div class="kpi-box"><div class="kpi-label">Social Followers</div><div class="kpi-value">50K+</div></div>
+            <div class="kpi-box"><div class="kpi-label">Repeat Purchase</div><div class="kpi-value">&gt;40%</div></div>
+            <div class="kpi-box"><div class="kpi-label">Review Score</div><div class="kpi-value">4.7★+</div></div>
+            <div class="kpi-box"><div class="kpi-label">Community</div><div class="kpi-value">Filipino First</div></div>
+          </div>
+
+          <div class="card" style="border-left:3px solid var(--color-gold)">
+            <div class="card-title" style="display:flex;align-items:center;gap:var(--space-2);">
+              🗓️ Your First 30 Days — Action Checklist
+            </div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-3);margin-top:var(--space-3)">
+              <ul class="checklist">
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Week 1: File LLC, get EIN, open bank account</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Week 1: Create Instagram, TikTok, Facebook accounts</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Week 1: Register FFN trademark at USPTO.gov (U.S. Patent and Trademark Office)</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Week 2: Research and book shared kitchen space</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Week 2: Register FDA Food Facility (free, FDA.gov)</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Week 2: Get ServSafe food handler certification</li>
+              </ul>
+              <ul class="checklist">
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Week 3: First kitchen session — Ube bar sample batch</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Week 3: Film the entire process for TikTok content</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Week 3: Post "Why We Started" brand story video</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Week 4: Share samples at church / Filipino community</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Week 4: Collect 50 feedback surveys</li>
+                <li><svg class="check-icon pending" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="8" cy="8" r="6"/><path d="M5 8l2 2 4-4"/></svg>Week 4: Set up Shopify store (coming soon page)</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ══════════════════════════════════════════════
+           SLIDE 11: BRAND FILM — OUR STORY
+      ══════════════════════════════════════════════ -->
+
+      <style>
+      /* ── CINEMA SLIDE ── */
+      .cinema-slide { padding:0!important; background:#000; overflow:hidden; position:relative; }
+
+      /* Letterbox */
+      .cine-box { position:absolute; left:0; right:0; height:9%; background:#000; z-index:20; pointer-events:none; }
+      .cine-box.top { top:0; }
+      .cine-box.bottom { bottom:0; }
+
+      /* Film grain overlay */
+      .cine-grain {
+        position:absolute; inset:0; z-index:19; pointer-events:none;
+        opacity:.028;
+        background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='256' height='256'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='256' height='256' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
+        background-size: 200px 200px;
+        animation: grain-drift 0.12s steps(1) infinite;
+      }
+      @keyframes grain-drift { 0%{background-position:0 0} 25%{background-position:60px 40px} 50%{background-position:-40px 80px} 75%{background-position:80px -30px} 100%{background-position:0 0} }
+
+      /* Scene wrapper */
+      .cine-scenes { position:absolute; inset:0; }
+      .cine-scene {
+        position:absolute; inset:0;
+        display:flex; align-items:center; justify-content:center;
+        opacity:0; transition:opacity 1.1s cubic-bezier(0.16,1,0.3,1);
+        overflow:hidden;
+      }
+      .cine-scene.active { opacity:1; }
+
+      /* Scene backgrounds — each is a cinematic environment */
+      .sb1 { background: radial-gradient(ellipse at 25% 55%, #0b2d4a 0%, #041525 55%, #020a14 100%); }
+      .sb2 { background: radial-gradient(ellipse at 75% 45%, #3d1a06 0%, #1c0c04 55%, #0c0502 100%); }
+      .sb3 { background: radial-gradient(ellipse at 50% 60%, #2e1d06 0%, #160e03 55%, #0a0702 100%); }
+      .sb4 { background: radial-gradient(ellipse at 50% 35%, #2e0a0a 0%, #160404 55%, #0c0202 100%); }
+      .sb5 { background: radial-gradient(ellipse at 50% 50%, #1c1306 0%, #0e0a04 55%, #060402 100%); }
+
+      /* Per-scene light bloom */
+      .cine-bloom {
+        position:absolute; border-radius:50%;
+        filter:blur(120px); pointer-events:none;
+        animation:bloom-pulse 5s ease-in-out infinite;
+      }
+      @keyframes bloom-pulse { 0%,100%{opacity:.5;transform:scale(1)} 50%{opacity:.8;transform:scale(1.12)} }
+      .sb1 .cine-bloom { width:400px;height:400px; background:radial-gradient(circle,rgba(30,100,200,.25),transparent 70%); top:-10%;left:-10%; }
+      .sb2 .cine-bloom { width:450px;height:450px; background:radial-gradient(circle,rgba(200,100,20,.22),transparent 70%); top:20%;right:-5%; }
+      .sb3 .cine-bloom { width:380px;height:380px; background:radial-gradient(circle,rgba(200,160,20,.2),transparent 70%); bottom:0;left:20%; }
+      .sb4 .cine-bloom { width:500px;height:500px; background:radial-gradient(circle,rgba(200,20,20,.22),transparent 70%); top:-20%;left:30%; }
+      .sb5 .cine-bloom { width:600px;height:600px; background:radial-gradient(circle,rgba(200,131,26,.3),transparent 70%); top:-10%;left:-10%; }
+
+      /* Vignette */
+      .cine-vignette {
+        position:absolute; inset:0; pointer-events:none;
+        background:radial-gradient(ellipse at 50% 50%, transparent 40%, rgba(0,0,0,.75) 100%);
+      }
+
+      /* Large scene icon — Ken Burns */
+      .scene-icon-wrap {
+        position:absolute;
+        font-size:clamp(6rem,14vw,12rem);
+        line-height:1; user-select:none; pointer-events:none;
+        filter:drop-shadow(0 0 40px rgba(255,255,255,.08));
+        animation:ken-burns 6s ease-in-out infinite;
+      }
+      @keyframes ken-burns { 0%,100%{transform:scale(1) rotate(-1deg)} 50%{transform:scale(1.06) rotate(0deg)} }
+      .sb1 .scene-icon-wrap { bottom:12%; right:8%; opacity:.6; }
+      .sb2 .scene-icon-wrap { bottom:14%; left:6%;  opacity:.55; }
+      .sb3 .scene-icon-wrap { bottom:12%; right:6%; opacity:.6; }
+      .sb4 .scene-icon-wrap { top:14%;    right:8%; opacity:.55; }
+      .sb5 .scene-icon-wrap { bottom:14%; right:6%; opacity:.5; }
+
+      /* Floating decorative particles per scene */
+      .scene-floaters {
+        position:absolute; inset:0; overflow:hidden; pointer-events:none;
+      }
+      .sf {
+        position:absolute; border-radius:50%;
+        animation:sf-rise 6s ease-in-out infinite;
+        opacity:.25;
+      }
+      @keyframes sf-rise {
+        0%  { transform:translateY(0) translateX(0) rotate(0deg); opacity:.2; }
+        50% { transform:translateY(-30px) translateX(10px) rotate(180deg); opacity:.35; }
+        100%{ transform:translateY(0) translateX(0) rotate(360deg); opacity:.2; }
+      }
+
+      /* Text block */
+      .scene-text {
+        position:absolute; z-index:5;
+        left:clamp(1.5rem,6vw,5rem);
+        bottom:clamp(3rem,12%,5rem);
+        max-width:600px;
+      }
+      .scene-eyebrow-cine {
+        font-size:.65rem; letter-spacing:.18em; text-transform:uppercase;
+        color:rgba(200,131,26,.9); font-weight:700; margin-bottom:.5rem;
+        opacity:0; transform:translateY(10px);
+        transition:opacity .5s ease .15s, transform .5s ease .15s;
+      }
+      .cine-scene.active .scene-eyebrow-cine { opacity:1; transform:translateY(0); }
+
+      .scene-headline-cine {
+        font-family:'Playfair Display',serif;
+        font-size:clamp(1.6rem,4vw,3.2rem);
+        line-height:1.1; letter-spacing:-.025em;
+        color:#fff; font-weight:900;
+        margin-bottom:.75rem;
+        opacity:0; transform:translateY(18px);
+        transition:opacity .6s ease .35s, transform .6s ease .35s;
+        text-shadow:0 2px 20px rgba(0,0,0,.6);
+      }
+      .cine-scene.active .scene-headline-cine { opacity:1; transform:translateY(0); }
+
+      .scene-headline-cine em { color:#f0c040; font-style:italic; }
+
+      .scene-sub-cine {
+        font-size:clamp(.8rem,1.5vw,1rem);
+        color:rgba(255,255,255,.65); line-height:1.6;
+        opacity:0; transform:translateY(12px);
+        transition:opacity .6s ease .6s, transform .6s ease .6s;
+      }
+      .cine-scene.active .scene-sub-cine { opacity:1; transform:translateY(0); }
+
+      /* Product tag */
+      .scene-product-tag {
+        position:absolute; top:clamp(2.5rem,11%,4.5rem); right:clamp(1.5rem,4vw,3rem);
+        z-index:6;
+        background:rgba(200,131,26,.15);
+        border:1px solid rgba(200,131,26,.4);
+        backdrop-filter:blur(8px);
+        border-radius:99px; padding:.4rem 1rem;
+        font-size:.7rem; font-weight:700; color:rgba(240,192,64,.9);
+        letter-spacing:.08em; text-transform:uppercase;
+        opacity:0; transform:translateY(-10px) scale(.95);
+        transition:opacity .5s ease .8s, transform .5s ease .8s;
+      }
+      .cine-scene.active .scene-product-tag { opacity:1; transform:translateY(0) scale(1); }
+
+      /* Scene 5 special — center layout */
+      .scene5-center {
+        display:flex; flex-direction:column; align-items:center;
+        justify-content:center;
+        position:absolute; inset:0; z-index:5; text-align:center;
+        padding:2rem;
+      }
+      .scene5-logo-ring {
+        width:100px; height:100px;
+        position:relative; display:flex; align-items:center; justify-content:center;
+        margin-bottom:1.5rem;
+      }
+      .scene5-logo-ring svg.spin-slow { animation:spin-rays 14s linear infinite; }
+      .scene5-eyebrow {
+        font-size:.65rem; letter-spacing:.2em; text-transform:uppercase;
+        color:rgba(200,131,26,.8); margin-bottom:.75rem;
+        opacity:0; transition:opacity .6s ease .2s;
+      }
+      .scene5-headline {
+        font-family:'Playfair Display',serif;
+        font-size:clamp(2rem,5vw,4rem);
+        line-height:1.05; letter-spacing:-.03em;
+        color:#fff; font-weight:900; margin-bottom:1rem;
+        opacity:0; transform:scale(.95);
+        transition:opacity .7s ease .4s, transform .7s ease .4s;
+        text-shadow:0 4px 30px rgba(0,0,0,.5);
+      }
+      .scene5-headline em { color:#f0c040; font-style:italic; }
+      .scene5-tagline {
+        font-size:clamp(.75rem,1.4vw,.95rem);
+        color:rgba(255,255,255,.5); letter-spacing:.08em;
+        opacity:0; transition:opacity .6s ease .8s;
+      }
+      .scene5-cta {
+        margin-top:1.5rem;
+        padding:.5rem 1.5rem;
+        border:1px solid rgba(200,131,26,.5);
+        border-radius:99px;
+        font-size:.75rem; font-weight:700; letter-spacing:.1em; text-transform:uppercase;
+        color:rgba(200,131,26,.85);
+        background:rgba(200,131,26,.08);
+        opacity:0; transform:translateY(8px);
+        transition:opacity .5s ease 1.1s, transform .5s ease 1.1s;
+      }
+      .cine-scene.active .scene5-eyebrow,
+      .cine-scene.active .scene5-headline,
+      .cine-scene.active .scene5-tagline,
+      .cine-scene.active .scene5-cta    { opacity:1; transform:none; }
+
+      /* ECG line (scene 1) */
+      .ecg-line {
+        position:absolute; bottom:20%; left:0; right:0;
+        height:50px; overflow:hidden; opacity:.15; z-index:4; pointer-events:none;
+      }
+      .ecg-path {
+        stroke:#40b0ff; stroke-width:1.5; fill:none;
+        stroke-dasharray:600; stroke-dashoffset:600;
+        animation:ecg-draw 3s linear infinite;
+      }
+      @keyframes ecg-draw { to { stroke-dashoffset:-600; } }
+
+      /* Heartbeat dot (scene 2) */
+      .pulse-ring {
+        position:absolute; top:20%; right:12%; width:60px; height:60px;
+        border-radius:50%; border:2px solid rgba(240,120,40,.4);
+        animation:pulse-expand 1.8s ease-out infinite; z-index:4;
+      }
+      @keyframes pulse-expand { 0%{transform:scale(.8);opacity:.7} 100%{transform:scale(2.2);opacity:0} }
+
+      /* Steam (scene 3) */
+      .steam-wrap {
+        position:absolute; top:10%; left:50%; transform:translateX(-50%);
+        pointer-events:none; z-index:4;
+      }
+      .steam {
+        width:3px; height:30px;
+        background:linear-gradient(to top, transparent, rgba(255,255,255,.15));
+        border-radius:99px; display:inline-block; margin:0 4px;
+        animation:steam-rise 2s ease-in-out infinite;
+      }
+      .steam:nth-child(2){ animation-delay:.4s; height:40px; }
+      .steam:nth-child(3){ animation-delay:.8s; height:25px; }
+      @keyframes steam-rise {
+        0%,100%{ transform:translateY(0) scaleX(1); opacity:.4; }
+        50%    { transform:translateY(-20px) scaleX(1.5); opacity:0; }
+      }
+
+      /* Philippine sun (scene 4) */
+      .ph-sun {
+        position:absolute; top:8%; right:10%; opacity:.12; z-index:4;
+        animation:sun-spin 30s linear infinite;
+      }
+      @keyframes sun-spin { to { transform:rotate(360deg); } }
+
+      /* Scene 5 star particles */
+      @keyframes star-twinkle {
+        0%,100%{ opacity:.15; transform:scale(1); }
+        50%    { opacity:.5;  transform:scale(1.4); }
+      }
+      .star-dot {
+        position:absolute; border-radius:50%;
+        background:#f0c040;
+        animation:star-twinkle 3s ease-in-out infinite;
+      }
+
+      /* ── CINEMA CONTROLS ── */
+      .cinema-controls {
+        position:absolute; bottom:9%; left:0; right:0;
+        display:flex; align-items:center; gap:.75rem;
+        padding:0 clamp(1rem,4vw,3rem);
+        z-index:25; height:36px;
+      }
+      .cine-play-btn {
+        width:30px; height:30px; flex-shrink:0;
+        border-radius:50%;
+        background:rgba(255,255,255,.1);
+        border:1px solid rgba(255,255,255,.2);
+        color:#fff; font-size:.75rem;
+        display:flex; align-items:center; justify-content:center;
+        cursor:pointer; transition:background .2s ease;
+      }
+      .cine-play-btn:hover { background:rgba(200,131,26,.5); }
+      .cine-timeline {
+        flex:1; height:3px; background:rgba(255,255,255,.12);
+        border-radius:99px; overflow:hidden; cursor:pointer;
+      }
+      .cine-timeline-fill {
+        height:100%;
+        background:linear-gradient(90deg, #c8831a, #f0c040);
+        border-radius:99px; width:0%;
+        transition:width .1s linear;
+      }
+      .cine-scene-dots {
+        display:flex; gap:.4rem; align-items:center; flex-shrink:0;
+      }
+      .csd {
+        width:6px; height:6px; border-radius:50%;
+        background:rgba(255,255,255,.25); cursor:pointer;
+        transition:all .25s ease; border:none;
+      }
+      .csd.active { width:18px; border-radius:99px; background:#e8a030; }
+      .cine-timer {
+        font-size:.6rem; color:rgba(255,255,255,.3);
+        letter-spacing:.06em; font-variant-numeric:tabular-nums;
+        min-width:4ch; flex-shrink:0;
+      }
+
+      /* Scene label top-left */
+      .cine-scene-label {
+        position:absolute; top:11%; left:clamp(1.5rem,4vw,3rem);
+        z-index:6; font-size:.6rem; letter-spacing:.14em;
+        text-transform:uppercase; color:rgba(255,255,255,.3);
+        opacity:0; transition:opacity .4s ease .2s;
+      }
+      .cine-scene.active .cine-scene-label { opacity:1; }
+
+      /* FFN watermark */
+      .cine-watermark {
+        position:absolute; top:11%; right:clamp(1.5rem,4vw,3rem);
+        z-index:6; font-size:.6rem; letter-spacing:.18em;
+        text-transform:uppercase; color:rgba(200,131,26,.35);
+        font-family:'Playfair Display',serif; font-weight:700;
+      }
+
+      /* Slide 11 intro eyebrow override */
+      .cinema-slide.slide-active .section-eyebrow::after { display:none; }
+      </style>
+
+      <section class="slide cinema-slide" data-title="Our Film">
+
+        <!-- Film grain + letterbox -->
+        <div class="cine-grain"></div>
+        <div class="cine-box top"></div>
+        <div class="cine-box bottom"></div>
+
+        <!-- FFN watermark -->
+        <div class="cine-watermark">FFN · Filipino Functional Nutrition</div>
+
+        <!-- ── SCENES ── -->
+        <div class="cine-scenes" id="cineScenes">
+
+          <!-- SCENE 1: The Night Shift -->
+          <div class="cine-scene active sb1" data-scene="0">
+            <div class="cine-bloom"></div>
+            <div class="cine-vignette"></div>
+            <!-- ECG line -->
+            <div class="ecg-line">
+              <svg viewBox="0 0 600 50" preserveAspectRatio="none" width="100%" height="50">
+                <polyline class="ecg-path" points="0,25 60,25 80,5 95,45 110,10 125,40 140,25 300,25 320,5 335,45 350,10 365,40 380,25 600,25"/>
+              </svg>
+            </div>
+            <!-- Floating crosses -->
+            <div class="scene-floaters">
+              <div class="sf" style="width:8px;height:8px;background:#40a8ff;top:25%;left:15%;animation-delay:0s"></div>
+              <div class="sf" style="width:5px;height:5px;background:#40a8ff;top:40%;left:70%;animation-delay:1.2s"></div>
+              <div class="sf" style="width:6px;height:6px;background:#fff;top:60%;left:40%;animation-delay:2.4s"></div>
+            </div>
+            <div class="scene-icon-wrap">👩‍⚕️</div>
+            <div class="cine-scene-label">Scene 01 · The Night Shift</div>
+            <div class="scene-text">
+              <div class="scene-eyebrow-cine">Filipino Healthcare Workers</div>
+              <div class="scene-headline-cine">It's 2 AM.<br>Your shift doesn't<br>end for 3 hours.<br><em>Reach for real fuel.</em></div>
+              <div class="scene-sub-cine">200,000+ Filipino nurses in the US. Hard-working. Heritage-proud. Deserving better than a vending machine.</div>
+            </div>
+            <div class="scene-product-tag">🟣 Ube Coconut Bar · 20g Protein</div>
+          </div>
+
+          <!-- SCENE 2: Game Day -->
+          <div class="cine-scene sb2" data-scene="1">
+            <div class="cine-bloom"></div>
+            <div class="cine-vignette"></div>
+            <!-- Pulse ring -->
+            <div class="pulse-ring"></div>
+            <div class="pulse-ring" style="animation-delay:.6s;border-color:rgba(240,120,40,.3)"></div>
+            <div class="scene-floaters">
+              <div class="sf" style="width:7px;height:7px;background:#f0a040;top:20%;left:20%;animation-delay:.5s"></div>
+              <div class="sf" style="width:5px;height:5px;background:#f0a040;top:55%;left:65%;animation-delay:1.5s"></div>
+              <div class="sf" style="width:9px;height:9px;background:#f0c040;top:35%;left:80%;animation-delay:2.5s"></div>
+            </div>
+            <div class="scene-icon-wrap">🏋️‍♂️</div>
+            <div class="cine-scene-label">Scene 02 · Game Day</div>
+            <div class="scene-text">
+              <div class="scene-eyebrow-cine">Filipino Athletes &amp; Gym Culture</div>
+              <div class="scene-headline-cine">4:45 AM.<br>Before the PR<br><span style="font-size:.55em;opacity:.6;font-style:normal;letter-spacing:.04em">(Personal Record)</span>.<br>Before the world<br><em>wakes up.</em></div>
+              <div class="scene-sub-cine">Filipino athletes who train hard and eat harder. Flavors that honor where they came from — and fuel where they're going.</div>
+            </div>
+            <div class="scene-product-tag">🥮 Turon Cinnamon Bar · 18g Protein</div>
+          </div>
+
+          <!-- SCENE 3: The Kitchen -->
+          <div class="cine-scene sb3" data-scene="2">
+            <div class="cine-bloom"></div>
+            <div class="cine-vignette"></div>
+            <div class="steam-wrap">
+              <div class="steam"></div><div class="steam"></div><div class="steam"></div>
+            </div>
+            <div class="scene-floaters">
+              <div class="sf" style="width:6px;height:6px;background:#f0c040;top:30%;left:10%;animation-delay:0s"></div>
+              <div class="sf" style="width:8px;height:8px;background:#f0c040;top:45%;left:75%;animation-delay:1s"></div>
+              <div class="sf" style="width:5px;height:5px;background:#fff;top:65%;left:30%;animation-delay:2s"></div>
+            </div>
+            <div class="scene-icon-wrap">🙏</div>
+            <div class="cine-scene-label">Scene 03 · The Kitchen</div>
+            <div class="scene-text">
+              <div class="scene-eyebrow-cine">Made by Godly Men</div>
+              <div class="scene-headline-cine">Every batch begins<br>with prayer.<br>Every ingredient<br><em>chosen with care.</em></div>
+              <div class="scene-sub-cine">A team of men who love Christ — doing business the right way. No shortcuts. No compromise. Only the best for your body.</div>
+            </div>
+            <div class="scene-product-tag">🟢 Pandan Protein Bar · Antioxidant-Rich</div>
+          </div>
+
+          <!-- SCENE 4: The Community -->
+          <div class="cine-scene sb4" data-scene="3">
+            <div class="cine-bloom"></div>
+            <div class="cine-vignette"></div>
+            <!-- Philippine sun decoration -->
+            <svg class="ph-sun" width="180" height="180" viewBox="0 0 180 180" fill="none">
+              <circle cx="90" cy="90" r="30" fill="none" stroke="#f0c040" stroke-width="2"/>
+              <g stroke="#f0c040" stroke-width="1.5" stroke-linecap="round">
+                <line x1="90" y1="10"  x2="90" y2="40"/>  <line x1="90" y1="140" x2="90" y2="170"/>
+                <line x1="10" y1="90"  x2="40" y2="90"/>  <line x1="140" y1="90" x2="170" y2="90"/>
+                <line x1="28" y1="28"  x2="49" y2="49"/>  <line x1="131" y1="131" x2="152" y2="152"/>
+                <line x1="152" y1="28" x2="131" y2="49"/> <line x1="49" y1="131" x2="28" y2="152"/>
+              </g>
+            </svg>
+            <div class="scene-floaters">
+              <div class="sf" style="width:7px;height:7px;background:#ff6060;top:20%;left:25%;animation-delay:.3s"></div>
+              <div class="sf" style="width:5px;height:5px;background:#f0c040;top:50%;left:70%;animation-delay:1.3s"></div>
+              <div class="sf" style="width:9px;height:9px;background:#ff6060;top:70%;left:15%;animation-delay:2.3s"></div>
+            </div>
+            <div class="scene-icon-wrap">🇵🇭</div>
+            <div class="cine-scene-label">Scene 04 · The Community</div>
+            <div class="scene-text">
+              <div class="scene-eyebrow-cine">4.2 Million Filipino-Americans</div>
+              <div class="scene-headline-cine">For every Filipino<br>who ever felt<br><em>unseen.</em><br>You are celebrated.</div>
+              <div class="scene-sub-cine">We build community first. Scholarships funded. Families nourished. Filipino culture carried proudly into every gym, hospital, and home in America.</div>
+            </div>
+            <div class="scene-product-tag">🌟 Buy a Bar · Feed a Dream</div>
+          </div>
+
+          <!-- SCENE 5: Brand End Card -->
+          <div class="cine-scene sb5" data-scene="4">
+            <div class="cine-bloom"></div>
+            <div class="cine-vignette"></div>
+            <!-- Stars -->
+            <div class="scene-floaters" id="starField"></div>
+            <div class="scene5-center">
+              <div class="scene5-logo-ring">
+                <svg class="spin-slow" style="position:absolute;inset:0;width:100%;height:100%" viewBox="0 0 100 100" fill="none">
+                  <g stroke="#c8831a" stroke-width="1.2" stroke-linecap="round" opacity="0.7">
+                    <line x1="50" y1="4"   x2="50" y2="18"/>  <line x1="50" y1="82" x2="50" y2="96"/>
+                    <line x1="4"  y1="50"  x2="18" y2="50"/>  <line x1="82" y1="50" x2="96" y2="50"/>
+                    <line x1="18" y1="18"  x2="27" y2="27"/>  <line x1="73" y1="73" x2="82" y2="82"/>
+                    <line x1="82" y1="18"  x2="73" y2="27"/>  <line x1="27" y1="73" x2="18" y2="82"/>
+                  </g>
+                </svg>
+                <svg width="52" height="52" viewBox="0 0 40 40" fill="none">
+                  <circle cx="20" cy="20" r="18" fill="#c8831a" opacity="0.15"/>
+                  <circle cx="20" cy="20" r="8"  fill="#e8a030"/>
+                  <circle cx="20" cy="20" r="4"  fill="#f0c040"/>
+                </svg>
+              </div>
+              <div class="scene5-eyebrow">Filipino Functional Nutrition · Est. 2025</div>
+              <div class="scene5-headline">Real Flavors.<br><em>Real Nutrition.</em><br>Real Impact.</div>
+              <div class="scene5-tagline">"Whatever you do, work at it with all your heart, as working for the Lord."<br>— Colossians 3:23</div>
+              <div class="scene5-cta">ffnbars.com · Coming Soon</div>
+            </div>
+            <div class="cine-scene-label">Scene 05 · The Mission</div>
+          </div>
+
+        </div><!-- /cine-scenes -->
+
+        <!-- ── CONTROLS ── -->
+        <div class="cinema-controls">
+          <button class="cine-play-btn" id="cinePlayBtn" aria-label="Play/Pause">
+            <svg width="10" height="10" viewBox="0 0 10 10" fill="currentColor" id="cinePlayIcon"><path d="M0 0l10 5L0 10z"/></svg>
+          </button>
+          <div class="cine-timeline">
+            <div class="cine-timeline-fill" id="cineTimelineFill"></div>
+          </div>
+          <div class="cine-scene-dots" id="cineSceneDots"></div>
+          <span class="cine-timer" id="cineTimer">1 / 5</span>
+        </div>
+
+      </section>
+
+      <script>
+      (function(){
+        const SCENE_DURATION = 5500; // ms per scene
+        const scenes   = Array.from(document.querySelectorAll('.cine-scene'));
+        const fill     = document.getElementById('cineTimelineFill');
+        const dotsWrap = document.getElementById('cineSceneDots');
+        const timerEl  = document.getElementById('cineTimer');
+        const playBtn  = document.getElementById('cinePlayBtn');
+        const playIcon = document.getElementById('cinePlayIcon');
+        let current  = 0;
+        let playing  = false;
+        let raf      = null;
+        let startTS  = null;
+        let elapsed  = 0;
+
+        // Build dots
+        scenes.forEach((_, i) => {
+          const d = document.createElement('button');
+          d.className = 'csd' + (i === 0 ? ' active' : '');
+          d.addEventListener('click', () => jumpTo(i));
+          dotsWrap.appendChild(d);
+        });
+
+        // Star field for scene 5
+        const starField = document.getElementById('starField');
+        if (starField) {
+          for (let i = 0; i < 40; i++) {
+            const s = document.createElement('div');
+            s.className = 'star-dot';
+            const sz = 1.5 + Math.random() * 2.5;
+            s.style.cssText = `
+              width:${sz}px;height:${sz}px;
+              top:${Math.random()*90}%;left:${Math.random()*100}%;
+              animation-delay:${Math.random()*3}s;
+              animation-duration:${2+Math.random()*2}s;
+            `;
+            starField.appendChild(s);
+          }
+        }
+
+        function updateDots(idx) {
+          document.querySelectorAll('.csd').forEach((d, i) => d.classList.toggle('active', i === idx));
+          timerEl.textContent = `${idx + 1} / ${scenes.length}`;
+        }
+
+        function goScene(idx) {
+          scenes[current].classList.remove('active');
+          current = (idx + scenes.length) % scenes.length;
+          scenes[current].classList.add('active');
+          updateDots(current);
+          // Reset fill
+          fill.style.transition = 'none';
+          fill.style.width = '0%';
+          elapsed = 0;
+          startTS = null;
+        }
+
+        function jumpTo(idx) {
+          goScene(idx);
+          if (playing) { cancelAnimationFrame(raf); startTS = null; tick(performance.now()); }
+        }
+
+        function tick(ts) {
+          if (!startTS) startTS = ts - elapsed;
+          elapsed = ts - startTS;
+          const pct = Math.min((elapsed / SCENE_DURATION) * 100, 100);
+          fill.style.transition = 'none';
+          fill.style.width = pct + '%';
+          if (elapsed >= SCENE_DURATION) {
+            goScene(current + 1);
+          }
+          if (playing) raf = requestAnimationFrame(tick);
+        }
+
+        function play() {
+          playing = true;
+          playIcon.innerHTML = '<rect x="1" y="0" width="3" height="10"/><rect x="6" y="0" width="3" height="10"/>';
+          raf = requestAnimationFrame(tick);
+        }
+        function pause() {
+          playing = false;
+          playIcon.innerHTML = '<path d="M0 0l10 5L0 10z"/>';
+          cancelAnimationFrame(raf);
+        }
+
+        playBtn.addEventListener('click', () => playing ? pause() : play());
+
+        // Timeline click to scrub
+        document.querySelector('.cine-timeline').addEventListener('click', e => {
+          const r   = e.currentTarget.getBoundingClientRect();
+          const pct = (e.clientX - r.left) / r.width;
+          elapsed   = pct * SCENE_DURATION;
+          startTS   = null;
+          fill.style.width = (pct * 100) + '%';
+          if (playing) { cancelAnimationFrame(raf); raf = requestAnimationFrame(tick); }
+        });
+
+        // Auto-play when this slide becomes active (slide 10 = index 10)
+        const observer = new MutationObserver(() => {
+          const cinemaSlide = document.querySelector('.cinema-slide');
+          if (cinemaSlide && cinemaSlide.classList.contains('slide-active') && !playing) {
+            goScene(0);
+            play();
+          }
+        });
+        const cinemaSlide = document.querySelector('.cinema-slide');
+        if (cinemaSlide) observer.observe(cinemaSlide, { attributes:true, attributeFilter:['class'] });
+
+        // Init — show first scene, no autoplay until user visits
+        updateDots(0);
+      })();
+      </script>
+
+    </div><!-- /track -->
+  </div><!-- /viewport -->
+
+  <!-- PROGRESS DOTS -->
+  <div class="progress-bar" role="tablist" aria-label="Slide progress">
+    <span class="slide-counter" id="counter">1 / 11</span>
+    <div id="dots" style="display:flex;gap:var(--space-2);"></div>
+  </div>
+</div><!-- /app -->
+
+<div class="swipe-indicator" id="swipeHint">Swipe to navigate</div>
+
+<script>
+(function(){
+
+  /* ══════════════════════════════
+     CINEMATIC INTRO
+  ══════════════════════════════ */
+  const intro = document.getElementById('intro-overlay');
+  if (intro) {
+    setTimeout(() => {
+      intro.classList.add('out');
+      intro.addEventListener('animationend', () => {
+        intro.style.display = 'none';
+      }, { once: true });
+    }, 3200);
+  }
+
+  /* ══════════════════════════════
+     THEME TOGGLE
+  ══════════════════════════════ */
+  const themeBtn = document.querySelector('[data-theme-toggle]');
+  const html = document.documentElement;
+  let theme = html.getAttribute('data-theme') || (matchMedia('(prefers-color-scheme:dark)').matches ? 'dark' : 'light');
+  html.setAttribute('data-theme', theme);
+  if (themeBtn) {
+    themeBtn.addEventListener('click', () => {
+      theme = theme === 'dark' ? 'light' : 'dark';
+      html.setAttribute('data-theme', theme);
+      themeBtn.innerHTML = theme === 'dark'
+        ? '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>'
+        : '<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+    });
+  }
+
+  /* ══════════════════════════════
+     PARTICLE CANVAS — hero slide
+  ══════════════════════════════ */
+  const canvas = document.getElementById('particle-canvas');
+  if (canvas) {
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+    let heroActive = true;
+
+    function resizeCanvas() {
+      const heroSlide = canvas.parentElement;
+      canvas.width  = heroSlide.offsetWidth;
+      canvas.height = heroSlide.offsetHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', resizeCanvas);
+
+    function mkParticle() {
+      const isDark = html.getAttribute('data-theme') === 'dark';
+      return {
+        x: Math.random() * canvas.width,
+        y: canvas.height + 10,
+        r: Math.random() * 2.5 + 0.8,
+        speed: Math.random() * 0.6 + 0.25,
+        drift: (Math.random() - 0.5) * 0.4,
+        alpha: Math.random() * 0.5 + 0.2,
+        color: isDark
+          ? `hsla(${38 + Math.random()*20},90%,${65 + Math.random()*20}%`
+          : `hsla(${30 + Math.random()*20},80%,${45 + Math.random()*15}%`,
+      };
+    }
+
+    for (let i = 0; i < 55; i++) {
+      const p = mkParticle();
+      p.y = Math.random() * canvas.height;
+      particles.push(p);
+    }
+
+    function drawParticles() {
+      if (!heroActive) return;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      particles.forEach((p, i) => {
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+        ctx.fillStyle = p.color + `,${p.alpha})`;
+        ctx.fill();
+
+        p.y  -= p.speed;
+        p.x  += p.drift;
+        p.alpha -= 0.0008;
+
+        if (p.y < -10 || p.alpha <= 0) {
+          particles[i] = mkParticle();
+        }
+      });
+      requestAnimationFrame(drawParticles);
+    }
+    drawParticles();
+  }
+
+  /* ══════════════════════════════
+     3D TILT ON CARDS
+  ══════════════════════════════ */
+  function applyTilt(selector, strength = 8) {
+    document.querySelectorAll(selector).forEach(el => {
+      el.classList.add('tiltable');
+      el.addEventListener('mousemove', e => {
+        const r  = el.getBoundingClientRect();
+        const cx = r.left + r.width  / 2;
+        const cy = r.top  + r.height / 2;
+        const dx = (e.clientX - cx) / (r.width  / 2);
+        const dy = (e.clientY - cy) / (r.height / 2);
+        el.style.transform =
+          `perspective(700px) rotateY(${dx * strength}deg) rotateX(${-dy * strength}deg) translateZ(4px)`;
+      });
+      el.addEventListener('mouseleave', () => {
+        el.style.transform = '';
+      });
+    });
+  }
+  applyTilt('.card',          7);
+  applyTilt('.value-card',    6);
+  applyTilt('.product-card',  7);
+  applyTilt('.roadmap-col',   5);
+  applyTilt('.platform-card', 6);
+  applyTilt('.give-card',     6);
+  applyTilt('.stat-box',      9);
+
+  /* ══════════════════════════════
+     SPARKLE on stat / kpi hover
+  ══════════════════════════════ */
+  function addSparkle(el) {
+    for (let i = 0; i < 6; i++) {
+      const sp = document.createElement('span');
+      sp.className = 'sparkle-particle';
+      const angle = (i / 6) * 360;
+      const dist  = 22 + Math.random() * 16;
+      sp.style.cssText = `
+        left:${50 + dist * Math.cos(angle * Math.PI/180)}%;
+        top:${50 + dist * Math.sin(angle * Math.PI/180)}%;
+        width:${4 + Math.random()*4}px;
+        height:${4 + Math.random()*4}px;
+        background: hsl(${36 + Math.random()*20},90%,${60+Math.random()*20}%);
+      `;
+      el.style.position = 'relative';
+      el.style.overflow = 'visible';
+      el.appendChild(sp);
+      sp.addEventListener('animationend', () => sp.remove());
+    }
+  }
+  document.querySelectorAll('.stat-box').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      el.querySelector('.stat-num')?.classList.add('popped');
+      addSparkle(el);
+    });
+    el.addEventListener('animationend', e => {
+      if (e.target.classList.contains('stat-num')) e.target.classList.remove('popped');
+    });
+  });
+  document.querySelectorAll('.kpi-box').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      el.querySelector('.kpi-value')?.classList.add('flash');
+      addSparkle(el);
+    });
+    el.addEventListener('animationend', e => {
+      if (e.target.classList.contains('kpi-value')) e.target.classList.remove('flash');
+    });
+  });
+
+  /* ══════════════════════════════
+     COUNTER ANIMATION
+  ══════════════════════════════ */
+  function parseTarget(str) {
+    const clean = str.replace(/[^0-9.]/g, '');
+    return parseFloat(clean) || 0;
+  }
+  function formatLike(val, original) {
+    if (original.startsWith('#'))     return '#' + Math.round(val);
+    if (original.startsWith('$')) {
+      if (original.includes('B'))     return '$' + val.toFixed(0) + 'B+';
+      if (original.includes('M'))     return '$' + val.toFixed(0) + 'M+';
+      if (original.includes('K'))     return '$' + val.toFixed(0) + 'K/mo';
+      return '$' + val.toFixed(0);
+    }
+    if (original.includes('%'))       return val.toFixed(1) + '%';
+    return val.toFixed(0);
+  }
+  function animateCounter(el, duration = 1400) {
+    const original = el.textContent.trim();
+    const target   = parseTarget(original);
+    if (!target) return;
+    const start = performance.now();
+    function tick(now) {
+      const t = Math.min((now - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - t, 3);
+      el.textContent = formatLike(target * ease, original);
+      if (t < 1) requestAnimationFrame(tick);
+      else el.textContent = original;
+    }
+    requestAnimationFrame(tick);
+  }
+
+  /* ══════════════════════════════
+     SLIDE ENTRANCE SYSTEM
+  ══════════════════════════════ */
+  const triggered = new Set();
+
+  function animateSlide(idx) {
+    const slide = slides[idx];
+    if (!slide) return;
+
+    slide.classList.add('slide-active');
+
+    // — generic stagger children: cards, mini-cards, tool-items, etc.
+    const targets = slide.querySelectorAll(
+      '.card, .value-card, .product-card, .platform-card, .give-card, ' +
+      '.mini-card, .tool-item, .step-list li, .checklist li, ' +
+      '.pillar, .stat-box, .kpi-box, .phase-item, .roadmap-col, ' +
+      '.flow-step, .content-type, .kitchen-card'
+    );
+    targets.forEach((el, i) => {
+      el.classList.add('ec');
+      setTimeout(() => el.classList.add('in'), 60 + i * 55);
+    });
+
+    // — roadmap columns
+    slide.querySelectorAll('.roadmap-col').forEach((col, i) => {
+      setTimeout(() => col.classList.add('in'), 80 + i * 120);
+    });
+
+    // — flow steps
+    slide.querySelectorAll('.flow-step').forEach((step, i) => {
+      setTimeout(() => step.classList.add('in'), 100 + i * 140);
+    });
+
+    // — research table rows
+    slide.querySelectorAll('.research-table tbody tr').forEach((row, i) => {
+      setTimeout(() => row.classList.add('in'), 200 + i * 80);
+    });
+
+    // — counters on hero slide
+    if (idx === 0 && !triggered.has('counters')) {
+      triggered.add('counters');
+      setTimeout(() => {
+        slide.querySelectorAll('.stat-num').forEach((el, i) => {
+          setTimeout(() => animateCounter(el), 300 + i * 180);
+        });
+      }, 400);
+    }
+
+    // — KPI counters on roadmap slide
+    if (idx === slides.length - 1 && !triggered.has('kpi')) {
+      triggered.add('kpi');
+      setTimeout(() => {
+        slide.querySelectorAll('.kpi-value').forEach((el, i) => {
+          setTimeout(() => animateCounter(el, 1200), 200 + i * 100);
+        });
+      }, 300);
+    }
+  }
+
+  /* ══════════════════════════════
+     CAROUSEL
+  ══════════════════════════════ */
+  const track = document.getElementById('track');
+  const slides = Array.from(track.querySelectorAll('.slide'));
+  const total = slides.length;
+  const navTabsEl = document.getElementById('navTabs');
+  const dotsEl = document.getElementById('dots');
+  const counter = document.getElementById('counter');
+  const prevBtn = document.getElementById('prevBtn');
+  const nextBtn = document.getElementById('nextBtn');
+  const swipeHint = document.getElementById('swipeHint');
+  let current = 0;
+
+  slides.forEach((s, i) => {
+    const t = document.createElement('button');
+    t.className = 'nav-tab' + (i === 0 ? ' active' : '');
+    t.textContent = s.dataset.title || `Slide ${i+1}`;
+    t.setAttribute('role', 'tab');
+    t.setAttribute('aria-selected', i === 0 ? 'true' : 'false');
+    t.addEventListener('click', () => goTo(i));
+    navTabsEl.appendChild(t);
+
+    const d = document.createElement('button');
+    d.className = 'dot' + (i === 0 ? ' active' : '');
+    d.setAttribute('aria-label', `Go to slide ${i+1}`);
+    d.addEventListener('click', () => goTo(i));
+    dotsEl.appendChild(d);
+  });
+
+  /* ══════════════════════════════
+     SLIDE TRANSITION — scale + fade
+  ══════════════════════════════ */
+  function goTo(idx) {
+    idx = Math.max(0, Math.min(total - 1, idx));
+
+    // De-activate old slide
+    if (slides[current]) slides[current].classList.remove('slide-active');
+
+    current = idx;
+    track.style.transform = `translateX(-${idx * 100}%)`;
+
+    document.querySelectorAll('.nav-tab').forEach((t, i) => {
+      t.classList.toggle('active', i === idx);
+      t.setAttribute('aria-selected', i === idx ? 'true' : 'false');
+    });
+    document.querySelectorAll('.dot').forEach((d, i) => d.classList.toggle('active', i === idx));
+    counter.textContent = `${idx + 1} / ${total}`;
+    prevBtn.disabled = idx === 0;
+    nextBtn.disabled = idx === total - 1;
+
+    const activeTab = navTabsEl.querySelectorAll('.nav-tab')[idx];
+    if (activeTab) activeTab.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+
+    // Scroll new slide to top
+    slides[idx].scrollTop = 0;
+
+    // Trigger entrance animations after slide settles
+    setTimeout(() => animateSlide(idx), 80);
+  }
+
+  prevBtn.addEventListener('click', () => goTo(current - 1));
+  nextBtn.addEventListener('click', () => goTo(current + 1));
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') goTo(current + 1);
+    if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   goTo(current - 1);
+  });
+
+  let touchStartX = 0, touchStartY = 0;
+  const vp = document.getElementById('viewport');
+  vp.addEventListener('touchstart', e => {
+    touchStartX = e.touches[0].clientX;
+    touchStartY = e.touches[0].clientY;
+  }, { passive: true });
+  vp.addEventListener('touchend', e => {
+    const dx = e.changedTouches[0].clientX - touchStartX;
+    const dy = e.changedTouches[0].clientY - touchStartY;
+    if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) {
+      dx < 0 ? goTo(current + 1) : goTo(current - 1);
+    }
+  }, { passive: true });
+
+  if ('ontouchstart' in window) {
+    swipeHint.classList.add('show');
+    setTimeout(() => swipeHint.classList.remove('show'), 3000);
+  }
+
+  /* ══════════════════════════════
+     MOUSE CURSOR TRAIL on hero
+  ══════════════════════════════ */
+  const heroSection = slides[0];
+  if (heroSection) {
+    heroSection.addEventListener('mousemove', e => {
+      if (current !== 0) return;
+      const trail = document.createElement('div');
+      trail.style.cssText = `
+        position:fixed; left:${e.clientX}px; top:${e.clientY}px;
+        width:6px; height:6px; border-radius:50%;
+        background:hsl(${36+Math.random()*24},90%,65%);
+        pointer-events:none; z-index:50;
+        transform:translate(-50%,-50%);
+        animation:sparkle 0.6s ease forwards;
+      `;
+      document.body.appendChild(trail);
+      trail.addEventListener('animationend', () => trail.remove());
+    });
+  }
+
+  /* ══════════════════════════════
+     INITIAL LOAD — after intro
+  ══════════════════════════════ */
+  goTo(0);
+
+  // Delay first slide's animations until after intro clears
+  setTimeout(() => animateSlide(0), 3400);
+
+})();
+</script>
+</body>
+</html>
